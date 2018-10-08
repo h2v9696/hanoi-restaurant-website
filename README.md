@@ -44,7 +44,11 @@ MYSQL_DATABASE_DEV: # name of database your want to create
 ```
 Create database with name as above:
 ```
-rake db:create
+rails db:create
+```
+Populate database with fake data:
+```
+rails db:seed
 ```
 Run server 
 ```
