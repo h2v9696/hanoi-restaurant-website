@@ -12,7 +12,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 gem 'figaro'
-gem 'faker', github: 'stympy/faker'
+gem 'ffaker', github: 'ffaker/ffaker'
+gem 'devise'
 
 group :development, :test do
   gem 'rspec-rails'
