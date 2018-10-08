@@ -15,6 +15,7 @@ gem 'figaro'
 gem 'faker'
 
 group :development, :test do
+  gem 'rspec-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
