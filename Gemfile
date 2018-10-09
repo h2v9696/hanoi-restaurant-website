@@ -12,11 +12,12 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 gem 'figaro'
-gem 'ffaker', github: 'ffaker/ffaker'
-gem 'devise'
+gem 'faker', github: 'stympy/faker'
+gem 'devise_token_auth'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'factory_bot_rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
