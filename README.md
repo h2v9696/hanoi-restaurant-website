@@ -59,11 +59,11 @@ Open browser and go to [http://localhost:3000]()
 
 ### 2. API list
 
-**Note: all URI prefix with /api**
+**Note: All URI prefix with /api `/users` -> `/api/users`**
 
-- User model
+- User Model
 
-REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
+REQUEST | URI | DETAILS | REQUIRED FIELDS | RETURN
 --- | --- | --- | --- | --- 
 POST | /users | Create new user| username, email, password, password_comfirmation|
 GET | /users |||
@@ -71,14 +71,15 @@ GET | /users/{id} |||
 PATCH | /users/{id} |||
 DELETE | /users/{id} |||
 
-- Authentication
+- User Authentication
 
-REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
+REQUEST | URI | DETAILS | REQUIRED FIELDS | RETURN
 --- | --- | --- | --- | --- 
+POST | /users/sign_in | | email, password |
 
-- Restaurant
+- Restaurant Model
 
-REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
+REQUEST | URI | DETAILS | REQUIRED FIELDS | RETURN
 --- | --- | --- | --- | --- 
 POST | /restaurants | Create new restaurant | name, address, phone, description |
 GET | /restaurants | List all restaurants
