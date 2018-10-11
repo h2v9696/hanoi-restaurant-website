@@ -1,7 +1,7 @@
 ## Hanoi restaurant website backend
 Content:
-- [Installation](#1.-Installation)
-- [Api list](#2.-api-list)
+- [Installation](#1-Installation)
+- [Api list](#2-api-list)
 
 ### 1. Installation
 
@@ -57,11 +57,12 @@ rails server
 ```
 Open browser and go to [http://localhost:3000]()
 
-2. API list
+### 2. API list
 
 **Note: all URI prefix with /api**
 
 - User model
+
 REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
 --- | --- | --- | ---
 POST | /users | Create new user| username, email, password, password_comfirmation|
@@ -71,10 +72,12 @@ PATCH | /users/{id} |||
 DELETE | /users/{id} |||
 
 - Authentication
+
 REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
 --- | --- | --- | ---
 
 - Restaurant
+
 REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
 --- | --- | --- | ---
 POST | /restaurants | Create new restaurant | name, address, phone, description |
