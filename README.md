@@ -1,4 +1,7 @@
 ## Hanoi restaurant website backend
+Content:
+- [Installation](#1.-Installation)
+- [Api list](#2.-api-list)
 
 ### 1. Installation
 
@@ -42,16 +45,40 @@ MYSQL_USERNAME: # your mysql username eg. root
 MYSQL_PASSWORD: # your mysql password eg. 123456
 MYSQL_DATABASE_DEV: # name of database your want to create
 ```
-Create database with name as above:
+Create database and table, then populate database with fake data
 ```
 rails db:create
-```
-Populate database with fake data:
-```
+rails db:migrate
 rails db:seed
 ```
-Run server 
+Test server 
 ```
 rails server
 ```
 Open browser and go to [http://localhost:3000]()
+
+2. API list
+
+**Note: all URI prefix with /api**
+
+- User model
+REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
+--- | --- | --- | ---
+POST | /users | Create new user| username, email, password, password_comfirmation|
+GET | /users |||
+GET | /users/{id} |||
+PATCH | /users/{id} |||
+DELETE | /users/{id} |||
+
+- Authentication
+REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
+--- | --- | --- | ---
+
+- Restaurant
+REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
+--- | --- | --- | ---
+POST | /restaurants | Create new restaurant | name, address, phone, description |
+GET | /restaurants | List all restaurants
+GET | /restaurants/{id} |
+PATCH | /restaurants/{id} | Update restaurants at {id}
+DELETE | /restaurants/{id}
