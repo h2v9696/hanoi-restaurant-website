@@ -59,7 +59,7 @@ Open browser and go to [http://localhost:3000]()
 
 ### 2. API list
 
-**Note: All URI prefix with /api `/users` -> `/api/users`**
+**Note: All URI prefix with "/api". Eg. `/users` -> `/api/users`**
 
 - User Model
 
