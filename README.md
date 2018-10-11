@@ -64,7 +64,7 @@ Open browser and go to [http://localhost:3000]()
 - User model
 
 REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
---- | --- | --- | ---
+--- | --- | --- | --- | --- 
 POST | /users | Create new user| username, email, password, password_comfirmation|
 GET | /users |||
 GET | /users/{id} |||
@@ -74,12 +74,12 @@ DELETE | /users/{id} |||
 - Authentication
 
 REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
---- | --- | --- | ---
+--- | --- | --- | --- | --- 
 
 - Restaurant
 
 REQUEST | URI | DETAILS | REQUIRED FIELDS | RESULT
---- | --- | --- | ---
+--- | --- | --- | --- | --- 
 POST | /restaurants | Create new restaurant | name, address, phone, description |
 GET | /restaurants | List all restaurants
 GET | /restaurants/{id} |
