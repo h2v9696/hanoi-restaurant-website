@@ -1,4 +1,4 @@
 import React from "react"
-export default () => <div>
-    day la top bar ngu lol
+export default ({match}) => <div>
+    day la top bar ngu lol {match.params.nameUser}
 </div>

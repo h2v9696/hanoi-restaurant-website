@@ -12,10 +12,12 @@ export default class Main extends Component {
             <Switch>
                 {/*home*/}
                 <Route exact path="/" component={HomeIndex} />
-                <Route exact path="/home" component={HomeIndex} />
+                <Route path="/home/:nameUser" component={HomeIndex} />
+                <Route path="/home" component={HomeIndex} />
                 {/*user*/}
-                <Route exact path="/logIn" component={LogIn} />
-                <Route exact path="/signUp" component={SignUp} />
+                <Route path="/logIn/:error" component={LogIn} />
+                <Route path="/logIn" component={LogIn} />
+                <Route path="/signUp" component={SignUp} />
             </Switch>
         )
     }

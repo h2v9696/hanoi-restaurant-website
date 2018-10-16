@@ -9,7 +9,7 @@ export default class LogIn extends Component {
 
     render() {
         return (
-            <Login/>
+            <Login {...this.props}/>
         );
     }
 }

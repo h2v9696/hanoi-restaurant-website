@@ -1,11 +1,22 @@
 import React, { Component } from "react"
-
+import {
+    Link,
+} from "react-router-dom";
 export default class Signup extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            password: '',
+            rePassword:''
+        };
+    }
+    onPasswordChange(value){
+        this.setState({password: value})
     }
 
+    onRePasswordChange(value) {
+        this.setState({rePassword : value })
+    }
     render() {
         return (
             <div className="register-page">
@@ -33,18 +44,19 @@ export default class Signup extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Password</label>
-                                        <input type="Password" className="form-control" name="password"
+                                        <input type="Password" className="form-control" name="password"  value={this.state.password} onChange={e => this.onPasswordChange(e.target.value)}
                                                placeholder="Password"/>
                                     </div>
                                     <div className="form-group">
                                         <label>Re-type Password</label>
-                                        <input type="Password" className="form-control" name="password"
+                                        <input type="Password" className="form-control" name="password"  value={this.state.rePassword} onChange={e => this.onRePasswordChange(e.target.value)}
                                                placeholder="Confirm Password"/>
                                     </div>
+                                    <p style={{color: 'red'}}>{this.state.password !== this.state.rePassword ? 'mật khẩu không khớp nhau' : ""}</p>
                                     <div className="form-group">
-                                        <button type="submit" className="btn btn-color btn-md btn-block">Create New
+                                        <Link to={this.state.password !== this.state.rePassword ? '/signup' : '/login'} className="btn btn-color btn-md btn-block">Create New
                                             Account
-                                        </button>
+                                        </Link>
                                     </div>
                                     <div className="login-footer text-center">
                                         <p>Already have an account?<a href="/logIn"> Sign In</a></p>
