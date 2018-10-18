@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "userName": "frontend",
   "version": "1.0.0",
   "description": "front end for rails project JAPE",
   "main": "index.js",
@@ -27,6 +27,7 @@
     "fs-extra": "7.0.0",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "mini-css-extract-plugin": "0.4.3",
+    "node-sass": "^4.9.4",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.1.0",
     "postcss-flexbugs-fixes": "4.1.0",
@@ -51,6 +52,7 @@
   "scripts": {
     "start": "node scripts/start.js"
   },
+  "proxy": "http://localhost:3000",
   "browserslist": [
     ">0.2%",
     "not dead",

@@ -16,6 +16,7 @@
   "rules": {
     "react-app/jsx-a11y/href-no-hash": "off",
     "no-unused-vars": 1,
-    "eol-last": 2
+    "eol-last": 2,
+    "no-console": 1
   }
 }
