@@ -1,5 +1,5 @@
 class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
-  def self.up    
+  def up    
     create_table :users do |t|
       ## Required
       t.string :provider, :null => false, :default => "email"
@@ -38,6 +38,8 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
       t.string :username
       t.string :email
       t.string :image_url
+      t.string :cover_url
+      t.string :address
 
       ## Tokens
       t.text :tokens
@@ -52,7 +54,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
     # add_index :users, :unlock_token,       unique: true
   end
 
-  def self.down
+  def down
     drop_table :users
   end
 end

@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 2018_10_11_073444) do
     t.string "username"
     t.string "email"
     t.string "image_url"
+    t.string "cover_url"
+    t.string "address"
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,5 +1,13 @@
 class Api::RestaurantsController < ApplicationController
 
+  def index
+    render json: {status: :success, data: Restaurant.all}
+  end
+
+  def show
+    render json: {status: :success, data: Restaurant.find(params[:id])}
+  end
+
   def create
     @restaurant = Restaurant.new(restaurant_params)
     if @restaurant.save
@@ -7,14 +15,6 @@ class Api::RestaurantsController < ApplicationController
     else
       render json: {status: :error, errors: @restaurant.errors}
     end
-  end
-
-  def index
-    render json: {status: :success, data: Restaurant.all}
-  end
-
-  def show
-    render json: {status: :success, data: Restaurant.find(params[:id])}
   end
 
   def update

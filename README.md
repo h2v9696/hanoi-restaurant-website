@@ -55,34 +55,35 @@ Test server
 ```
 rails server
 ```
-Open browser and go to [http://localhost:3000]()
+Open browser and go to [http://localhost:3000](http://localhost:3000)
 
 ### 2. API list
 
 **Note: All URI prefix with /api. Eg. `/users` -> `/api/users`**
 
-- User Model
-
-REQUEST | URI | DETAILS | REQUIRED FIELDS | RETURN
---- | --- | --- | --- | --- 
-POST | /users | Create new user| username, email, password, password_comfirmation|
-GET | /users |||
-GET | /users/{id} |||
-PATCH | /users/{id} |||
-DELETE | /users/{id} |||
-
 - User Authentication
 
-REQUEST | URI | DETAILS | REQUIRED FIELDS | RETURN
---- | --- | --- | --- | --- 
-POST | /users/sign_in | | email, password |
+Request | Uri | Required Fields | Details
+--- | --- | --- | ---
+POST | /users/sign_in | **Body:** `email`, `password` | Sign in<br>Return `uid`, new `access-token`, new `client` in Headers
+DELETE | /users/sign_out | **Headers:** `uid`, `access-token`, `client` | Sign out
+
+- User Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /users || Index users
+GET | /users/:id || Show user at :id
+POST | /users | **Body:** `username`, `email`, `password`, `password_comfirmation` | Create new user
+PUT | /users | **Headers:** `uid`, `access-token`, `client`<br> **Body:** *(all fields is optional)* `username`, `email`, `image_url`, `cover_url`, `address`, `password`, `password_comfirmation` | Update user.<br>For update password: must include `current_password` in Body.<br>Return `uid`, new `access-token`, same `client`.
+DELETE | /users | **Headers:** `uid`, `access-token`, `client` | Delete user
 
 - Restaurant Model
 
-REQUEST | URI | DETAILS | REQUIRED FIELDS | RETURN
---- | --- | --- | --- | --- 
-POST | /restaurants | Create new restaurant | name, address, phone, description |
-GET | /restaurants | List all restaurants
-GET | /restaurants/{id} |
-PATCH | /restaurants/{id} | Update restaurants at {id}
-DELETE | /restaurants/{id}
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /restaurants | | Index
+GET | /restaurants/:id || Show
+POST | /restaurants | **Body:** `name`, `address`, `phone`, `description` | Create
+PATCH | /restaurants/:id | **Body:** `name`, `address`, `phone`, `description` | Update
+DELETE | /restaurants/:id || Destroy
