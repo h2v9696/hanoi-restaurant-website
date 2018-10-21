@@ -45,7 +45,7 @@ MYSQL_USERNAME: # your mysql username eg. root
 MYSQL_PASSWORD: # your mysql password eg. 123456
 MYSQL_DATABASE_DEV: # name of database your want to create
 ```
-Create database and table, then populate database with fake data
+Create database and table, then populate database with fake data (if database already exists, drop it: `rails db:drop`)
 ```
 rails db:create
 rails db:migrate
@@ -87,3 +87,22 @@ GET | /restaurants/:id || Show
 POST | /restaurants | **Body:** `name`, `address`, `phone`, `description` | Create
 PATCH | /restaurants/:id | **Body:** `name`, `address`, `phone`, `description` | Update
 DELETE | /restaurants/:id || Destroy
+
+- Rating Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /ratings | **Params:** `restaurant_id` | Index
+POST | /ratings | **Body:** `restaurant_id`, `value`  | Create
+PATCH | /ratings/:rating_id | **Body:** `value` | Update
+DELETE | /ratings/:rating_id | | Destroy
+
+- Dish Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /dishes | **Params:** `restaurant_id` | Index
+GET | /dishes/:dish_id | | Show
+POST | /dishes | **Body:** `restaurant_id`, `name`, `price`, `image_url` | Create
+PATCH | /dishes/:dish_id | **Body:** `restaurant_id`, `name`, `price`, `image_url` | Update
+DELETE | /dishes/:dish_id | | Destroy
