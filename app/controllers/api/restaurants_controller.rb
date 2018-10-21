@@ -19,22 +19,20 @@ class Api::RestaurantsController < ApplicationController
 
   def update
     @restaurant = Restaurant.find(params[:id])
-    if restaurant.update(user_params)
-      render json: {status: :success, location: [:api, restaurant], data: @restaurant}
+    if @restaurant.update_attributes(restaurant_params)
+      render json: {status: :success, data: @restaurant}
     else
       render json: {status: :error, errors: @restaurant.errors}
     end
   end
 
   def destroy
-    @restaurant = Restaurant.find(params[:id])
-    @restaurant.destroy
-    head 204
+    Restaurant.find(params[:id]).destroy
   end
 
   private
   def restaurant_params
-    params.permit(:name, :address, :phone, :description)
+    params.permit(:name, :address, :phone, :description, :cover_url)
   end
 
 end
