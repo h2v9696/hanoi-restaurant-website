@@ -61,14 +61,14 @@ Open browser and go to [http://localhost:3000](http://localhost:3000)
 
 **Note: All URI prefix with /api. Eg. `/users` -> `/api/users`**
 
-- User Authentication
+#### User Authentication
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | ---
 POST | /users/sign_in | **Body:** `email`, `password` | Sign in<br>Return `uid`, new `access-token`, new `client` in Headers
 DELETE | /users/sign_out | **Headers:** `uid`, `access-token`, `client` | Sign out
 
-- User Model
+#### User Model
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
@@ -78,7 +78,7 @@ POST | /users | **Body:** `username`, `email`, `password`, `password_comfirmatio
 PUT | /users | **Headers:** `uid`, `access-token`, `client`<br> **Body:** *(all fields is optional)* `username`, `email`, `image_url`, `cover_url`, `address`, `password`, `password_comfirmation` | Update user.<br>For update password: must include `current_password` in Body.<br>Return `uid`, new `access-token`, same `client`.
 DELETE | /users | **Headers:** `uid`, `access-token`, `client` | Delete user
 
-- Restaurant Model
+#### Restaurant Model
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
@@ -88,7 +88,7 @@ POST | /restaurants | **Body:** `name`, `address`, `phone`, `description` | Crea
 PATCH | /restaurants/:id | **Body:** `name`, `address`, `phone`, `description` | Update
 DELETE | /restaurants/:id || Destroy
 
-- Rating Model
+#### Rating Model
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
@@ -97,7 +97,7 @@ POST | /ratings | **Body:** `restaurant_id`, `value`  | Create
 PATCH | /ratings/:rating_id | **Body:** `value` | Update
 DELETE | /ratings/:rating_id | | Destroy
 
-- Dish Model
+#### Dish Model
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
