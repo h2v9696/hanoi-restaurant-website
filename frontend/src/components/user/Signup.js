@@ -5,7 +5,7 @@ import API from 'constants/api'
 
 export default class Signup extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             userName: '',
             email: '',
