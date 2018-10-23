@@ -1,11 +1,16 @@
 import React from 'react'
 import './App.css'
+
+import 'assets/css/animate.css'
 import 'assets/css/bootstrap.min.css'
-import 'assets/css/mCSB_buttons.png'
-import 'assets/css/map.css'
-import 'assets/css/leaflet.css'
-import 'assets/css/skins/default.css'
-import 'assets/css/style.css'
+import 'assets/css/classy-nav.min.css'
+import 'assets/css/custom-icon.css'
+import 'assets/css/font-awesome.min.css'
+import 'assets/css/magnific-popup.css'
+import 'assets/css/nice-select.min.css'
+// import './css/owl.carousel.min.css'
+import 'assets/style.css'
+
 import {BrowserRouter as Router} from "react-router-dom"
 import SwitchRoute from "./Route"
 
@@ -16,10 +21,6 @@ export default class App extends React.Component {
             <React.Fragment>
                 <Router history={browserHistory}>
                     <div>
-                        {/*<Topbar/>*/}
-                        {/*<div className={styles.wrap}>*/}
-                        {/*nha hang ml*/}
-                        {/*</div>*/}
                         <SwitchRoute/>
                     </div>
                 </Router>

@@ -2,6 +2,14 @@ import React, { Component } from "react"
 import {
     Link,
 } from "react-router-dom";
+
+import './css/bootstrap.min.css'
+import './css/mCSB_buttons.png'
+import './css/map.css'
+import './css/leaflet.css'
+import './css/skins/default.css'
+import './css/style.css'
+
 export default class Signup extends Component {
     constructor(props) {
         super(props);
