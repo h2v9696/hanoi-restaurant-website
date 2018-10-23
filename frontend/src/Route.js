@@ -1,29 +1,32 @@
-import React, { Component } from 'react'
-import { Route, Switch } from 'react-router'
-
+import React, {Component} from 'react'
+import {Route, Switch} from 'react-router'
 // home
-import HomeIndex from "./pages/home/Index";
-import LogIn from "./pages/user/LogIn";
-import SignUp from "./pages/user/SignUp";
+import HomeIndex from './pages/home/Index'
+import LogIn from './pages/user/LogIn'
+import SignUp from './pages/user/SignUp'
+import Profile from './pages/user/Profile'
+import withAuth from 'components/AuthServices'
+import {withRouter} from "react-router"
 
 //restaurant
 import Show from "./pages/restaurant/Show";
 
-export default class Main extends Component {
+class Main extends Component {
     render() {
         return (
             <Switch>
                 {/*home*/}
-                <Route exact path="/" component={HomeIndex} />
-                <Route path="/home/:nameUser" component={HomeIndex} />
-                <Route path="/home" component={HomeIndex} />
+                <Route exact path="/" component={HomeIndex}/>
+                <Route exact path="/home" component={HomeIndex}/>
                 {/*user*/}
-                <Route path="/logIn/:error" component={LogIn} />
-                <Route path="/logIn" component={LogIn} />
-                <Route path="/signUp" component={SignUp} />
+                <Route exact path="/logIn" component={LogIn}/>
+                <Route exact path="/signUp" component={SignUp}/>
+                <Route exact path='/profile' component={Profile}/>
                 {/*restaurant*/}
-                <Route path="/restaurant/:id" component={Show} />
+                <Route path="/restaurant/:id" component={Show}/>
             </Switch>
         )
     }
 }
+
+export default withRouter(withAuth(Main))

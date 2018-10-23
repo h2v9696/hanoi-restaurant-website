@@ -9,6 +9,8 @@ import StarRatings from 'react-star-ratings';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 export default class RestaurantDetail extends Component {
     constructor(props) {
@@ -104,7 +106,7 @@ export default class RestaurantDetail extends Component {
                                 <div className="row">
                                     <div className="col-12 col-md-8">
                                         <div className="receipe-headline my-5">
-                                            <span>{restaurantDetail.updated_at}</span>
+                                            <span><Moment>{restaurantDetail.updated_at}</Moment></span>
                                             <h2>{restaurantDetail.name}</h2>
                                             <div className="receipe-duration">
                                                 <h6 style={{fontStyle: "italic"}}>

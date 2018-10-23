@@ -8,14 +8,13 @@ import 'assets/css/custom-icon.css'
 import 'assets/css/font-awesome.min.css'
 import 'assets/css/magnific-popup.css'
 import 'assets/css/nice-select.min.css'
-// import './css/owl.carousel.min.css'
 import 'assets/style.css'
 
 import {BrowserRouter as Router} from "react-router-dom"
 import SwitchRoute from "./Route"
 
 var browserHistory = require("react-router").browserHistory;
-export default class App extends React.Component {
+class App extends React.Component {
     render() {
         return (
             <React.Fragment>
@@ -27,5 +26,6 @@ export default class App extends React.Component {
             </React.Fragment>
         )
     }
-
 }
+
+export default App
