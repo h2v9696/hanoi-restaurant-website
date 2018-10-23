@@ -1,25 +1,25 @@
 import React, {Component} from "react"
-import Homepage from "../../components/home/Homepage";
 import axios from "axios";
 import Footer from "../../components/layout/Footer";
+import RestaurantDetail from "../../components/restaurant/RestaurantDetail";
 import Header from "../../components/layout/Header";
 
-export default class index extends Component{
+export default class show extends Component{
     constructor(props) {
         super(props);
         this.state = {
             restaurant: 0
-        }
+        };
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:3000/api/restaurants`)
+        axios.get('http://localhost:3000/api/restaurants/' + this.props.match.params.id)
             .then(
                 response => {
                     this.setState({restaurant: response.data.data});
                 })
             .catch(
-                error=>console.log("Restaurants's error!")
+                error=>console.log("RestaurantDetail: error!")
             )
     }
 
@@ -27,7 +27,7 @@ export default class index extends Component{
         return (
             <React.Fragment>
                 <Header/>
-                <Homepage {...this.props} restaurantInfo = {this.state.restaurant}/>
+                <RestaurantDetail {...this.props} restaurantDetail={this.state.restaurant}/>
                 <Footer/>
             </React.Fragment>
         );
