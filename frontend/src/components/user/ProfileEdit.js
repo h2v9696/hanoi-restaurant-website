@@ -32,22 +32,22 @@ export default class Signup extends Component {
   }
 
   signUp() {
-      return new Promise((resolve, reject) => {
-        fetch(API + '/api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            'username': this.state.userName,
-            'email': this.state.email,
-            'password': this.state.password,
-            'password_confirmation': this.state.rePassword
-          })
+    return new Promise((resolve, reject) => {
+      fetch(API + '/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'username': this.state.userName,
+          'email': this.state.email,
+          'password': this.state.password,
+          'password_confirmation': this.state.rePassword
         })
-          .then(res => resolve(res.json()))
-          .catch(error => reject(error))
       })
+        .then(res => resolve(res.json()))
+        .catch(error => reject(error))
+    })
   }
   handleSubmit(e) {
     //TODO validate sign up form

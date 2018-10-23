@@ -19,6 +19,7 @@ class Main extends Component {
         <Route exact path="/logIn" component={LogIn}/>
         <Route exact path="/signUp" component={SignUp}/>
         <Route exact path='/profile' component={Profile}/>
+        <Route exact path='/profile/edit' component={ProfileEdit}/>
       </Switch>
     )
   }

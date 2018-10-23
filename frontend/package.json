@@ -13,6 +13,7 @@
     "babel-plugin-named-asset-import": "^0.2.2",
     "babel-preset-react-app": "^5.0.3",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
+    "classnames": "^2.2.6",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
@@ -52,7 +53,6 @@
   "scripts": {
     "start": "node scripts/start.js"
   },
-  "proxy": "http://localhost:3000",
   "browserslist": [
     ">0.2%",
     "not dead",
