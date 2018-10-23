@@ -1,0 +1,67 @@
+a:hover {
+    font-size: 15px !important;
+}
+
+.tab {
+    background-color: #f3f5f8;
+    color: #9b9b9b;
+    border: none;
+    border-left: 3px solid #40ba37;
+    padding: 0 15px;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 15px;
+    border-radius: 0;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    width: 562px;
+}
+
+.tab:active {
+    background-color: #40ba37;
+    color: #ffffff;
+    border-left: 3px solid #1c8314;
+}
+
+.react-tabs__tab--selected {
+    background-color: #40ba37;
+    color: #ffffff;
+    border-left: 3px solid #1c8314;
+    text-align: justify-all;
+}
+
+.btn-myself {
+    background-color: #40ba37;
+    color: #ffffff !important;
+    height: 50px !important;
+    width: 150px !important;
+    text-align: center !important;
+    padding-top: 13px !important;
+    font-size: 16px !important;
+}
+
+.btn-myself:hover {
+    background-color: #1c8314;
+    color: #ffffff !important;
+    height: 50px !important;
+    width: 150px !important;
+    padding-top: 13px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+.avatar {
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    height: 55px;
+    width: 55px;
+    display: block;
+    float: right;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal !important;
+}
