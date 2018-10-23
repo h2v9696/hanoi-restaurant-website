@@ -5,6 +5,7 @@ class Api::DishesController < ApplicationController
       render json: {status: :success,  data: Dish.where(restaurant_id: params[:restaurant_id])}
     else
       render json: {status: :error, errors: "Params restaurant_id not found"}
+    end
   end
 
   def show

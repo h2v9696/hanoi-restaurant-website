@@ -1,15 +1,15 @@
 class Api::RatingsController < ApplicationController
 
   def index
-    if (params.[:restaurant_id].present? && params.[:user_id].present?)
+    if (params.(:restaurant_id).present? && params.(:user_id).present?)
       render json: {status: :success, data: Rating.where({
-        restaurant_id: params[:restaurant_id],
-        user_id: params[:user_id]
+        restaurant_id: params(:restaurant_id),
+        user_id: params(:user_id)
       })}
-    elsif (params.[:restaurant_id].present?)
-      render json: {status: :success, data: Rating.where(restaurant_id: params[:restaurant_id])}
-    elsif (params.[:user_id].present?)
-      render json: {status: :success, data: Rating.where(user_id: params[:user_id])}
+    elsif (params.(:restaurant_id).present?)
+      render json: {status: :success, data: Rating.where(restaurant_id: params(:restaurant_id))}
+    elsif (params.(:user_id).present?)
+      render json: {status: :success, data: Rating.where(user_id: params(:user_id))}
     else
       render json: {status: :error, data: "Params user_id and/or restaurant_id not found"}
     end
@@ -34,7 +34,7 @@ class Api::RatingsController < ApplicationController
   end
 
   def destroy
-    if Rating.find(params[:id]).destroy
+    if Rating.find(params(:id)).destroy
       render json: {status: :success}
     else
       render json: {status: :error}
