@@ -19,7 +19,7 @@ export default class AuthServices {
   }
 
   logout () {
-    localStorage.removeItem('id_user')
+    sessionStorage.removeItem('id_user')
   }
 
   loggedIn () {
@@ -30,12 +30,12 @@ export default class AuthServices {
 
   setToken (idToken) {
     // Saves user token to localStorage
-    localStorage.setItem('id_user', idToken)
+    sessionStorage.setItem('id_user', idToken)
   }
 
   getToken () {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_user')
+    return sessionStorage.getItem('id_user')
   }
 
   fetch (url, options) {

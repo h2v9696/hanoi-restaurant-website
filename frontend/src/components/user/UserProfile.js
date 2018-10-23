@@ -1,5 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import ProfileEdit from './ProfileEdit'
+import Modal from 'react-responsive-modal'
 import { AuthService } from 'components/AuthServices'
 import API from 'constants/api'
 import './UserProfile.css'
@@ -11,8 +12,16 @@ export default class UserProfile extends React.Component {
     this.state = {
       loading: true,
       userData: null,
+      modalEditOpen: false
     }
   }
+  onOpenModal = () => {
+    this.setState({ modalEditOpen: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ modalEditOpen: false });
+  };
 
   componentWillMount () {
     if (!this.Auth.loggedIn()) {
@@ -40,12 +49,10 @@ export default class UserProfile extends React.Component {
             </div>
             <div className="profile-user-settings">
               <h1 className="profile-user-name">{data.email}</h1>
-              <Link to = '' className="btn profile-edit-btn">Edit Profile</Link>
-              <button
-                className="btn profile-settings-btn"
-                aria-label="profile settings">
-                <i className="fas fa-cog" aria-hidden="true"/>
-              </button>
+              <button className="btn profile-edit-btn" onClick={this.onOpenModal}>Edit Profile</button>
+              <Modal open={this.state.modalEditOpen} onClose={this.onCloseModal}>
+                <ProfileEdit data = {data}/>
+              </Modal>
             </div>
             <div className="profile-bio">
               <p>

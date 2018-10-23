@@ -1,16 +1,24 @@
 import React, { Component } from 'react'
 import { AuthService } from 'components/AuthServices'
-
+import classNames from 'classnames'
 // api
 import API from 'constants/api'
-export default class Signup extends Component {
+//css
+import './ProfileEdit.css'
+
+export default class ProfileEdit extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      userName: '',
-      email: '',
+      userName: this.props.data.username,
+      location: this.props.data.address,
       password: '',
-      rePassword: ''
+      rePassword: '',
+      oldPassword: '',
+      validate: {
+        valid: true,
+        errors: []
+      }
     }
     this.Auth = new AuthService()
   }
@@ -19,97 +27,113 @@ export default class Signup extends Component {
     this.setState({userName: value})
   }
 
-  onEmailInputChange (value) {
-    this.setState({email: value})
+  onLocationInputChange (value) {
+    this.setState({location: value})
   }
 
   onPasswordChange (value) {
-    this.setState({password: value})
+    this.setState({password: value, validate: this.validate()})
   }
 
   onRePasswordChange (value) {
-    this.setState({rePassword: value})
+    this.setState({rePassword: value,validate: this.validate()})
   }
 
-  signUp() {
+  onOldPasswordChange (value) {
+    this.setState({oldPassword: value,validate: this.validate() })
+  }
+
+  validate () {
+    let valid = true
+    let errors = []
+    if (this.state.password !== this.state.rePassword) {
+      valid = false
+      errors.push('password not match!!!')
+    }
+    if (this.state.password.length > 0 && this.state.password < 6) {
+      valid = false
+      errors.push('password minimum 6 characters')
+    }
+    if (this.state.password.length > 0 && this.state.oldPassword.length === 0) {
+      valid = false
+      errors.push('old password requires for change new password')
+    }
+    return {
+      valid,
+      errors
+    }
+  }
+
+  editInfo () {
     return new Promise((resolve, reject) => {
       fetch(API + '/api/users', {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
+        body: this.state.password.length > 0 ? JSON.stringify({
+          'uid': this.props.data.id,
+          'address': this.state.location,
           'username': this.state.userName,
-          'email': this.state.email,
           'password': this.state.password,
           'password_confirmation': this.state.rePassword
+        }) : JSON.stringify({
+          'uid': this.props.data.id,
+          'address': this.state.location,
+          'username': this.state.userName
         })
       })
         .then(res => resolve(res.json()))
         .catch(error => reject(error))
     })
   }
-  handleSubmit(e) {
+
+  handleSubmit (e) {
     //TODO validate sign up form
     e.preventDefault()
-    this.signUp().then(this.props.history.push('/login')).catch(error => console.log(error))
+    this.editInfo().catch(error => console.log(error))
   }
-  componentWillMount() {
-    this.Auth.loggedIn() && this.props.history.push('/profile')
+
+  componentWillMount () {
+    !this.Auth.loggedIn() && this.props.history.push('/login')
   }
 
   render () {
     return (
-      <div className="register-page">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-4 col-md-4 cnt-bg-photo d-none d-xl-block d-lg-block d-md-block"
-                 style={{backgroundImage: 'url(/img/side-img.jpg)'}}>
-              <div className="register-info">
-                <h3 style={{}}>Restaurants</h3>
-                <p style={{color: 'black'}}>Sign up now to review more restaurant and follow your favourite
-                  restaurants!</p>
-              </div>
-            </div>
-            <div className="col-lg-8 col-md-8 col-sm-12 align-self-center">
-              <div className="content-form-box register-box">
-                <div className="login-header"><h4>Create Your account</h4></div>
-                <form onSubmit={e => this.handleSubmit(e)}>
-                  <div className="form-group">
-                    <label>Nickname</label>
-                    <input type="text" className="form-control" name="Nickname" placeholder="Nickname"
-                           value={this.state.userName} onChange={e => this.onNameInputChange(e.target.value)}/>
-                  </div>
-                  <div className="form-group">
-                    <label>Email Address</label>
-                    <input type="email" className="form-control" name="email"
-                           placeholder="Email Address"
-                           value={this.state.email} onChange={e => this.onEmailInputChange(e.target.value)}/>
-                  </div>
-                  <div className="form-group">
-                    <label>Password</label>
-                    <input type="Password" className="form-control" name="password"
-                           placeholder="Password"
-                           value={this.state.password} onChange={e => this.onPasswordChange(e.target.value)}/>
-                  </div>
-                  <div className="form-group">
-                    <label>Re-type Password</label>
-                    <input type="Password" className="form-control" name="password"
-                           placeholder="Confirm Password"
-                           value={this.state.rePassword} onChange={e => this.onRePasswordChange(e.target.value)}/>
-                  </div>
-                  <div className="form-group">
-                    <button type="submit" className="btn btn-color btn-md btn-block">Create New
-                      Account
-                    </button>
-                  </div>
-                  <div className="login-footer text-center">
-                    <p>Already have an account?<a href="/logIn"> Sign In</a></p>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+      <div className="wrapper">
+        <div className="form-header">
+          Edit Profile
+        </div>
+        <div className="form-grp">
+          <label>Full name</label>
+          <input type="text" value={this.state.userName} onChange={e => this.onNameInputChange(e.target.value)}/>
+        </div>
+        <div className="form-grp">
+          <label>Location</label>
+          <input type="text" value={this.state.location} onChange={e => this.onLocationInputChange(e.target.value)}/>
+        </div>
+        <div className="form-grp">
+          <label>Password</label>
+          <input type="password" value={this.state.password} onChange={e => this.onPasswordChange(e.target.value)}/>
+        </div>
+        <div className="form-grp">
+          <label>Password confirmation</label>
+          <input type="password" value={this.state.rePassword} onChange={e => this.onRePasswordChange(e.target.value)}/>
+        </div>
+        <div className="form-grp">
+          <label>Old Password</label>
+          <input type="password" value={this.state.oldPassword}
+                 onChange={e => this.onOldPasswordChange(e.target.value)}/>
+        </div>
+        <div className="errors">
+          {this.state.validate.errors.map(e => <p style={{color: 'red'}}>{e}</p>)}
+        </div>
+        <div className="form-grp">
+          <input type="submit" onClick={e => this.handleSubmit(e)} defaultValue="Update profile"/>
+        </div>
+        <div className="form-grp">
+          <label>Change Avatar</label>
+          <input type="file"/>
         </div>
       </div>
     )
