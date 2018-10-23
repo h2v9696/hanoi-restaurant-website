@@ -27,18 +27,18 @@ export default class Homepage extends Component {
                     <div className="top-header-area">
                         <div className="container h-100">
                             <div className="row h-100 align-items-center justify-content-between">
-                                {/* Breaking News */}
-                                <div className="col-12 col-sm-6">
-                                    <div className="breaking-news">
-                                        <div id="breakingNewsTicker" className="ticker">
-                                            <ul>
-                                                <li><a href="#">Hello World!</a></li>
-                                                <li><a href="#">Welcome to Colorlib Family.</a></li>
-                                                <li><a href="#">Hello Delicious!</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                {/*/!* Breaking News *!/*/}
+                                {/*<div className="col-12 col-sm-6">*/}
+                                    {/*<div className="breaking-news">*/}
+                                        {/*<div id="breakingNewsTicker" className="ticker">*/}
+                                            {/*<ul>*/}
+                                                {/*<li><a href="#">Hello World!</a></li>*/}
+                                                {/*<li><a href="#">Welcome to Colorlib Family.</a></li>*/}
+                                                {/*<li><a href="#">Hello Delicious!</a></li>*/}
+                                            {/*</ul>*/}
+                                        {/*</div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
                                 {/* Top Social Info */}
                                 <div className="col-12 col-sm-6">
                                     <div className="top-social-info text-right">
@@ -61,7 +61,7 @@ export default class Homepage extends Component {
                                 <nav className="classy-navbar justify-content-between" id="deliciousNav">
                                     {/* Logo */}
                                     <a className="nav-brand" href="index.html"><img src="/img/core-img/logo.png"
-                                                                                    alt/></a>
+                                                                                    alt="true"/></a>
                                     {/* Navbar Toggler */}
                                     <div className="classy-navbar-toggler">
                                         <span className="navbarToggler"><span/><span/><span/></span>
@@ -139,8 +139,8 @@ export default class Homepage extends Component {
                                                         </ul>
                                                         {/*<div className="single-mega cn-col-4">*/}
                                                             {/*<div className="receipe-slider owl-carousel">*/}
-                                                                {/*<a href="#"><img src="/img/bg-img/bg1.jpg" alt/></a>*/}
-                                                                {/*<a href="#"><img src="/img/bg-img/bg6.jpg" alt/></a>*/}
+                                                                {/*<a href="#"><img src="/img/bg-img/bg1.jpg" alt="true"/></a>*/}
+                                                                {/*<a href="#"><img src="/img/bg-img/bg6.jpg" alt="true"/></a>*/}
                                                             {/*</div>*/}
                                                         {/*</div>*/}
                                                     </div>
@@ -171,70 +171,70 @@ export default class Homepage extends Component {
                 </header>
                 {/* ##### Header Area End ##### */}
                 {/* ##### Hero Area Start ##### */}
-                <section className="hero-area">
-                    <div className="hero-slides">
-                        {/* Single Hero Slide */}
-                        <div className="single-hero-slide bg-img" style={{backgroundImage: 'url(/img/bg-img/bg1.jpg)'}}>
-                            <div className="container h-100">
-                                <div className="row h-100 align-items-center">
-                                    <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-                                        <div className="hero-slides-content" data-animation="fadeInUp"
-                                             data-delay="100ms">
-                                            <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade
-                                                Burger</h2>
-                                            <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit. Cras tristique nisl vitae luctus
-                                                sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu
-                                                varius.</p>
-                                            <a href="#" className="btn delicious-btn" data-animation="fadeInUp"
-                                               data-delay="1000ms">See Receipe</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Single Hero Slide */}
-                        <div className="single-hero-slide bg-img" style={{backgroundImage: 'url(/img/bg-img/bg6.jpg)'}}>
-                            <div className="container h-100">
-                                <div className="row h-100 align-items-center">
-                                    <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-                                        <div className="hero-slides-content" data-animation="fadeInUp"
-                                             data-delay="100ms">
-                                            <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade
-                                                Burger</h2>
-                                            <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit. Cras tristique nisl vitae luctus
-                                                sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu
-                                                varius.</p>
-                                            <a href="#" className="btn delicious-btn" data-animation="fadeInUp"
-                                               data-delay="1000ms">See Receipe</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Single Hero Slide */}
-                        <div className="single-hero-slide bg-img" style={{backgroundImage: 'url(/img/bg-img/bg7.jpg)'}}>
-                            <div className="container h-100">
-                                <div className="row h-100 align-items-center">
-                                    <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-                                        <div className="hero-slides-content" data-animation="fadeInUp"
-                                             data-delay="100ms">
-                                            <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade
-                                                Burger</h2>
-                                            <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet,
-                                                consectetur adipiscing elit. Cras tristique nisl vitae luctus
-                                                sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu
-                                                varius.</p>
-                                            <a href="#" className="btn delicious-btn" data-animation="fadeInUp"
-                                               data-delay="1000ms">See Receipe</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {/*<section className="hero-area">*/}
+                    {/*<div className="hero-slides">*/}
+                        {/*/!* Single Hero Slide *!/*/}
+                        {/*<div className="single-hero-slide bg-img" style={{backgroundImage: 'url(/img/bg-img/bg1.jpg)'}}>*/}
+                            {/*<div className="container h-100">*/}
+                                {/*<div className="row h-100 align-items-center">*/}
+                                    {/*<div className="col-12 col-md-9 col-lg-7 col-xl-6">*/}
+                                        {/*<div className="hero-slides-content" data-animation="fadeInUp"*/}
+                                             {/*data-delay="100ms">*/}
+                                            {/*<h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade*/}
+                                                {/*Burger</h2>*/}
+                                            {/*<p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet,*/}
+                                                {/*consectetur adipiscing elit. Cras tristique nisl vitae luctus*/}
+                                                {/*sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu*/}
+                                                {/*varius.</p>*/}
+                                            {/*<a href="#" className="btn delicious-btn" data-animation="fadeInUp"*/}
+                                               {/*data-delay="1000ms">See Receipe</a>*/}
+                                        {/*</div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                        {/*/!* Single Hero Slide *!/*/}
+                        {/*<div className="single-hero-slide bg-img" style={{backgroundImage: 'url(/img/bg-img/bg6.jpg)'}}>*/}
+                            {/*<div className="container h-100">*/}
+                                {/*<div className="row h-100 align-items-center">*/}
+                                    {/*<div className="col-12 col-md-9 col-lg-7 col-xl-6">*/}
+                                        {/*<div className="hero-slides-content" data-animation="fadeInUp"*/}
+                                             {/*data-delay="100ms">*/}
+                                            {/*<h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade*/}
+                                                {/*Burger</h2>*/}
+                                            {/*<p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet,*/}
+                                                {/*consectetur adipiscing elit. Cras tristique nisl vitae luctus*/}
+                                                {/*sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu*/}
+                                                {/*varius.</p>*/}
+                                            {/*<a href="#" className="btn delicious-btn" data-animation="fadeInUp"*/}
+                                               {/*data-delay="1000ms">See Receipe</a>*/}
+                                        {/*</div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                        {/*/!* Single Hero Slide *!/*/}
+                        {/*<div className="single-hero-slide bg-img" style={{backgroundImage: 'url(/img/bg-img/bg7.jpg)'}}>*/}
+                            {/*<div className="container h-100">*/}
+                                {/*<div className="row h-100 align-items-center">*/}
+                                    {/*<div className="col-12 col-md-9 col-lg-7 col-xl-6">*/}
+                                        {/*<div className="hero-slides-content" data-animation="fadeInUp"*/}
+                                             {/*data-delay="100ms">*/}
+                                            {/*<h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade*/}
+                                                {/*Burger</h2>*/}
+                                            {/*<p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet,*/}
+                                                {/*consectetur adipiscing elit. Cras tristique nisl vitae luctus*/}
+                                                {/*sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu*/}
+                                                {/*varius.</p>*/}
+                                            {/*<a href="#" className="btn delicious-btn" data-animation="fadeInUp"*/}
+                                               {/*data-delay="1000ms">See Receipe</a>*/}
+                                        {/*</div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</section>*/}
                 {/* ##### Hero Area End ##### */}
                 {/* ##### Top Catagory Area Start ##### */}
                 <section className="top-catagory-area section-padding-80-0">
@@ -243,7 +243,7 @@ export default class Homepage extends Component {
                             {/* Top Catagory Area */}
                             <div className="col-12 col-lg-6">
                                 <div className="single-top-catagory">
-                                    <img src="/img/bg-img/bg2.jpg" alt/>
+                                    <img src="/img/bg-img/bg2.jpg" alt="true"/>
                                     {/* Content */}
                                     <div className="top-cta-content">
                                         <h3>Strawberry Cake</h3>
@@ -255,7 +255,7 @@ export default class Homepage extends Component {
                             {/* Top Catagory Area */}
                             <div className="col-12 col-lg-6">
                                 <div className="single-top-catagory">
-                                    <img src="/img/bg-img/bg3.jpg" alt/>
+                                    <img src="/img/bg-img/bg3.jpg" alt="true"/>
                                     {/* Content */}
                                     <div className="top-cta-content">
                                         <h3>Chinesse Noodles</h3>
@@ -282,7 +282,7 @@ export default class Homepage extends Component {
                             {/* Single Best Receipe Area */}
                             <div className="col-12 col-sm-6 col-lg-4">
                                 <div className="single-best-receipe-area mb-30">
-                                    <img src="/img/bg-img/r1.jpg" alt/>
+                                    <img src="/img/bg-img/r1.jpg" alt="true"/>
                                     <div className="receipe-content">
                                         <a href="receipe-post.html">
                                             <h5>Sushi Easy Receipy</h5>
@@ -300,7 +300,7 @@ export default class Homepage extends Component {
                             {/* Single Best Receipe Area */}
                             <div className="col-12 col-sm-6 col-lg-4">
                                 <div className="single-best-receipe-area mb-30">
-                                    <img src="/img/bg-img/r2.jpg" alt/>
+                                    <img src="/img/bg-img/r2.jpg" alt="true"/>
                                     <div className="receipe-content">
                                         <a href="receipe-post.html">
                                             <h5>Homemade Burger</h5>
@@ -318,7 +318,7 @@ export default class Homepage extends Component {
                             {/* Single Best Receipe Area */}
                             <div className="col-12 col-sm-6 col-lg-4">
                                 <div className="single-best-receipe-area mb-30">
-                                    <img src="/img/bg-img/r3.jpg" alt/>
+                                    <img src="/img/bg-img/r3.jpg" alt="true"/>
                                     <div className="receipe-content">
                                         <a href="receipe-post.html">
                                             <h5>Vegan Smoothie</h5>
@@ -336,7 +336,7 @@ export default class Homepage extends Component {
                             {/* Single Best Receipe Area */}
                             <div className="col-12 col-sm-6 col-lg-4">
                                 <div className="single-best-receipe-area mb-30">
-                                    <img src="/img/bg-img/r4.jpg" alt/>
+                                    <img src="/img/bg-img/r4.jpg" alt="true"/>
                                     <div className="receipe-content">
                                         <a href="receipe-post.html">
                                             <h5>Calabasa soup</h5>
@@ -354,7 +354,7 @@ export default class Homepage extends Component {
                             {/* Single Best Receipe Area */}
                             <div className="col-12 col-sm-6 col-lg-4">
                                 <div className="single-best-receipe-area mb-30">
-                                    <img src="/img/bg-img/r5.jpg" alt/>
+                                    <img src="/img/bg-img/r5.jpg" alt="true"/>
                                     <div className="receipe-content">
                                         <a href="receipe-post.html">
                                             <h5>Homemade Breakfast</h5>
@@ -372,10 +372,10 @@ export default class Homepage extends Component {
                             {/* Single Best Receipe Area */}
                             <div className="col-12 col-sm-6 col-lg-4">
                                 <div className="single-best-receipe-area mb-30">
-                                    <img src="/img/bg-img/r6.jpg" alt/>
+                                    <img src="/img/bg-img/r6.jpg" alt="true"/>
                                     <div className="receipe-content">
                                         <a href="receipe-post.html">
-                                            <h5>Healthy Fruit Desert</h5>
+                                            <h5>Healt="true"hy Fruit Desert</h5>
                                         </a>
                                         <div className="ratings">
                                             <i className="fa fa-star" aria-hidden="true"/>
@@ -419,7 +419,7 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr1.jpg" alt/>
+                                        <img src="/img/bg-img/sr1.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
@@ -443,7 +443,7 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr2.jpg" alt/>
+                                        <img src="/img/bg-img/sr2.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
@@ -467,13 +467,13 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr3.jpg" alt/>
+                                        <img src="/img/bg-img/sr3.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
                                         <span>January 04, 2018</span>
                                         <a href="receipe-post.html">
-                                            <h5>Scalops on salt</h5>
+                                            <h5>Scalops on salt="true"</h5>
                                         </a>
                                         <div className="ratings">
                                             <i className="fa fa-star" aria-hidden="true"/>
@@ -491,7 +491,7 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr4.jpg" alt/>
+                                        <img src="/img/bg-img/sr4.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
@@ -515,7 +515,7 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr5.jpg" alt/>
+                                        <img src="/img/bg-img/sr5.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
@@ -539,7 +539,7 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr6.jpg" alt/>
+                                        <img src="/img/bg-img/sr6.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
@@ -563,7 +563,7 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr7.jpg" alt/>
+                                        <img src="/img/bg-img/sr7.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
@@ -587,7 +587,7 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr8.jpg" alt/>
+                                        <img src="/img/bg-img/sr8.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
@@ -611,7 +611,7 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr9.jpg" alt/>
+                                        <img src="/img/bg-img/sr9.jpg" alt="true"/>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
@@ -671,7 +671,7 @@ export default class Homepage extends Component {
                             {/* Adds */}
                             <div className="col-12 col-lg-4">
                                 <div className="delicious-add">
-                                    <img src="/img/bg-img/add.png" alt/>
+                                    <img src="/img/bg-img/add.png" alt="true"/>
                                 </div>
                             </div>
                         </div>
@@ -691,7 +691,7 @@ export default class Homepage extends Component {
                     <div className="insta-feeds d-flex flex-wrap">
                         {/* Single Insta Feeds */}
                         <div className="single-insta-feeds">
-                            <img src="/img/bg-img/insta1.jpg" alt/>
+                            <img src="/img/bg-img/insta1.jpg" alt="true"/>
                             {/* Icon */}
                             <div className="insta-icon">
                                 <a href="#"><i className="fa fa-instagram" aria-hidden="true"/></a>
@@ -699,7 +699,7 @@ export default class Homepage extends Component {
                         </div>
                         {/* Single Insta Feeds */}
                         <div className="single-insta-feeds">
-                            <img src="/img/bg-img/insta2.jpg" alt/>
+                            <img src="/img/bg-img/insta2.jpg" alt="true"/>
                             {/* Icon */}
                             <div className="insta-icon">
                                 <a href="#"><i className="fa fa-instagram" aria-hidden="true"/></a>
@@ -707,7 +707,7 @@ export default class Homepage extends Component {
                         </div>
                         {/* Single Insta Feeds */}
                         <div className="single-insta-feeds">
-                            <img src="/img/bg-img/insta3.jpg" alt/>
+                            <img src="/img/bg-img/insta3.jpg" alt="true"/>
                             {/* Icon */}
                             <div className="insta-icon">
                                 <a href="#"><i className="fa fa-instagram" aria-hidden="true"/></a>
@@ -715,7 +715,7 @@ export default class Homepage extends Component {
                         </div>
                         {/* Single Insta Feeds */}
                         <div className="single-insta-feeds">
-                            <img src="/img/bg-img/insta4.jpg" alt/>
+                            <img src="/img/bg-img/insta4.jpg" alt="true"/>
                             {/* Icon */}
                             <div className="insta-icon">
                                 <a href="#"><i className="fa fa-instagram" aria-hidden="true"/></a>
@@ -723,7 +723,7 @@ export default class Homepage extends Component {
                         </div>
                         {/* Single Insta Feeds */}
                         <div className="single-insta-feeds">
-                            <img src="/img/bg-img/insta5.jpg" alt/>
+                            <img src="/img/bg-img/insta5.jpg" alt="true"/>
                             {/* Icon */}
                             <div className="insta-icon">
                                 <a href="#"><i className="fa fa-instagram" aria-hidden="true"/></a>
@@ -731,7 +731,7 @@ export default class Homepage extends Component {
                         </div>
                         {/* Single Insta Feeds */}
                         <div className="single-insta-feeds">
-                            <img src="/img/bg-img/insta6.jpg" alt/>
+                            <img src="/img/bg-img/insta6.jpg" alt="true"/>
                             {/* Icon */}
                             <div className="insta-icon">
                                 <a href="#"><i className="fa fa-instagram" aria-hidden="true"/></a>
@@ -739,7 +739,7 @@ export default class Homepage extends Component {
                         </div>
                         {/* Single Insta Feeds */}
                         <div className="single-insta-feeds">
-                            <img src="/img/bg-img/insta7.jpg" alt/>
+                            <img src="/img/bg-img/insta7.jpg" alt="true"/>
                             {/* Icon */}
                             <div className="insta-icon">
                                 <a href="#"><i className="fa fa-instagram" aria-hidden="true"/></a>
@@ -764,7 +764,7 @@ export default class Homepage extends Component {
                                 </div>
                                 {/* Footer Logo */}
                                 <div className="footer-logo">
-                                    <a href="index.html"><img src="/img/core-img/logo.png" alt/></a>
+                                    <a href="index.html"><img src="/img/core-img/logo.png" alt="true"/></a>
                                 </div>
                                 {/* Copywrite */}
                                 <p>{/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
