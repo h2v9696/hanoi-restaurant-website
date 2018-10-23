@@ -47,9 +47,7 @@ MYSQL_DATABASE_DEV: # name of database your want to create
 ```
 Create database and table, then populate database with fake data (if database already exists, drop it: `rails db:drop`)
 ```
-rails db:create
-rails db:migrate
-rails db:seed
+rails db:setup
 ```
 Test server 
 ```
@@ -88,15 +86,6 @@ POST | /restaurants | **Body:** `name`, `address`, `phone`, `description` | Crea
 PATCH | /restaurants/:id | **Body:** `name`, `address`, `phone`, `description` | Update
 DELETE | /restaurants/:id || Destroy
 
-#### Rating Model
-
-Request | Uri | Required Fields | Details
---- | --- | --- | --- 
-GET | /ratings | **Params:** `restaurant_id` | Index
-POST | /ratings | **Body:** `restaurant_id`, `value`  | Create
-PATCH | /ratings/:rating_id | **Body:** `value` | Update
-DELETE | /ratings/:rating_id | | Destroy
-
 #### Dish Model
 
 Request | Uri | Required Fields | Details
@@ -106,3 +95,38 @@ GET | /dishes/:dish_id | | Show
 POST | /dishes | **Body:** `restaurant_id`, `name`, `price`, `image_url` | Create
 PATCH | /dishes/:dish_id | **Body:** `restaurant_id`, `name`, `price`, `image_url` | Update
 DELETE | /dishes/:dish_id | | Destroy
+
+#### Rating Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /ratings | **Params:** `restaurant_id` or `user_id` or both | Index
+POST | /ratings | **Body:** `restaurant_id`, `user_id`, `value`  | Create
+PATCH | /ratings/:rating_id | **Body:** `value` | Update
+DELETE | /ratings/:rating_id | | Destroy
+
+#### Comment Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /comments | **Params:** `restaurant_id` or `user_id` or both | Index
+GET | /comments/:comment_id | | Show
+POST | /comments | **Body:** `restaurant_id`, `user_id`, `content` | Create
+PATCH | /comments/:comment_id | **Body:** `content` | Update
+DELETE | /comments/:comment_id | | Destroy
+
+#### Subcription Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /subscriptions | **Params:** `restaurant_id` or `user_id` or both | Index
+POST | /subscriptions | **Body:** `restaurant_id`, `user_id` | Create
+DELETE | /subscriptions/:subscription_id | | Destroy
+
+#### Like Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /likes | **Params:** `user_id` or (`object_type` & `object_id`) or both | Index
+POST | /likes | **Body:** `user_id`, `object_type`, `object_id` | Create
+DELETE | /likes/:like_id | | Destroy

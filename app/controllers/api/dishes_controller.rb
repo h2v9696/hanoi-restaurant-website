@@ -1,7 +1,10 @@
 class Api::DishesController < ApplicationController
 
   def index
-    render json: { status: :success,  data: Dish.where(restaurant_id: params[:restaurant_id])}
+    if params[:restaurant_id].present?
+      render json: {status: :success,  data: Dish.where(restaurant_id: params[:restaurant_id])}
+    else
+      render json: {status: :error, errors: "Params restaurant_id not found"}
   end
 
   def show
