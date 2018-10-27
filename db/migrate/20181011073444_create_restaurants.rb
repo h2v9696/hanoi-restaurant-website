@@ -1,5 +1,5 @@
 class CreateRestaurants < ActiveRecord::Migration[5.2]
-  def up
+  def change
     create_table :restaurants do |t|
       t.string :name
       t.string :address
@@ -8,9 +8,5 @@ class CreateRestaurants < ActiveRecord::Migration[5.2]
       t.text :description
       t.timestamps
     end
-  end
-
-  def down
-  	drop_table :restaurant
   end
 end

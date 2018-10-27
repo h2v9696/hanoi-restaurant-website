@@ -13,7 +13,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 gem 'figaro'
 gem 'faker', github: 'stympy/faker'
-gem 'devise_token_auth'
 
 group :development, :test do
   gem 'rspec-rails'

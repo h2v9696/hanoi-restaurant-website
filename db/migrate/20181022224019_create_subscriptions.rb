@@ -1,5 +1,5 @@
 class CreateSubscriptions < ActiveRecord::Migration[5.2]
-  def up
+  def change
     create_table :subscriptions do |t|
       t.integer :user_id
       t.integer :restaurant_id
@@ -8,9 +8,4 @@ class CreateSubscriptions < ActiveRecord::Migration[5.2]
 
     add_index :subscriptions, [:user_id, :restaurant_id], unique: true
   end
-
-  def down
-    drop_table :subscriptions
-  end
-  
 end

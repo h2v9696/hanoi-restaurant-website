@@ -24,7 +24,7 @@ class Api::CommentsController < ApplicationController
     if @comment.save
       render json: {status: :success, data: @comment}
     else
-      render json: {status: :error, errors: @comment.errors}
+      render json: {status: :error, errors: @comment.errors.full_messages}
     end
   end
   
@@ -33,7 +33,7 @@ class Api::CommentsController < ApplicationController
     if @comment.update_attributes(comment_params)
       render json: {status: :success, data: @comment}
     else
-      render json: {status: :error, errors: @comment.errors}
+      render json: {status: :error, errors: @comment.errors.full_messages}
     end
   end
   

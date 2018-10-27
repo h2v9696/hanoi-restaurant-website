@@ -20,7 +20,7 @@ class Api::RatingsController < ApplicationController
     if @rating.save
       render json: {status: :success, data: @rating}
     else
-      render json: {status: :error, errors: @rating.errors}
+      render json: {status: :error, errors: @rating.errors.full_messages}
     end
   end
 
@@ -29,7 +29,7 @@ class Api::RatingsController < ApplicationController
     if @rating.update_attributes(rating_params)
       render json: {status: :success, data: @rating}
     else
-      render json: {status: :error, errors: @rating.errors}
+      render json: {status: :error, errors: @rating.errors.full_messages}
     end
   end
 

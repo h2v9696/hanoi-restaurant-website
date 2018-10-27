@@ -30,7 +30,7 @@ class Api::LikesController < ApplicationController
     if @like.save
       render json: {status: :success, data: @like}
     else
-      render json: {status: :error, errors: @like.errors}
+      render json: {status: :error, errors: @like.errors.full_messages}
     end
   end
   
