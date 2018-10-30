@@ -1,5 +1,5 @@
 class CreateComments < ActiveRecord::Migration[5.2]
-  def up
+  def change
     create_table :comments do |t|
       t.integer :user_id
       t.integer :restaurant_id
@@ -8,9 +8,5 @@ class CreateComments < ActiveRecord::Migration[5.2]
     end
 
     add_index :comments, [:user_id, :restaurant_id], unique: true
-  end
-
-  def down
-    drop_table :comments
   end
 end

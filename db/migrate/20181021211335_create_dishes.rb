@@ -1,5 +1,5 @@
 class CreateDishes < ActiveRecord::Migration[5.2]
-  def up
+  def change
     create_table :dishes do |t|
       t.integer :restaurant_id
       t.string :name
@@ -7,9 +7,7 @@ class CreateDishes < ActiveRecord::Migration[5.2]
       t.string :image_url
       t.timestamps
     end
-  end
 
-  def down
-    drop_table :dishes
+    add_index :dishes, [:restaurant_id, :name], unique: true
   end
 end

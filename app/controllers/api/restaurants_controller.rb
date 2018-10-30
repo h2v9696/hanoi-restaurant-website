@@ -27,7 +27,11 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def destroy
-    Restaurant.find(params[:id]).destroy
+    if Restaurant.find(params[:id]).destroy
+      render json: {status: :success}
+    else
+      render json: {status: :error}
+    end
   end
 
   private

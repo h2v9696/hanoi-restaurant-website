@@ -17,7 +17,7 @@ class Api::DishesController < ApplicationController
     if @dish.save
       render json: {status: :success, data: @dish}
     else
-      render json: {status: :error, errors: @dish.errors}
+      render json: {status: :error, errors: @dish.errors.full_messages}
     end
   end
 
@@ -26,7 +26,7 @@ class Api::DishesController < ApplicationController
     if @dish.update_attributes(dish_params)
       render json: {status: :success, data: @dish}
     else
-      render json: {status: :error, errors: @dish.errors}
+      render json: {status: :error, errors: @dish.errors.full_messages}
     end
   end
 

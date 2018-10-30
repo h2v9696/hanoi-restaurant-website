@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 puts "\nGenerating fake data\n"
 
 @count = 0
@@ -9,6 +8,7 @@ if ActiveRecord::Base.connection.table_exists? :users
       username: Faker::Internet.unique.username(8),
       email: Faker::Internet.unique.free_email,
       password: '123456',
+      password_confirmation: '123456',
       image_url: Faker::Avatar.unique.image
     )
     @count += 1
@@ -49,12 +49,13 @@ if ActiveRecord::Base.connection.table_exists? :dishes
     rand(5..10).times do
       Dish.create(
         restaurant_id: restaurant.id,
-        name: Faker::Food.dish,
+        name: Faker::Food.unique.dish,
         price: rand(20..100) * 1000,
         image_url: 'https://source.unsplash.com/user/foodess'
       )
       @count += 1
     end
+    Faker::Food.unique.clear
   end
 end
 puts "#{@count} Dishes created"

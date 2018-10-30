@@ -1,5 +1,5 @@
 class CreateLikes < ActiveRecord::Migration[5.2]
-  def up
+  def change
     create_table :likes do |t|
       t.integer :user_id
       t.integer :object_type
@@ -9,9 +9,4 @@ class CreateLikes < ActiveRecord::Migration[5.2]
 
     add_index :likes, [:user_id, :object_type, :object_id], unique: true
   end
-
-  def down
-    drop_table :likes
-  end
-  
 end

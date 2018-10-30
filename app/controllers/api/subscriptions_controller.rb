@@ -23,7 +23,7 @@ class Api::SubscriptionsController < ApplicationController
     if @subscription.save
       render json: {status: :success, data: @subscription}
     else
-      render json: {status: :error, errors: @subscription.errors}
+      render json: {status: :error, errors: @subscription.errors.full_messages}
     end
   end
   

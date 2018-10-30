@@ -63,8 +63,8 @@ Open browser and go to [http://localhost:3000](http://localhost:3000)
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | ---
-POST | /users/sign_in | **Body:** `email`, `password` | Sign in<br>Return `uid`, new `access-token`, new `client` in Headers
-DELETE | /users/sign_out | **Headers:** `uid`, `access-token`, `client` | Sign out
+POST | /users/sign_in | **Body:** `email`, `password` | Sign in, return user information
+DELETE | /users/sign_out | | Sign out
 
 #### User Model
 
@@ -72,9 +72,9 @@ Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
 GET | /users || Index users
 GET | /users/:id || Show user at :id
-POST | /users | **Body:** `username`, `email`, `password`, `password_comfirmation` | Create new user
-PUT | /users | **Headers:** `uid`, `access-token`, `client`<br> **Body:** *(all fields is optional)* `username`, `email`, `image_url`, `cover_url`, `address`, `password`, `password_comfirmation` | Update user.<br>For update password: must include `current_password` in Body.<br>Return `uid`, new `access-token`, same `client`.
-DELETE | /users | **Headers:** `uid`, `access-token`, `client` | Delete user
+POST | /users/:id | **Body:** `username`, `email`, `password`, `password_comfirmation` | Create new user
+PUT<br>PATCH | /users | **Body:** *(all fields is optional)* `username`, `email`, `image_url`, `cover_url`, `address`, `password`, `password_comfirmation` | Update user, when update password must have both `password` & `password_comfirmation` in params.
+DELETE | /users/:id | | Delete user
 
 #### Restaurant Model
 
@@ -83,7 +83,7 @@ Request | Uri | Required Fields | Details
 GET | /restaurants | | Index
 GET | /restaurants/:id || Show
 POST | /restaurants | **Body:** `name`, `address`, `phone`, `description` | Create
-PATCH | /restaurants/:id | **Body:** `name`, `address`, `phone`, `description` | Update
+PUT<br>PATCH | /restaurants/:id | **Body:** `name`, `address`, `phone`, `description` | Update
 DELETE | /restaurants/:id || Destroy
 
 #### Dish Model
@@ -93,7 +93,7 @@ Request | Uri | Required Fields | Details
 GET | /dishes | **Params:** `restaurant_id` | Index
 GET | /dishes/:dish_id | | Show
 POST | /dishes | **Body:** `restaurant_id`, `name`, `price`, `image_url` | Create
-PATCH | /dishes/:dish_id | **Body:** `restaurant_id`, `name`, `price`, `image_url` | Update
+PUT<br>PATCH | /dishes/:dish_id | **Body:** `restaurant_id`, `name`, `price`, `image_url` | Update
 DELETE | /dishes/:dish_id | | Destroy
 
 #### Rating Model
@@ -102,7 +102,7 @@ Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
 GET | /ratings | **Params:** `restaurant_id` or `user_id` or both | Index
 POST | /ratings | **Body:** `restaurant_id`, `user_id`, `value`  | Create
-PATCH | /ratings/:rating_id | **Body:** `value` | Update
+PUT<br>PATCH | /ratings/:rating_id | **Body:** `value` | Update
 DELETE | /ratings/:rating_id | | Destroy
 
 #### Comment Model
@@ -112,7 +112,7 @@ Request | Uri | Required Fields | Details
 GET | /comments | **Params:** `restaurant_id` or `user_id` or both | Index
 GET | /comments/:comment_id | | Show
 POST | /comments | **Body:** `restaurant_id`, `user_id`, `content` | Create
-PATCH | /comments/:comment_id | **Body:** `content` | Update
+PUT<br>PATCH | /comments/:comment_id | **Body:** `content` | Update
 DELETE | /comments/:comment_id | | Destroy
 
 #### Subcription Model

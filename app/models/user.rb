@@ -1,23 +1,38 @@
-# frozen_string_literal: true
-
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-     :recoverable, :rememberable, :trackable, :validatable
-  include DeviseTokenAuth::Concerns::User
+  attr_accessor :update_password
 
-  before_save :add_missing_fields
+  has_secure_password
+  before_save :before_save_action
+  
+  validates :username, 
+    presence: true, 
+    length: {maximum: 50},
+    uniqueness: true
+  
+  validates :email, 
+    presence: true, 
+    length: { maximum: 255}, 
+    format: { with: URI::MailTo::EMAIL_REGEXP}, 
+    uniqueness: { case_sensitive: false }
+  
+  validates :password,
+    length: { minimum: 6},
+    if: :should_validate_password?
+
+  validates :password_confirmation,
+    presence: true,
+    if: :should_validate_password?
 
   private
-
-  def add_missing_fields
-  	if self.image_url.blank?
-    	self.image_url = "default_avar.png"
-    end
-    if self.cover_url.blank?
-    	self.cover_url = "banner_default.png"
-    end
+  
+  def before_save_action
+    self.email = email.downcase
+    self.image_url = image_url.presence || "default_avar.png"
+    self.cover_url = cover_url || "banner_default.png"
+    self.address ||= ""
   end
 
+  def should_validate_password?
+    update_password || new_record?
+  end
 end
