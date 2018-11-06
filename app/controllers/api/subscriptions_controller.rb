@@ -1,5 +1,5 @@
 class Api::SubscriptionsController < ApplicationController
-  
+
   def index
     if (params[:restaurant_id].present? && params[:user_id].present?)
       render json: {
@@ -12,12 +12,13 @@ class Api::SubscriptionsController < ApplicationController
     elsif (params[:restaurant_id].present?)
       render json: {status: :success, data: Subscription.where(restaurant_id: params[:restaurant_id])}
     elsif (params[:user_id].present?)
-      render json: {status: :success, data: Subscription.where(user_id: params[:user_id])}
+      @sub = Subscription.joins(:restaurant).where(user_id: params[:user_id])
+      render json: {status: :success, data: @sub.as_json(include: [restaurant: {only: [:name, :cover_url]}])}
     else
       render json: {status: :error, data: "Params user_id and/or restaurant_id not found"}
     end
   end
-  
+
   def create
     @subscription = Subscription.new(subscription_params)
     if @subscription.save
@@ -26,7 +27,7 @@ class Api::SubscriptionsController < ApplicationController
       render json: {status: :error, errors: @subscription.errors.full_messages}
     end
   end
-  
+
   def destroy
     if Subscription.find(params[:id]).destroy
       render json: {status: :success}
@@ -34,9 +35,9 @@ class Api::SubscriptionsController < ApplicationController
       render json: {status: :error}
     end
   end
-  
+
   private
   def subscription_params
-    params.permit(:restaurant_id, :user_id)    
+    params.permit(:restaurant_id, :user_id)
   end
 end
