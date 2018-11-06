@@ -45,7 +45,7 @@ export default class Header extends Component {
                   {/* Nav Start */}
                   <div className="classynav">
                     <ul>
-                      <li className="active"><a href="index.html">Home</a></li>
+                      <li className="active"><a href="/">Home</a></li>
                       <li><a href="">Restaurant</a></li>
                       <li><a href="#">Notification</a></li>
                       {this.state.loading ? <li><Link to="/logIn">Login</Link></li> : <li><Link
