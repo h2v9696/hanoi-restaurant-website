@@ -12,6 +12,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import axios from "axios";
+import {Image, Transformation} from 'cloudinary-react';
 import API from 'constants/api';
 
 export default class RestaurantDetail extends Component {
@@ -24,12 +25,15 @@ export default class RestaurantDetail extends Component {
             userInfo: 0,
             comments: 0,
             checkComment: 0,
-            subscribe: []
+            subscribe: [],
+            countRating: 0
         };
         this.changeRating = this.changeRating.bind(this);
         this.getComment = this.getComment.bind(this);
+        this.getUser = this.getUser.bind(this);
         this.checkComment = this.checkComment.bind(this);
         this.getSubscribe = this.getSubscribe.bind(this);
+        this.getCountRating = this.getCountRating.bind(this);
     }
 
     componentDidMount () {
@@ -43,8 +47,10 @@ export default class RestaurantDetail extends Component {
             );
         this.getComment(this.props.match.params.id);
         this.getSubscribe();
+        this.getUser();
         this.getRating();
         this.checkComment();
+        this.getCountRating();
     }
 
     getUser() {
@@ -163,7 +169,7 @@ export default class RestaurantDetail extends Component {
     }
 
     changeRating( newRating ) {
-        if (this.state.rating.length === 0) { 
+        if (this.state.rating === 0) {
             this.setState({
                 rating: newRating
             },
@@ -205,11 +211,38 @@ export default class RestaurantDetail extends Component {
                     })
                     .catch(error=>console.log("rating updated: error!"));
         }
+        this.getCountRating();
+    }
+
+    getCountRating () {
+        axios.get(API+'/api/ratings/?restaurant_id=' + this.props.match.params.id)
+            .then(
+                response => {
+                    this.setState({countRating: response.data.data})
+                })
+            .catch(error => console.log('countRating: error!'));   
     }
 
     render() {
         if (this.props.restaurantDetail !== 0) {
             const restaurantDetail = this.props.restaurantDetail;
+
+            //count rating
+            const count = this.state.countRating;
+            let countRate = [];
+            let sumRating = 0;
+            let rateNumber = 0;
+            if (count !== 0) {
+                countRate = count.map((count, index)=>{
+                    sumRating = sumRating + count.value;
+                    rateNumber = index;
+                });
+            }
+            let countRating = 
+                        <div className="rateCount">
+                            <p className="rateCount">{rateNumber} ratings</p>
+                            <p className="rateCount">{Number.parseFloat(sumRating/rateNumber).toFixed(1)}/5.0</p>
+                        </div>
 
             //show menu
             const dish = this.state.dish;
@@ -245,10 +278,12 @@ export default class RestaurantDetail extends Component {
                                 <form>
                                     <div className="row commentPost">
                                         <div className="col-1">
-                                            <img className="avatar" src="/img/bg-img/bg5.jpg"/>
+                                            <div className="avatar">
+                                                <Image publicId={comment.user.image_url}></Image>
+                                            </div>
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
-                                            <h3 style={{fontWeight: "bold !important"}}>{comment.user_id}</h3>
+                                            <h3 style={{fontWeight: "bold !important"}}>{comment.user.username}</h3>
                                             <h4 style={{fontWeight: "bold !important"}}>{comment.content}</h4>
                                         </div>
                                         <p className="col-1"></p>
@@ -279,7 +314,11 @@ export default class RestaurantDetail extends Component {
                             <div className="contact-form-area">
                                 <div className="row">
                                     <div className="col-1">
-                                        <img className="avatar" src="/img/bg-img/bg5.jpg"/>
+                                        <div className="avatar">
+                                            <Image
+                                                publicId={this.state.userInfo.image_url}>
+                                            </Image>
+                                        </div>
                                     </div>
                                     <div className="col-11">
                                         <input name="message" className="form-control" id="message"
@@ -308,7 +347,11 @@ export default class RestaurantDetail extends Component {
                             <div className="contact-form-area">
                                 <div className="row">
                                     <div className="col-1">
-                                        <img className="avatar" src="/img/bg-img/bg5.jpg"/>
+                                        <div className="avatar">
+                                            <Image
+                                                publicId={this.state.userInfo.image_url}>
+                                            </Image>
+                                        </div>
                                     </div>
                                     <div className="col-11">
                                         <input name="message" className="form-control" id="message"
@@ -328,7 +371,7 @@ export default class RestaurantDetail extends Component {
 
                 //subscribe
                 if ((this.state.subscribe).length === 0) {
-                    subscribe = 
+                    subscribe =
                     <a className="btn btn-myself" onClick={()=>this.Subscribe()}>
                         <i className="fa fa-plus"
                            style={{color: "white"}}/>Subscribe
@@ -341,10 +384,10 @@ export default class RestaurantDetail extends Component {
                            style={{color: "grey"}}/>Subscribed
                     </a>
                 }
-            } 
+            }
 
             if (!sessionStorage.getItem('id_user')) {
-                newComment = 
+                newComment =
                 <div>
                     <button className="comment btn">Please <Link className="comment-1" to="/login">log in</Link> to comment this restaurant!</button>
                 </div>;
@@ -395,7 +438,9 @@ export default class RestaurantDetail extends Component {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="receipe-slider">
-                                        <img src="/img/bg-img/bg5.jpg"/>
+                                        <Image
+                                            publicId="default_restaurant.jpg">
+                                        </Image>
                                     </div>
                                 </div>
                             </div>
@@ -435,6 +480,7 @@ export default class RestaurantDetail extends Component {
                                                     starHoverColor="gold"
                                                     starSpacing="3px"
                                                 />
+                                                {countRating}
                                             </div>
                                             {subscribe}
                                         </div>
