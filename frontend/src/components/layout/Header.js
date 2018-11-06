@@ -48,12 +48,12 @@ export default class Header extends Component {
                       <li className="active"><a href="index.html">Home</a></li>
                       <li><a href="">Restaurant</a></li>
                       <li><a href="#">Notification</a></li>
-                      {this.state.loading ? <li><Link to="logIn">Login</Link></li> : <li><Link
-                        to="profile">{this.state.userData.username}</Link></li>}
+                      {this.state.loading ? <li><Link to="/logIn">Login</Link></li> : <li><Link
+                        to="/profile">{this.state.userData.username}</Link></li>}
                       {!this.state.loading && <li><Link onClick={() => {
                         this.Auth.logout()
                         this.setState({loading: true})
-                      }} to='home'>Logout</Link></li>}
+                      }} to='/home'>Logout</Link></li>}
                       </ul>
                         {/* Newsletter Form */}
                         <div className="search-btn">
