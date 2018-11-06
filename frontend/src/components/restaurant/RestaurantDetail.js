@@ -288,7 +288,7 @@ export default class RestaurantDetail extends Component {
                                     <div className="col-1">
                                         <div className="avatar">
                                             <Image
-                                                publicId={userInfo.image_url}>
+                                                publicId={this.state.userInfo.image_url}>
                                             </Image>
                                         </div>
                                     </div>
@@ -410,7 +410,9 @@ export default class RestaurantDetail extends Component {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="receipe-slider">
-                                        <img src="/img/bg-img/bg5.jpg"/>
+                                        <Image
+                                            publicId="default_restaurant.jpg">
+                                        </Image>
                                     </div>
                                 </div>
                             </div>

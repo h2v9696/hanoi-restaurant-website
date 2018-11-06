@@ -87,10 +87,13 @@ export default class UserProfile extends React.Component {
                             {
                                 this.state.loadingRes ? <div className='loader'/> :
                                     this.state.followRes.map((e, index) => <div className="gallery-item" key={index} tabIndex={0}>
-                                        <img
-                                            src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
-                                            className="gallery-image"
-                                        />
+                                        <div className="gallery-image">
+                                            <Image
+                                                publicId="default_restaurant.jpg">
+                                            </Image>
+                                            <p align="center"> {e.restaurant.name} </p>
+                                        </div>
+
                                         <Link to={'/restaurant/'+e.restaurant_id} className="gallery-item-info">
                                             <ul>
                                                 <li className="gallery-item-likes">
