@@ -3,4 +3,4 @@
 //viet sv
 // export default 'http://91a1ab9c.ngrok.io'
 // export default ''
-export default 'http://localhost:3000/'
+export default 'http://localhost:3000'

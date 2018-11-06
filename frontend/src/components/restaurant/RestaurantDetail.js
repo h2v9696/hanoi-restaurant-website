@@ -33,7 +33,7 @@ export default class RestaurantDetail extends Component {
     }
 
     componentDidMount () {
-        axios.get(API+'api/dishes/?restaurant_id=' + this.props.match.params.id)
+        axios.get(API+'/api/dishes/?restaurant_id=' + this.props.match.params.id)
             .then(
                 response => {
                     this.setState({dish: response.data.data})
@@ -48,7 +48,7 @@ export default class RestaurantDetail extends Component {
     }
 
     getUser() {
-        axios.get(API+'api/users/' + sessionStorage.getItem('id_user'))
+        axios.get(API+'/api/users/' + sessionStorage.getItem('id_user'))
             .then(
                 response => {
                     this.setState({userInfo: response.data.data})
@@ -59,7 +59,7 @@ export default class RestaurantDetail extends Component {
     }
 
     getComment (restaurantId) {
-        axios.get(API+'api/comments/?restaurant_id=' + restaurantId)
+        axios.get(API+'/api/comments/?restaurant_id=' + restaurantId)
             .then(
                 response => {
                     this.setState({comments: response.data.data})
@@ -73,7 +73,7 @@ export default class RestaurantDetail extends Component {
         comment.set('content', this.refs.comment.value);
         axios({
             method: 'post',
-            url: API + 'api/comments',
+            url: API + '/api/comments',
             data:comment,
             headers: {'Content-Type': 'multipart/form-data'}
         })
@@ -89,7 +89,7 @@ export default class RestaurantDetail extends Component {
         comment.set('content', this.refs.comment.value);
         axios({
             method: 'put',
-            url: API + 'api/comments/'+this.state.checkComment[0].id,
+            url: API + '/api/comments/'+this.state.checkComment[0].id,
             data:comment,
             headers: {'Content-Type': 'multipart/form-data'}
         })
@@ -101,7 +101,7 @@ export default class RestaurantDetail extends Component {
     }
 
     checkComment () {
-        axios.get(API+'api/comments/?restaurant_id=' + this.props.match.params.id + "&&user_id=" + sessionStorage.getItem('id_user'))
+        axios.get(API+'/api/comments/?restaurant_id=' + this.props.match.params.id + "&&user_id=" + sessionStorage.getItem('id_user'))
             .then(
                 response => {
                     this.setState({checkComment: response.data.data})
@@ -112,7 +112,7 @@ export default class RestaurantDetail extends Component {
     }
 
     getSubscribe () {
-        axios.get(API+'api/subscriptions/?restaurant_id=' + this.props.match.params.id + "&&" + "user_id="+sessionStorage.getItem('id_user'))
+        axios.get(API+'/api/subscriptions/?restaurant_id=' + this.props.match.params.id + "&&" + "user_id="+sessionStorage.getItem('id_user'))
             .then(
                 response => {
                     this.setState({subscribe: response.data.data})
@@ -127,7 +127,7 @@ export default class RestaurantDetail extends Component {
             subscribe.set('user_id', sessionStorage.getItem("id_user"));
             axios({
                 method: 'post',
-                url: API + 'api/subscriptions',
+                url: API + '/api/subscriptions',
                 data:subscribe,
                 headers: {'Content-Type': 'multipart/form-data'}
             })
@@ -141,7 +141,7 @@ export default class RestaurantDetail extends Component {
             console.log(this.state.subscribe);
             axios({
                 method: 'delete',
-                url: API + 'api/subscriptions/'+this.state.subscribe[0].id,
+                url: API + '/api/subscriptions/'+this.state.subscribe[0].id,
                 headers: {'Content-Type': 'multipart/form-data'}
             })
                 .then(response=>{
@@ -153,13 +153,13 @@ export default class RestaurantDetail extends Component {
     }
 
     getRating () {
-        axios.get(API+'api/ratings/?restaurant_id=' + this.props.match.params.id + "&&" + "user_id="+sessionStorage.getItem('id_user'))
+        axios.get(API+'/api/ratings/?restaurant_id=' + this.props.match.params.id + "&&" + "user_id="+sessionStorage.getItem('id_user'))
             .then(
                 response => {
                     this.setState({rating: response.data.data[0].value})
                     this.setState({ratingId: response.data.data[0].id})
                 })
-            .catch(error => console.log('Follow: error!'));   
+            .catch(error => console.log('Rating: error!'));   
     }
 
     changeRating( newRating ) {
@@ -175,7 +175,7 @@ export default class RestaurantDetail extends Component {
                 rating.set('value', newRating);
                 axios({
                     method: 'post',
-                    url: API + 'api/ratings',
+                    url: API + '/api/ratings',
                     data:rating,
                     headers: {'Content-Type': 'multipart/form-data'}
                 })
@@ -195,7 +195,7 @@ export default class RestaurantDetail extends Component {
                 rating.set('value', newRating);
                 axios({
                     method: 'put',
-                    url: API + 'api/ratings/' +this.state.ratingId,
+                    url: API + '/api/ratings/' +this.state.ratingId,
                     data:rating,
                     headers: {'Content-Type': 'multipart/form-data'}
                 })
