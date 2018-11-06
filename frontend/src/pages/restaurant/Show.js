@@ -6,7 +6,7 @@ import Header from '../../components/layout/Header'
 import API from 'constants/api'
 export default class show extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       restaurant: 0
     }

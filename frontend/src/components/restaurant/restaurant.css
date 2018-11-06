@@ -15,7 +15,7 @@ a:hover {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 5px;
-    width: 562px;
+    width: 460px;
 }
 
 .tab:active {
@@ -39,11 +39,29 @@ a:hover {
     text-align: center !important;
     padding-top: 13px !important;
     font-size: 16px !important;
+    border: none !important;
+}
+
+.btn-myself-2 {
+    color: grey !important;
+    height: 50px !important;
+    width: 150px !important;
+    text-align: center !important;
+    padding-top: 13px !important;
+    font-size: 16px !important;
 }
 
 .btn-myself:hover {
     background-color: #1c8314;
     color: #ffffff !important;
+    height: 50px !important;
+    width: 150px !important;
+    padding-top: 13px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+.btn-myself-2:hover {
     height: 50px !important;
     width: 150px !important;
     padding-top: 13px !important;
@@ -64,4 +82,39 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal !important;
+}
+
+.dish_image {
+    object-fit: cover;
+    height: 300px;
+    width: 300px;
+}
+
+.comment {
+    font-style: italic;
+    font-size: 20px;
+}
+
+.comment-1 {
+    font-size: 20px !important;
+}
+
+.comment-1:hover {
+    font-size: 20px !important;
+    text-decoration: underline;
+    color: blue;
+}
+
+.commentPost {
+    min-height: 70px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: #DCDCDC;
+}
+
+.time {
+    font-size: 10px;
+    color: grey;
 }
