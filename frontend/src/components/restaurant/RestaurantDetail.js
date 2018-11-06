@@ -301,7 +301,7 @@ export default class RestaurantDetail extends Component {
                 }
 
                 //update comment
-                if (this.state.checkComment !==0) {
+                if (this.state.checkComment.length === 1) {
                     newComment =
                     <div className="row">
                         <div className="col-12">
