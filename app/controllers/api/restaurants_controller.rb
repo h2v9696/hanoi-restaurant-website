@@ -1,7 +1,8 @@
 class Api::RestaurantsController < ApplicationController
 
   def index
-    render json: {status: :success, data: Restaurant.all}
+    @restaurant = Restaurant.joins(:ratings).all
+    render json: {status: :success, data: @restaurant.as_json(include: [ratings: {only: :value}])}
   end
 
   def show
