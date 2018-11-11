@@ -14,13 +14,9 @@ class Api::SubscriptionsController < ApplicationController
       render json: {status: :success, data: Subscription.where(restaurant_id: params[:restaurant_id])}
 
     elsif (params[:user_id].present?)
-      @data = Subscription.where(user_id: params[:user_id])
-      @data.each do |d|
-        d[:restaurant] = Restaurant.where(id: d["restaurant_id"]).select("name, cover_url").first.as_json
-      end
       render json: {
-        status: :success,
-        data: @data
+        status: :success, 
+        data: Subscription.where(user_id: params[:user_id]).as_json(methods: :restaurant)
       }
 
     else

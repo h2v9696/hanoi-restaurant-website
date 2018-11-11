@@ -1,17 +1,16 @@
 class Api::RestaurantsController < ApplicationController
 
   def index
-    @restaurant = Restaurant.joins(:ratings).all
-    render json: {status: :success, data: @restaurant.as_json(include: [ratings: {only: :value}])}
+    render json: {
+      status: :success, 
+      data: Restaurant.all.as_json(methods: [:rating_avg, :rating_count])
+    }
   end
 
   def show
-    @data = Restaurant.find(params[:id]).as_json
-    @data[:rating_avg] = 
-    @data[:rating_count] =
     render json: {
       status: :success, 
-      data: @data
+      data: Restaurant.find(params[:id]).as_json(methods: [:rating_avg, :rating_count])
     }
   end
 

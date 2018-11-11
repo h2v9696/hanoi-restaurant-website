@@ -1,5 +1,12 @@
 class Restaurant < ApplicationRecord
+
   OBJECT_TYPE = 1
-  has_many :subscriptions, dependent: :destroy
-  has_many :ratings, dependent: :destroy
+
+  def rating_avg
+    (Rating.where(restaurant_id: self.id).average(:value).to_f * 2.0).round / 2.0
+  end
+
+  def rating_count
+    Rating.where(restaurant_id: self.id).count
+  end
 end
