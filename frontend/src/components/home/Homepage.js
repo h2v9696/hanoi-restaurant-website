@@ -66,7 +66,7 @@ export default class Homepage extends Component {
                                                     }}>{restaurantInfo.description}</h5>
                                                 </a>
                                             </div>
-                                            <Link to={"restaurant/"+restaurantInfo.id} style={{color: "CornflowerBlue ",textDecoration: "underline"}}>More info about {restaurantInfo.name}</Link>
+                                            <Link to={"restaurant/"+restaurantInfo.id} style={{color: "white",textDecoration: "underline"}}>More info about {restaurantInfo.name}</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -101,6 +101,7 @@ export default class Homepage extends Component {
                     );
                 }
             });
+
             const newRestaurant= restaurant
                 .sort((a, b)=>a.created_at > b.created_at)
                 .map((restaurantInfo, index)=>{
@@ -125,13 +126,30 @@ export default class Homepage extends Component {
                                                 name={restaurantInfo.id}
                                             />
                                         </div>
-                                        <p>2 Comments</p>
                                     </div>
                                 </div>
                             </div>
                         );
                     }
                 });
+
+            let middle = [];
+            if (!sessionStorage.getItem('id_user')) {
+                console.log(1111);
+                middle =
+                    <div className="cta-content text-center">
+                        <p>Follow the favourite restaurants, share your feeling with more and more people,find the best for you and your family!</p>
+                        <Link to="login" className="btn btn-myself">Login now!</Link>
+                    </div>
+            }
+            if (sessionStorage.getItem('id_user')) {
+                console.log(this.props);
+                middle =
+                    <div className="cta-content text-center">
+                        <h3 style={{color: "white"}}>See all restaurants which you are subscribing!</h3>
+                        <Link to="profile" className="btn btn-myself">My profile</Link>
+                    </div>
+            }
 
             //slider-slick's setting
             var settings = {
@@ -212,11 +230,7 @@ export default class Homepage extends Component {
                         <div className="container h-100">
                             <div className="row h-100 align-items-center">
                                 <div className="col-12">
-                                    {/* Cta Content */}
-                                    <div className="cta-content text-center">
-                                        <p>Follow the favourite restaurants, share your feeling with more and more people,find the best for you and your family!</p>
-                                        <Link to="login" className="btn btn-myself">Login now!</Link>
-                                    </div>
+                                    {middle}
                                 </div>
                             </div>
                         </div>
