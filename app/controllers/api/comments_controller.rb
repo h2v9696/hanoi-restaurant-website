@@ -1,25 +1,47 @@
 class Api::CommentsController < ApplicationController
 
   def index
+    # restaurant_id + user_id
     if (params[:restaurant_id].present? && params[:user_id].present?)
       render json: {status: :success,  data: Comment.where({
         restaurant_id: params[:restaurant_id],
         user_id: params[:user_id]
       })}
+
+    # restaurant_id only
     elsif (params[:restaurant_id].present?)
-      @comment = Comment.joins(:user).where(restaurant_id: params[:restaurant_id])
-      render json: {status: :success, data: @comment.as_json(include: [user: {only: [:username, :image_url]}])}
+      @data = Comment.where(restaurant_id: params[:restaurant_id]).as_json
+      @data.each do |cmt|
+        cmt[:user] = User.where(id: cmt["user_id"]).select("username, image_url").first.as_json
+        cmt[:no_of_like] = Like.where({object_type: Comment::OBJECT_TYPE, object_id: cmt["id"]}).count
+        cmt[:no_of_reply] = Comment.where(parent_id: cmt["id"]).count
+      end
+      render json: {
+        status: :success,
+        data: @data
+      }
+
+    # user_id only
     elsif (params[:user_id].present?)
       render json: {status: :success, data: Comment.where(user_id: params[:user_id])}
+
+    # no params
     else
       render json: {status: :error, errors: "Params restaurant_id and/or user_id empty"}
     end
   end
 
   def show
-    @comment = Comment.find(params[:id])
-    @user_info =  User.find_by(@comment.user_id)
-    render json: {status: :success, data: Comment.find(params[:id])}
+    @data = Comment.find(params[:id]).as_json
+    @data[:user] = User.where(id: @data["user_id"]).select("username, image_url").first.as_json
+    @data[:reply] = Comment.where(parent_id: @data["id"]).as_json
+    @data[:reply].each do |d|
+      d[:user] = User.where(id: d["user_id"]).select("username, image_url").first.as_json
+    end
+    render json: {
+      status: :success, 
+      data: @data
+    }
   end
 
   def create

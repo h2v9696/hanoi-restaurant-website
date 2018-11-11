@@ -9,11 +9,20 @@ class Api::SubscriptionsController < ApplicationController
           user_id: params[:user_id]
         })
       }
+
     elsif (params[:restaurant_id].present?)
       render json: {status: :success, data: Subscription.where(restaurant_id: params[:restaurant_id])}
+
     elsif (params[:user_id].present?)
-      @sub = Subscription.joins(:restaurant).where(user_id: params[:user_id])
-      render json: {status: :success, data: @sub.as_json(include: [restaurant: {only: [:name, :cover_url]}])}
+      @data = Subscription.where(user_id: params[:user_id])
+      @data.each do |d|
+        d[:restaurant] = Restaurant.where(id: d["restaurant_id"]).select("name, cover_url").first.as_json
+      end
+      render json: {
+        status: :success,
+        data: @data
+      }
+
     else
       render json: {status: :error, data: "Params user_id and/or restaurant_id not found"}
     end

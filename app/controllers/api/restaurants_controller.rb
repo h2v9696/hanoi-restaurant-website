@@ -6,7 +6,13 @@ class Api::RestaurantsController < ApplicationController
   end
 
   def show
-    render json: {status: :success, data: Restaurant.find(params[:id])}
+    @data = Restaurant.find(params[:id]).as_json
+    @data[:rating_avg] = 
+    @data[:rating_count] =
+    render json: {
+      status: :success, 
+      data: @data
+    }
   end
 
   def create
