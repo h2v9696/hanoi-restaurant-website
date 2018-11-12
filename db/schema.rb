@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(version: 2018_10_22_224138) do
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id"
     t.integer "restaurant_id"
+    t.integer "parent_id"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "restaurant_id"], name: "index_comments_on_user_id_and_restaurant_id", unique: true
   end
 
   create_table "dishes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

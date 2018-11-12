@@ -72,8 +72,8 @@ Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
 GET | /users || Index users
 GET | /users/:id || Show user at :id
-POST | /users/:id | **Body:** `username`, `email`, `password`, `password_comfirmation` | Create new user
-PUT<br>PATCH | /users | **Body:** *(all fields is optional)* `username`, `email`, `image_url`, `cover_url`, `address`, `password`, `password_comfirmation` | Update user, when update password must have both `password` & `password_comfirmation` in params.
+POST | /users/ | **Body:** `username`, `email`, `password`, `password_comfirmation` | Create new user
+PUT<br>PATCH | /users/:id | **Body:** *(all fields is optional)* `username`, `email`, `image_url`, `cover_url`, `address`, `password`, `password_comfirmation` | Update user, when update password must have both `password` & `password_comfirmation` in params.
 DELETE | /users/:id | | Delete user
 
 #### Restaurant Model
@@ -102,18 +102,18 @@ Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
 GET | /ratings | **Params:** `restaurant_id` or `user_id` or both | Index
 POST | /ratings | **Body:** `restaurant_id`, `user_id`, `value`  | Create
-PUT<br>PATCH | /ratings/:rating_id | **Body:** `value` | Update
-DELETE | /ratings/:rating_id | | Destroy
+PUT<br>PATCH | /ratings/:id | **Body:** `value` | Update
+DELETE | /ratings/:id | | Destroy
 
 #### Comment Model
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
 GET | /comments | **Params:** `restaurant_id` or `user_id` or both | Index
-GET | /comments/:comment_id | | Show
-POST | /comments | **Body:** `restaurant_id`, `user_id`, `content` | Create
-PUT<br>PATCH | /comments/:comment_id | **Body:** `content` | Update
-DELETE | /comments/:comment_id | | Destroy
+GET | /comments/:id | | Return comment of `:id`, bonus user and its child comments.
+POST | /comments | **Body:**<br>`restaurant_id`, `user_id`, `content` - create comment on restaurant page <br>`user_id`,  `parent_id`, `content` - create reply of comment with id = `parent_id`| Create
+PUT<br>PATCH | /comments/:id | **Body:** `content` | Update
+DELETE | /comments/:id | | Destroy
 
 #### Subcription Model
 
@@ -121,12 +121,17 @@ Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
 GET | /subscriptions | **Params:** `restaurant_id` or `user_id` or both | Index
 POST | /subscriptions | **Body:** `restaurant_id`, `user_id` | Create
-DELETE | /subscriptions/:subscription_id | | Destroy
+DELETE | /subscriptions/:id | | Destroy
 
 #### Like Model
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
-GET | /likes | **Params:** `user_id` or (`object_type` & `object_id`) or both | Index
-POST | /likes | **Body:** `user_id`, `object_type`, `object_id` | Create
-DELETE | /likes/:like_id | | Destroy
+POST | /likes | **Body:** `user_id`, `object_type`, `object_id` | Create like.<br>`object_type` restaurant is 1, comment is 2.
+DELETE | /likes/:id | | Destroy
+
+#### Search
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /search | **Params:** `q` | Return list of restaurants.<br>Search fields: `name`, `address`, `description`

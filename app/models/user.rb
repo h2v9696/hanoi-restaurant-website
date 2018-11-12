@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   attr_accessor :update_password
-  has_many :comments, dependent: :destroy
 
   has_secure_password
   before_save :before_save_action

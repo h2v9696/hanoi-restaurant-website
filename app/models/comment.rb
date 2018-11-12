@@ -1,4 +1,19 @@
 class Comment < ApplicationRecord
-    belongs_to :user
-    LIKE_TYPE = 1
+  OBJECT_TYPE = 2
+
+  def user
+    User.select("id, username, image_url").find(self.user_id)
+  end
+
+  def no_of_like
+    Like.where({object_type: Comment::OBJECT_TYPE, object_id: self.id}).count
+  end
+
+  def no_of_reply
+    Comment.where(parent_id: self.id).count
+  end
+
+  def reply
+    Comment.where(parent_id: self.id).as_json(methods: :user)
+  end
 end

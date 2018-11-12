@@ -83,17 +83,22 @@ puts "#{@count} Ratings created"
 @count = 0
 if ActiveRecord::Base.connection.table_exists? :comments
   ActiveRecord::Base.connection.execute 'TRUNCATE TABLE comments'
-  @indices = []
-  100.times do |i|
-    @restaurant_id = Restaurant.pluck(:id).sample
-    @user_id = User.pluck(:id).sample
-    @indices.push [@restaurant_id, @user_id]
-  end
-  @indices.uniq.each do |i, j|
+  100.times do
     Comment.create(
-      restaurant_id: i,
-      user_id: j,
+      restaurant_id: Restaurant.pluck(:id).sample,
+      user_id: User.pluck(:id).sample,
+      parent_id: 0,
       content: Faker::Restaurant.review
+    )
+    @count += 1
+  end
+
+  100.times do
+    Comment.create(
+      restaurant_id: 0,
+      user_id: User.pluck(:id).sample,
+      parent_id: Comment.pluck(:id).sample,
+      content: Faker::Dota.quote
     )
     @count += 1
   end
@@ -132,7 +137,7 @@ if ActiveRecord::Base.connection.table_exists? :likes
     Like.create(
       object_id: i,
       user_id: j,
-      object_type: Comment::LIKE_TYPE
+      object_type: Comment::OBJECT_TYPE
     )
     @count += 1
   end
