@@ -69,7 +69,7 @@ export default class UserProfile extends React.Component {
                             <h1 className="profile-user-name">{data.username}</h1>
                             <button className="btn profile-edit-btn" onClick={this.onOpenModal}>Edit Profile</button>
                             <Modal open={this.state.modalEditOpen} onClose={this.onCloseModal}>
-                                <ProfileEdit data={data} reFetchData={this.fetchDataUser}/>
+                                <ProfileEdit data={data} reFetchData={this.fetchDataUser} closeModal = {this.onCloseModal}/>
                             </Modal>
                         </div>
                         <div className="profile-bio">

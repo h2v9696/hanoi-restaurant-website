@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {AuthService} from 'components/AuthServices'
-import classNames from 'classnames'
 
 import PropTypes from 'prop-types';
 
@@ -21,9 +20,13 @@ export default class ProfileEdit extends Component {
             validate: {
                 valid: true,
                 errors: []
-            }
+            },
+            confirmDialog: false,
         }
         this.Auth = new AuthService()
+        this.closeDialog = this.closeDialog.bind(this)
+        this.editInfo = this.editInfo.bind(this)
+        this.submit = this.submit.bind(this)
     }
 
 
@@ -70,7 +73,7 @@ export default class ProfileEdit extends Component {
 
     editInfo() {
         return new Promise((resolve, reject) => {
-            fetch(API + '/api/users/'+this.Auth.getToken(), {
+            fetch(API + '/api/users/' + this.Auth.getToken(), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -89,10 +92,11 @@ export default class ProfileEdit extends Component {
                 .catch(error => reject(error))
         })
     }
+
     updateImage(publicId) {
         console.log(publicId)
         return new Promise((resolve, reject) => {
-            fetch(API + '/api/users/'+this.Auth.getToken(), {
+            fetch(API + '/api/users/' + this.Auth.getToken(), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -103,18 +107,31 @@ export default class ProfileEdit extends Component {
             })
                 .then(() => this.props.reFetchData())
                 .catch(error => reject(error))
-        } )
+        })
     }
 
     handleSubmit(e) {
         //TODO validate sign up form
         e.preventDefault()
-        this.editInfo().then(() => this.props.reFetchData()).catch(error => console.log(error))
+        this.setState({confirmDialog: true})
+    }
+
+    submit() {
+        this.editInfo().then(() => {
+            this.props.reFetchData()
+            this.props.closeModal()
+        }).catch(error => console.log(error))
+        this.closeDialog()
+    }
+
+    closeDialog() {
+        this.setState({confirmDialog: false})
     }
 
     componentWillMount() {
         !this.Auth.loggedIn() && this.props.history.push('/login')
     }
+
     onPhotoSelected(file) {
         const url = `https://api.cloudinary.com/v1_1/${
             this.context.cloudName
@@ -122,11 +139,15 @@ export default class ProfileEdit extends Component {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("upload_preset", this.context.uploadPreset);
-        fetch(url,{
+        fetch(url, {
             method: 'POST',
             body: formData,
-        }).then(res => res.json()).then(res => this.updateImage(res.public_id))
+        }).then(res => res.json()).then(res => {
+            this.updateImage(res.public_id)
+            this.props.closeModal()
+        })
     }
+
     render() {
         return (
             <div className="wrapper">
@@ -178,6 +199,19 @@ export default class ProfileEdit extends Component {
                                    this.fileInputEl.files[0]
                                )
                            }/>
+                </div>
+                <div className={`confirm-dialog${this.state.confirmDialog ? ' visible' : '' }`}>
+                    <div className='dialog'>
+                        <p>
+                            Update Information ?
+                        </p>
+                        <button onClick={this.submit}>
+                            OK
+                        </button>
+                        <button onClick={this.closeDialog}>
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             </div>
         )
