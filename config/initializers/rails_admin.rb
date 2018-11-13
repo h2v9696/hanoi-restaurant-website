@@ -3,14 +3,17 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     new
-    export
     bulk_delete
     show
     edit
     delete
-    show_in_app
 
   end
 
-  config.included_models = ["Restaurant"]
+  config.included_models = ["Restaurant", "Dish"]
+
+  config.model 'Dish' do
+    visible false
+  end
+
 end

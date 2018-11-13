@@ -4,13 +4,23 @@ puts "\nGenerating fake data\n"
 if ActiveRecord::Base.connection.table_exists? :users
   ActiveRecord::Base.connection.execute 'TRUNCATE TABLE users'
   50.times do
-    User.create(
-      username: Faker::Internet.unique.username(8),
-      email: Faker::Internet.unique.free_email,
-      password: '123456',
-      password_confirmation: '123456',
-      image_url: Faker::Avatar.unique.image
-    )
+    if @count == 0
+      User.create(
+        username: 'admin',
+        email: 'admin@gmail.com',
+        password: '123456',
+        password_confirmation: '123456',
+        admin: true
+      )
+    else
+      User.create(
+        username: Faker::Internet.unique.username(8),
+        email: Faker::Internet.unique.free_email,
+        password: '123456',
+        password_confirmation: '123456',
+        image_url: Faker::Avatar.unique.image
+      )
+    end
     @count += 1
   end
 end

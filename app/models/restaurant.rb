@@ -1,5 +1,5 @@
 class Restaurant < ApplicationRecord
-
+  has_many :dishes, inverse_of: :restaurant
   OBJECT_TYPE = 1
 
   def rating_avg
