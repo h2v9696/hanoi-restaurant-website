@@ -21,7 +21,6 @@ export default class Homepage extends Component {
     render() {
         if (this.props.restaurantInfo !== 0) {
             const restaurant = this.props.restaurantInfo;
-            console.log(restaurant);
 
             const restaurantTop3 = restaurant.map((restaurantInfo, index)=>{
                 if (index <= 2){
@@ -135,7 +134,6 @@ export default class Homepage extends Component {
 
             let middle = [];
             if (!sessionStorage.getItem('id_user')) {
-                console.log(1111);
                 middle =
                     <div className="cta-content text-center">
                         <p>Follow the favourite restaurants, share your feeling with more and more people,find the best for you and your family!</p>
@@ -143,7 +141,6 @@ export default class Homepage extends Component {
                     </div>
             }
             if (sessionStorage.getItem('id_user')) {
-                console.log(this.props);
                 middle =
                     <div className="cta-content text-center">
                         <h3 style={{color: "white"}}>See all restaurants which you are subscribing!</h3>
