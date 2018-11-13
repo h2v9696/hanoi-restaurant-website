@@ -123,7 +123,8 @@ DELETE | /subscriptions/:id | | Destroy
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
-POST | /likes | **Body:** `user_id`, `object_type`, `object_id` | Create like.<br>`object_type` restaurant is 1, comment is 2.
+GET | /likes | **Params:** `user_id` or (`object_type` + `object_id`) or both | Index.<br>`object_type` of restaurant is 1, comment is 2.
+POST | /likes | **Body:** `user_id`, `object_type`, `object_id` | Create like.
 DELETE | /likes/:id | | Destroy
 
 #### Search
