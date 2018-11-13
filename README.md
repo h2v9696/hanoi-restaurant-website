@@ -131,3 +131,11 @@ DELETE | /likes/:id | | Destroy
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
 GET | /search | **Params:** `q` | Return list of restaurants.<br>Search fields: `name`, `address`, `description`
+
+#### Notification Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /notifications | **Params:** `user_id` | `type_id` explain:<br>2 => someone like your comment<br>3 => someone reply to your comment<br>4 => restaurant has new dish<br>1 => other
+POST | /notifications | **Body:** `user_id`, `type_id`, `content` | Create
+DELETE | /notifications/:id | | Destroy

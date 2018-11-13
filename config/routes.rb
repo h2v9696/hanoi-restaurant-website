@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :show, :create, :update, :destroy]
     resources :replies, only: [:index, :show, :create, :update, :destroy]
     resources :subscriptions, only: [:index, :create, :destroy]
+    resources :notifications, only: [:index, :create, :destroy]
     resources :likes, only: [:create, :destroy]
     get '/search', to: 'search#index'
   end
