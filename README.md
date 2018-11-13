@@ -45,15 +45,11 @@ MYSQL_USERNAME: # your mysql username eg. root
 MYSQL_PASSWORD: # your mysql password eg. 123456
 MYSQL_DATABASE_DEV: # name of database your want to create
 ```
-Create database and table, then populate database with fake data (if database already exists, drop it: `rails db:drop`)
+Create database and table, then populate database with fake data:
 ```
-rails db:setup
+rails db:migrate:reset
+rails db:seed
 ```
-Test server 
-```
-rails server
-```
-Open browser and go to [http://localhost:3000](http://localhost:3000)
 
 ### 2. API list
 

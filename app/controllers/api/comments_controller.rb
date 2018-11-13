@@ -1,6 +1,5 @@
-# frozen_string_literal: true
-
 class Api::CommentsController < ApplicationController
+
   def index
     # restaurant_id + user_id
     if params[:restaurant_id].present? && params[:user_id].present?
@@ -17,7 +16,7 @@ class Api::CommentsController < ApplicationController
       render json: {
         status: :success,
         data: Comment.where(restaurant_id: params[:restaurant_id])
-                     .as_json(methods: [:user, :no_of_like, :no_of_reply])
+                     .as_json(methods: [:user, :no_of_like, :no_of_reply, :reply])
       }
 
     # user_id only

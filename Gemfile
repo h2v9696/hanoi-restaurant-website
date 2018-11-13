@@ -13,6 +13,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 gem 'figaro'
 gem 'faker', github: 'stympy/faker'
+gem 'rails_admin'
+gem 'rails_admin_rollincode'
 
 group :development, :test do
   gem 'rspec-rails'
