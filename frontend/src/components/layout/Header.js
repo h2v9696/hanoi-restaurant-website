@@ -60,6 +60,7 @@ export default class Header extends Component {
                                             <li><a href="#">Notification</a></li>
                                             {this.state.loading ? <li><Link to="/logIn">Login</Link></li> : <li><Link
                                                 to="/profile">{this.state.userData.username}</Link></li>}
+                                            {this.state.loading ? null : this.state.userData.admin && <li><a href={API + '/admin'}>Admin</a></li>}
                                             {!this.state.loading && <li><Link onClick={() => {
                                                 this.Auth.logout()
                                                 this.setState({loading: true})
