@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root 'infos#home'
   namespace :api, default: { format: :json } do
     scope '/users' do
@@ -12,7 +13,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :show, :create, :update, :destroy]
     resources :replies, only: [:index, :show, :create, :update, :destroy]
     resources :subscriptions, only: [:index, :create, :destroy]
-    resources :likes, only: [:create, :destroy]
+    resources :notifications, only: [:index, :create, :destroy]
+    resources :likes, only: [:index, :create, :destroy]
     get '/search', to: 'search#index'
   end
 end

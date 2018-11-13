@@ -1,5 +1,30 @@
 class Api::LikesController < ApplicationController
   
+  def index
+    if (params[:user_id].present? && params[:object_id].present? && params[:object_type].present?)
+      render json: {
+        status: :success,  
+        data: Like.where({
+          object_id: params[:object_id],
+          object_type: params[:object_type],
+          user_id: params[:user_id]
+        })
+      }
+    elsif (params[:object_id].present? && params[:object_type].present?)
+      render json: {
+        status: :success, 
+        data: Like.where({
+          object_id: params[:object_id],
+          object_type: params[:object_type]
+        })
+      }
+    elsif (params[:user_id].present?)
+      render json: {status: :success, data: Like.where(user_id: params[:user_id])}
+    else
+      render json: {status: :error, data: "Params user_id and/or object_id + object_type not found"}
+    end
+  end
+  
   def create
     @like = Like.new(like_params)
     if @like.save

@@ -45,15 +45,11 @@ MYSQL_USERNAME: # your mysql username eg. root
 MYSQL_PASSWORD: # your mysql password eg. 123456
 MYSQL_DATABASE_DEV: # name of database your want to create
 ```
-Create database and table, then populate database with fake data (if database already exists, drop it: `rails db:drop`)
+Create database and table, then populate database with fake data:
 ```
-rails db:setup
+rails db:migrate:reset
+rails db:seed
 ```
-Test server 
-```
-rails server
-```
-Open browser and go to [http://localhost:3000](http://localhost:3000)
 
 ### 2. API list
 
@@ -127,7 +123,8 @@ DELETE | /subscriptions/:id | | Destroy
 
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
-POST | /likes | **Body:** `user_id`, `object_type`, `object_id` | Create like.<br>`object_type` restaurant is 1, comment is 2.
+GET | /likes | **Params:** `user_id` or (`object_type` + `object_id`) or both | Index.<br>`object_type` of restaurant is 1, comment is 2.
+POST | /likes | **Body:** `user_id`, `object_type`, `object_id` | Create like.
 DELETE | /likes/:id | | Destroy
 
 #### Search
@@ -135,3 +132,11 @@ DELETE | /likes/:id | | Destroy
 Request | Uri | Required Fields | Details
 --- | --- | --- | --- 
 GET | /search | **Params:** `q` | Return list of restaurants.<br>Search fields: `name`, `address`, `description`
+
+#### Notification Model
+
+Request | Uri | Required Fields | Details
+--- | --- | --- | --- 
+GET | /notifications | **Params:** `user_id` | `type_id` explain:<br>2 => someone like your comment<br>3 => someone reply to your comment<br>4 => restaurant has new dish<br>1 => other
+POST | /notifications | **Body:** `user_id`, `type_id`, `content` | Create
+DELETE | /notifications/:id | | Destroy

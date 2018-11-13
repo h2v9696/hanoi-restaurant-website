@@ -1,6 +1,5 @@
-# frozen_string_literal: true
-
 class Api::CommentsController < ApplicationController
+
   def index
     # restaurant_id + user_id
     if params[:restaurant_id].present? && params[:user_id].present?
