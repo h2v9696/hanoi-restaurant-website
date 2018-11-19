@@ -14,6 +14,31 @@ RailsAdmin.config do |config|
 
   config.model 'Dish' do
     visible false
+    edit do
+      configure :name, :string do
+        required true
+      end
+      configure :price do
+        required true
+      end
+    end
+  end
+
+  config.model 'Restaurant' do
+    edit do
+      configure :name, :string do
+        required true
+      end
+      configure :address, :string do
+        required true
+      end
+      configure :phone, :string do
+        required true
+      end
+      configure :description, :string do
+        required true
+      end
+    end
   end
 
 end

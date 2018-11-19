@@ -14,6 +14,6 @@ class Comment < ApplicationRecord
   end
 
   def reply
-    Comment.where(parent_id: self.id).as_json(methods: [:user])
+    Comment.where(parent_id: self.id).as_json(methods: [:user, :no_of_like, :no_of_reply])
   end
 end

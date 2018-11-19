@@ -6,7 +6,7 @@ if ActiveRecord::Base.connection.table_exists? :users
   50.times do
     if @count == 0
       User.create(
-        username: 'admin',
+        username: 'admin_name',
         email: 'admin@gmail.com',
         password: '123456',
         password_confirmation: '123456',
