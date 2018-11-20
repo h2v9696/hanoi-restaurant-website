@@ -35,7 +35,7 @@ if ActiveRecord::Base.connection.table_exists? :restaurants
       address: Faker::Address.unique.full_address,
       phone: Faker::PhoneNumber.unique.cell_phone,
       description: Faker::Restaurant.description,
-      cover_url: 'default_restaurant'
+      cover_url: ('default_restaurant' + rand(1..3).to_s)
     )
     @count += 1
   end
@@ -51,7 +51,7 @@ if ActiveRecord::Base.connection.table_exists? :dishes
         restaurant_id: restaurant.id,
         name: Faker::Food.unique.dish,
         price: rand(20..100) * 1000,
-        image_url: 'default_restaurant' + rand(1..3).to_s
+        image_url: 'https://res.cloudinary.com/dzd4yfu79/image/upload/v1542125143/default-dish.jpg'
       )
       @count += 1
     end
