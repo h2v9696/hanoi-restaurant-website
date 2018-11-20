@@ -16,6 +16,7 @@ import {Image, Transformation} from 'cloudinary-react';
 import API from 'constants/api';
 import Modal from 'react-responsive-modal';
 import EditMessage from "../Modal/EditMessage";
+import ReplyMessage from "../Modal/ReplyMessage";
 
 export default class RestaurantDetail extends Component {
     constructor(props) {
@@ -26,14 +27,15 @@ export default class RestaurantDetail extends Component {
             dish: 0,
             userInfo: 0,
             comments: 0,
-            reply: [],
+            reply: false,
             checkComment: 0,
             checkLike: 0,
             subscribe: [],
             countRating: 0,
             countLikeRestaurant: 0,
             like: 0,
-            show: false
+            show: false,
+            value: '',
         };
         this.changeRating = this.changeRating.bind(this);
         this.getComment = this.getComment.bind(this);
@@ -42,11 +44,15 @@ export default class RestaurantDetail extends Component {
         this.getSubscribe = this.getSubscribe.bind(this);
         this.getCountRating = this.getCountRating.bind(this);
         this.getCountLikeRestaurant = this.getCountLikeRestaurant.bind(this);
-        this.getReplyComment = this.getReplyComment.bind(this);
         this.checkLike = this.checkLike.bind(this);
         this.focusTextInput = this.focusTextInput.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
         this.replyRef = React.createRef();
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
     }
 
     componentDidMount() {
@@ -77,9 +83,15 @@ export default class RestaurantDetail extends Component {
         this.getComment();
     };
 
+    onCloseModalReply = () => {
+        this.setState({ reply: false });
+        this.getComment();
+    };
+
     focusTextInput() {
-        this.replyRef.focus();
-        console.log(this.replyRef.current.focus());
+        console.log(this.state.value);
+        return this.state.value;
+
     }
 
     getUser() {
@@ -141,21 +153,6 @@ export default class RestaurantDetail extends Component {
             .catch(
                 error => console.log('Check comments: error!')
             );
-    }
-
-    postReply(reply) {
-        reply.set('content', this.focusTextInput());
-        axios({
-            method: 'post',
-            url: API + '/api/comments',
-            data: reply,
-            headers: {'Content-Type': 'multipart/form-data'}
-        })
-            .then(response => {
-                console.log("replied!");
-                this.getComment();
-            })
-            .catch(error => console.log("reply : error!"));
     }
 
     getSubscribe() {
@@ -318,15 +315,6 @@ export default class RestaurantDetail extends Component {
             );
     }
 
-    getReplyComment(commentId) {
-        axios.get(API + '/api/comments/' + commentId)
-            .then(
-                response => {
-                    this.setState({reply: [...this.state.reply, 'ngulol']});
-                })
-            .catch(error => console.log('replyComment: error!'));
-    }
-
     postNotification(user_id, type_id, content) {
         console.log(user_id);
         let notification = new FormData();
@@ -403,6 +391,10 @@ export default class RestaurantDetail extends Component {
                         replyCmt = comment.reply;
                         if (comment.no_of_reply !== 0) {
                             replies = (replyCmt || []).map((reply) => {
+
+
+
+                                //child 1
                                 //edit & delete button
                                 let optionButton = <div></div>;
                                 if (sessionStorage.getItem('id_user')) {
@@ -480,9 +472,13 @@ export default class RestaurantDetail extends Component {
                                         </p>
                                         <p className="col-1"></p>
                                         <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
-                                        <p className="col-2"><i className="fa fa-comment"/> Reply {reply.no_of_reply}
+                                        <p className="col-2"><i className="fa fa-comment" onClick={()=>this.setState({reply: reply.id})}/> Reply {reply.no_of_reply}
                                         </p>
                                         <p className="col-2"><i className="fa fa-flag"/> Report</p>
+                                        <Modal open={this.state.reply === reply.id} onClose={this.onCloseModalReply} center>
+                                            <ReplyMessage messageId={reply.id} userInfo={this.state.userInfo}/>
+                                        </Modal>
+                                        {replies_2}
                                     </div>
                                 );
                             });
@@ -507,32 +503,6 @@ export default class RestaurantDetail extends Component {
                                     {replies}
                                 </div>
                                 <div className="col-1"></div>
-                                <div className="contact-form-area col-11">
-                                    <div className="row">
-                                        <div className="col-1">
-                                            <div>
-                                                <Image className="avatar"
-                                                       publicId={this.state.userInfo.image_url}>
-                                                </Image>
-                                            </div>
-                                        </div>
-                                        <div className="col-11">
-                                            <input name="reply" className="form-control" id="reply"
-                                                   placeholder="Reply"
-                                                   defaultValue={""} style={{borderRadius: "15px"}}
-                                                   ref={this.replyRef}/>
-                                        </div>
-                                        <div className="col-12">
-                                            <button className="btn delicious-btn mt-30"
-                                                    onClick={() => {
-                                                        this.postReply(replyForm);
-                                                        this.postNotification(comment.user.id, 3, this.state.userInfo.username + ' replied your comment')
-                                                    }} type="submit"
-                                                    style={{float: "right", fontSize: "15px"}}>Reply
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>;
                     }
 
@@ -614,9 +584,12 @@ export default class RestaurantDetail extends Component {
                                         </p>
                                         <p className="col-1"></p>
                                         <p className="col-2">{likeButton} Like {comment.no_of_like}</p>
-                                        <p className="col-2"><i className="fa fa-comment"/> Reply {comment.no_of_reply}
+                                        <p className="col-2"><i className="fa fa-comment" onClick={()=>this.setState({reply: comment.id})}/> Reply {comment.no_of_reply}
                                         </p>
                                         <p className="col-2"><i className="fa fa-flag"/>Report</p>
+                                        <Modal open={this.state.reply === comment.id} onClose={this.onCloseModalReply} center>
+                                            <ReplyMessage messageId={comment.id} userInfo={this.state.userInfo}/>
+                                        </Modal>
                                         {reply}
                                     </div>
                                 </form>
@@ -777,7 +750,7 @@ export default class RestaurantDetail extends Component {
                                 <div className="col-12">
                                     <div className="receipe-slider">
                                         <Image
-                                            publicId="default_restaurant.jpg">
+                                            publicId={restaurantDetail.cover_url}>
                                         </Image>
                                     </div>
                                 </div>

@@ -133,10 +133,12 @@ export default class Header extends Component {
                                     <div className="classynav">
                                         <ul>
                                             <li className="active"><a href="/">Home</a></li>
-                                            <li>{notification}</li>
+                                            {!this.state.loading ?  <li>{notification}</li> : null
+                                            }
                                             {this.state.loading ? <li><Link to="/logIn">Login</Link></li> : <li><Link
                                                 to="/profile">{this.state.userData.username}</Link></li>}
-                                            {this.state.loading ? null : this.state.userData.admin && <li><a href={API + '/admin'}>Admin</a></li>}
+                                            {this.state.loading ? null : this.state.userData.admin &&
+                                                <li><a href={API + '/admin'}>Admin</a></li>}
                                             {!this.state.loading && <li><Link onClick={() => {
                                                 this.Auth.logout();
                                                 this.setState({loading: true})
@@ -145,9 +147,10 @@ export default class Header extends Component {
                                         {/* Newsletter Form */}
                                         <div className="search-btn">
                                             <i className="fa fa-search" aria-hidden="true" onClick={this.onOpenModal}/>
-                                            <Modal open={this.state.searchModalOpen} center={true} onClose={this.onCloseModal}
-                                            styles={{'modal': {'transform': 'translateY(-20%)'}}}>
-                                            <SearchBox closeModal={this.onCloseModal}/>
+                                            <Modal open={this.state.searchModalOpen} center={true}
+                                                   onClose={this.onCloseModal}
+                                                   styles={{'modal': {'transform': 'translateY(-20%)'}}}>
+                                                <SearchBox closeModal={this.onCloseModal}/>
                                             </Modal>
                                         </div>
                                         <div style={{

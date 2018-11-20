@@ -9,6 +9,7 @@ import 'moment-timezone';
 import {
     Link,
 } from "react-router-dom";
+import {Image} from "cloudinary-react";
 
 export default class Homepage extends Component {
     constructor(props) {
@@ -84,7 +85,9 @@ export default class Homepage extends Component {
                     return (
                         <div className="col-12 col-sm-6 col-lg-4" key={restaurantInfo.id}>
                             <div className="single-best-receipe-area mb-30">
-                                <img src="/img/bg-img/r1.jpg" alt="true"/>
+                                <Image
+                                    publicId={restaurantInfo.cover_url}>
+                                </Image>
                                 <div className="receipe-content">
                                     <Link to={"restaurant/"+restaurantInfo.id}>{restaurantInfo.name}</Link>
                                     <div className="ratings">
@@ -112,11 +115,13 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr5.jpg" alt="true"/>
+                                        <Image
+                                            publicId={restaurantInfo.cover_url}>
+                                        </Image>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
-                                        <span><Moment>{restaurantInfo.created_at}</Moment></span>
+                                        <span><Moment format="YYYY/MM/DD HH:MM">{restaurantInfo.created_at}</Moment></span>
                                         <Link to={"restaurant/" + restaurantInfo.id}>{restaurantInfo.name}</Link>
                                         <div className="ratings">
                                             <StarRatings
