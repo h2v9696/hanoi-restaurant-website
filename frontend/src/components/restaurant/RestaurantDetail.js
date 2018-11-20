@@ -14,6 +14,8 @@ import 'moment-timezone';
 import axios from "axios";
 import {Image, Transformation} from 'cloudinary-react';
 import API from 'constants/api';
+import Modal from 'react-responsive-modal';
+import EditMessage from "../Modal/EditMessage";
 
 export default class RestaurantDetail extends Component {
     constructor(props) {
@@ -30,7 +32,8 @@ export default class RestaurantDetail extends Component {
             subscribe: [],
             countRating: 0,
             countLikeRestaurant: 0,
-            like: 0
+            like: 0,
+            show: false
         };
         this.changeRating = this.changeRating.bind(this);
         this.getComment = this.getComment.bind(this);
@@ -44,11 +47,6 @@ export default class RestaurantDetail extends Component {
         this.focusTextInput = this.focusTextInput.bind(this);
 
         this.replyRef = React.createRef();
-    }
-
-    focusTextInput() {
-        this.replyRef.focus();
-        console.log(this.replyRef.current.focus());
     }
 
     componentDidMount() {
@@ -68,6 +66,20 @@ export default class RestaurantDetail extends Component {
         this.getRating();
         this.checkLike();
         this.getCountLikeRestaurant();
+    }
+
+    onOpenModal = () => {
+        this.setState({ show: true });
+    };
+
+    onCloseModal = () => {
+        this.setState({ show: false });
+        this.getComment();
+    };
+
+    focusTextInput() {
+        this.replyRef.focus();
+        console.log(this.replyRef.current.focus());
     }
 
     getUser() {
@@ -107,20 +119,17 @@ export default class RestaurantDetail extends Component {
             .catch(error => console.log("comment: error!"));
     }
 
-    putComment() {
-        let comment = new FormData();
-        comment.set('content', this.refs.comment.value);
+    deleteComment(commentId) {
         axios({
-            method: 'put',
-            url: API + '/api/comments/' + this.state.checkComment[0].id,
-            data: comment,
+            method: 'delete',
+            url: API + '/api/comments/' + commentId,
             headers: {'Content-Type': 'multipart/form-data'}
         })
             .then(response => {
-                console.log("updated comment!");
+                console.log("deleted comment!");
                 this.getComment();
             })
-            .catch(error => console.log("updated comment: error!"));
+            .catch(error => console.log("delete comment: error!"));
     }
 
     checkComment() {
@@ -318,7 +327,7 @@ export default class RestaurantDetail extends Component {
             .catch(error => console.log('replyComment: error!'));
     }
 
-    postNotification(user_id, type_id, content){
+    postNotification(user_id, type_id, content) {
         console.log(user_id);
         let notification = new FormData();
         notification.set('user_id', user_id);
@@ -393,8 +402,25 @@ export default class RestaurantDetail extends Component {
                     if (comment.no_of_reply > 0) {
                         replyCmt = comment.reply;
                         if (comment.no_of_reply !== 0) {
-                            console.log(1111);
                             replies = (replyCmt || []).map((reply) => {
+                                //edit & delete button
+                                let optionButton = <div></div>;
+                                if (sessionStorage.getItem('id_user')) {
+                                    if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
+                                        optionButton =
+                                            <p>
+                                                <Modal open={this.state.show === reply.id} onClose={this.onCloseModal} center>
+                                                    <EditMessage content={reply.content} messageId={reply.id}/>
+                                                </Modal>
+                                                <i className="fa fa-edit" style={{cursor: "pointer"}} onClick={()=>this.setState({show: reply.id})}/> Edit &emsp;
+                                                <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
+                                                    if (window.confirm('You really want to delete this message?')) {
+                                                        this.deleteComment(reply.id)
+                                                    }
+                                                }}/> Delete</p>;
+                                    }
+                                }
+
                                 //like reply button color
                                 let likeReplyStyle = {color: 'grey', cursor: 'pointer'};
                                 let likedReply = 0;
@@ -412,7 +438,10 @@ export default class RestaurantDetail extends Component {
                                 if (sessionStorage.getItem('id_user')) {
                                     if (likedReply === 0) {
                                         likeReplyButton = <i className="fa fa-thumbs-up"
-                                                             onClick={() => {this.postLike(reply.id, 2); this.postNotification(reply.user.id, 2, this.state.userInfo.username + ' likes your reply comment')}}
+                                                             onClick={() => {
+                                                                 this.postLike(reply.id, 2);
+                                                                 this.postNotification(reply.user.id, 2, this.state.userInfo.username + ' likes your reply comment')
+                                                             }}
                                                              style={likeReplyStyle}/>
                                     }
                                     if (likedReply !== 0) {
@@ -423,8 +452,10 @@ export default class RestaurantDetail extends Component {
                                 }
                                 if (!sessionStorage.getItem('id_user')) {
                                     likeReplyButton = <i className="fa fa-thumbs-up"
-                                                         style={{color: 'grey', cursor: 'pointer'}} data-toggle="tooltip"
-                                                         title="You must log in to like this comment!" data-placement="top" disabled/>
+                                                         style={{color: 'grey', cursor: 'pointer'}}
+                                                         data-toggle="tooltip"
+                                                         title="You must log in to like this comment!"
+                                                         data-placement="top" disabled/>
                                 }
 
                                 return (
@@ -435,17 +466,23 @@ export default class RestaurantDetail extends Component {
                                             </div>
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
-                                            <h3 style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                            <div className="row">
+                                                <h3 className="col-9"
+                                                    style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                <div className="col-3">{optionButton}</div>
+                                            </div>
                                             <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
                                         </div>
                                         <p className="col-1"></p>
-                                        <p className="col-2 time"><Moment>{reply.created_at}</Moment></p>
-                                        <p className="col-2 time">Updated at <Moment>{reply.updated_at}</Moment></p>
+                                        <p className="col-2 time"><Moment
+                                            format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment></p>
+                                        <p className="col-2 time">Updated: <Moment fromNow>{reply.updated_at}</Moment>
+                                        </p>
                                         <p className="col-1"></p>
                                         <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
-                                        <p className="col-2"><i className="fa fa-comment"
-                                                                style={{}}/> Reply {reply.no_of_reply}</p>
-                                        <p className="col-2"><i className="fa fa-flag" style={{}}/> Report</p>
+                                        <p className="col-2"><i className="fa fa-comment"/> Reply {reply.no_of_reply}
+                                        </p>
+                                        <p className="col-2"><i className="fa fa-flag"/> Report</p>
                                     </div>
                                 );
                             });
@@ -487,7 +524,10 @@ export default class RestaurantDetail extends Component {
                                         </div>
                                         <div className="col-12">
                                             <button className="btn delicious-btn mt-30"
-                                                    onClick={() => {this.postReply(replyForm); this.postNotification(comment.user.id, 3, this.state.userInfo.username + ' replied your comment')}} type="submit"
+                                                    onClick={() => {
+                                                        this.postReply(replyForm);
+                                                        this.postNotification(comment.user.id, 3, this.state.userInfo.username + ' replied your comment')
+                                                    }} type="submit"
                                                     style={{float: "right", fontSize: "15px"}}>Reply
                                             </button>
                                         </div>
@@ -513,7 +553,10 @@ export default class RestaurantDetail extends Component {
                     if (sessionStorage.getItem('id_user')) {
                         if (liked === 0) {
                             likeButton = <i className="fa fa-thumbs-up"
-                                            onClick={() => {this.postLike(comment.id, 2); this.postNotification(comment.user.id, 2, this.state.userInfo.username + ' likes your comment')}}
+                                            onClick={() => {
+                                                this.postLike(comment.id, 2);
+                                                this.postNotification(comment.user.id, 2, this.state.userInfo.username + ' likes your comment')
+                                            }}
                                             style={likeStyle}/>
                         }
                         if (liked !== 0) {
@@ -528,6 +571,24 @@ export default class RestaurantDetail extends Component {
                                         title="You must log in to like this comment!" data-placement="top" disabled/>
                     }
 
+                    //edit & delete button
+                    let optionButton = <div></div>;
+                    if (sessionStorage.getItem('id_user')) {
+                        if (sessionStorage.getItem('id_user') - comment.user.id === 0) {
+                            optionButton =
+                                <p>
+                                    <Modal open={this.state.show === comment.id} onClose={this.onCloseModal} center>
+                                        <EditMessage content={comment.content} messageId={comment.id}/>
+                                    </Modal>
+                                    <i className="fa fa-edit" style={{cursor: "pointer"}} onClick={()=>this.setState({show: comment.id})}/> Edit &emsp;
+                                    <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
+                                    if (window.confirm('You really want to delete this message?')) {
+                                        this.deleteComment(comment.id)
+                                    }
+                                }}/> Delete</p>;
+                        }
+                    }
+
                     return (
                         <div className="col-12" key={comment.id}>
                             <div className="contact-form-area">
@@ -539,16 +600,22 @@ export default class RestaurantDetail extends Component {
                                             </div>
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
-                                            <h3 style={{fontWeight: "bold !important"}}>{comment.user.username}</h3>
+                                            <div className="row">
+                                                <h3 className="col-9"
+                                                    style={{fontWeight: "bold !important"}}>{comment.user.username}</h3>
+                                                <div className="col-3">{optionButton}</div>
+                                            </div>
                                             <h4 style={{fontWeight: "bold !important"}}>{comment.content}</h4>
                                         </div>
                                         <p className="col-1"></p>
-                                        <p className="col-2 time"><Moment>{comment.created_at}</Moment></p>
-                                        <p className="col-2 time">Updated at <Moment>{comment.updated_at}</Moment></p>
+                                        <p className="col-2 time"><Moment
+                                            format="YYYY/MM/DD HH:MM">{comment.created_at}</Moment></p>
+                                        <p className="col-2 time">Updated: <Moment fromNow>{comment.updated_at}</Moment>
+                                        </p>
                                         <p className="col-1"></p>
                                         <p className="col-2">{likeButton} Like {comment.no_of_like}</p>
-                                        <p className="col-2"><i className="fa fa-comment"
-                                                                style={{}}/> Reply {comment.no_of_reply}</p>
+                                        <p className="col-2"><i className="fa fa-comment"/> Reply {comment.no_of_reply}
+                                        </p>
                                         <p className="col-2"><i className="fa fa-flag"/>Report</p>
                                         {reply}
                                     </div>
@@ -683,8 +750,10 @@ export default class RestaurantDetail extends Component {
                 }}/> {this.state.countLikeRestaurant} </h2>
             }
 
+            const { show } = this.state;
             return (
                 <div>
+                    <title>{restaurantDetail.name}</title>
                     {/* ##### Header Area End ##### */}
                     {/* ##### Breadcumb Area Start ##### */}
                     <div className="breadcumb-area bg-img bg-overlay"

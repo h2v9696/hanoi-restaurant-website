@@ -22,12 +22,22 @@ export default class show extends Component {
         error => console.log('RestaurantDetail: error!')
       )
   }
-
+  componentDidUpdate(prevProps, prevState) {
+      prevProps.match.params.id !== this.props.match.params.id &&
+      axios.get(API+'/api/restaurants/' + this.props.match.params.id)
+          .then(
+              response => {
+                  this.setState({restaurant: response.data.data})
+              })
+          .catch(
+              error => console.log('RestaurantDetail: error!')
+          )
+  }
   render () {
     return (
       <React.Fragment>
         <Header/>
-        <RestaurantDetail {...this.props} restaurantDetail={this.state.restaurant}/>
+        <RestaurantDetail key={this.props.match.params.id} {...this.props} restaurantDetail={this.state.restaurant}/>
         <Footer/>
       </React.Fragment>
     )

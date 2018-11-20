@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {Link,} from 'react-router-dom'
 import {AuthService} from 'components/AuthServices'
+import Modal from 'react-responsive-modal'
+import SearchBox from 'components/SearchBox'
 import API from '../../constants/api'
 import axios from "axios";
 import Moment from 'react-moment';
@@ -14,7 +16,8 @@ export default class Header extends Component {
             userData: null,
             notification: [],
             showNotification: false,
-            second: 0
+            second: 0,
+            searchModalOpen: false,
         };
         this.Auth = new AuthService();
         this.getNotification = this.getNotification.bind(this);
@@ -32,6 +35,14 @@ export default class Header extends Component {
 
     componentWillUnmount() {
         clearInterval(this.interval);
+    }
+
+    onOpenModal = () => {
+        this.setState({searchModalOpen: true})
+    }
+
+    onCloseModal = () => {
+        this.setState({searchModalOpen: false})
     }
 
     getNotification() {
@@ -122,10 +133,10 @@ export default class Header extends Component {
                                     <div className="classynav">
                                         <ul>
                                             <li className="active"><a href="/">Home</a></li>
-                                            <li><a href="">Restaurant</a></li>
                                             <li>{notification}</li>
                                             {this.state.loading ? <li><Link to="/logIn">Login</Link></li> : <li><Link
                                                 to="/profile">{this.state.userData.username}</Link></li>}
+                                            {this.state.loading ? null : this.state.userData.admin && <li><a href={API + '/admin'}>Admin</a></li>}
                                             {!this.state.loading && <li><Link onClick={() => {
                                                 this.Auth.logout();
                                                 this.setState({loading: true})
@@ -133,7 +144,11 @@ export default class Header extends Component {
                                         </ul>
                                         {/* Newsletter Form */}
                                         <div className="search-btn">
-                                            <i className="fa fa-search" aria-hidden="true"/>
+                                            <i className="fa fa-search" aria-hidden="true" onClick={this.onOpenModal}/>
+                                            <Modal open={this.state.searchModalOpen} center={true} onClose={this.onCloseModal}
+                                            styles={{'modal': {'transform': 'translateY(-20%)'}}}>
+                                            <SearchBox closeModal={this.onCloseModal}/>
+                                            </Modal>
                                         </div>
                                         <div style={{
                                             height: "auto",
@@ -169,7 +184,6 @@ export default class Header extends Component {
                         </div>
                     </div>
                 </div>
-
             </header>
         )
     }
