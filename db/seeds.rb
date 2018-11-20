@@ -17,17 +17,6 @@ end
 puts "#{@count} Users created"
 
 @count = 0
-if ActiveRecord::Base.connection.table_exists? :admins
-  ActiveRecord::Base.connection.execute 'TRUNCATE TABLE admins'
-  Admin.create(
-    username: 'admin',
-    encrypted_password: BCrypt::Password.create('123456')
-  )
-  @count += 1
-end
-puts "#{@count} Admins created"
-
-@count = 0
 if ActiveRecord::Base.connection.table_exists? :restaurants
   ActiveRecord::Base.connection.execute 'TRUNCATE TABLE restaurants'
   20.times do
@@ -51,7 +40,7 @@ if ActiveRecord::Base.connection.table_exists? :dishes
         restaurant_id: restaurant.id,
         name: Faker::Food.unique.dish,
         price: rand(20..100) * 1000,
-        image_url: 'https://source.unsplash.com/user/foodess'
+        image_url: 'default_restaurant' + rand(1..3).to_s
       )
       @count += 1
     end
