@@ -22,7 +22,9 @@ export default class Homepage extends Component {
         if (this.props.restaurantInfo !== 0) {
             const restaurant = this.props.restaurantInfo;
 
-            const restaurantTop3 = restaurant.map((restaurantInfo, index)=>{
+            const restaurantTop3 = restaurant
+                .sort((a, b)=>a.rating_avg < b.rating_avg)
+                .map((restaurantInfo, index)=>{
                 if (index <= 2){
                     return (
                         <div key={restaurantInfo.id}>
@@ -42,7 +44,7 @@ export default class Homepage extends Component {
                                             </a>
                                             <div className="ratings">
                                                 <StarRatings
-                                                    rating={restaurantInfo.id%5}
+                                                    rating={restaurantInfo.rating_avg}
                                                     starRatedColor="gold"
                                                     starDimension="20px"
                                                     starSpacing="3px"
@@ -87,7 +89,7 @@ export default class Homepage extends Component {
                                     <Link to={"restaurant/"+restaurantInfo.id}>{restaurantInfo.name}</Link>
                                     <div className="ratings">
                                         <StarRatings
-                                            rating={restaurantInfo.id%5}
+                                            rating={restaurantInfo.rating_avg}
                                             starRatedColor="gold"
                                             starDimension="15px"
                                             starSpacing="2px"
@@ -118,7 +120,7 @@ export default class Homepage extends Component {
                                         <Link to={"restaurant/" + restaurantInfo.id}>{restaurantInfo.name}</Link>
                                         <div className="ratings">
                                             <StarRatings
-                                                rating={restaurantInfo.id%5}
+                                                rating={restaurantInfo.rating_avg}
                                                 starRatedColor="gold"
                                                 starDimension="10px"
                                                 starSpacing="1px"
@@ -171,39 +173,9 @@ export default class Homepage extends Component {
                             </Slider>
                         </div>
                     </section>
+                    <br/>
+                    <br/>
 
-                    <section className="top-catagory-area section-padding-80-0">
-                        <div className="container">
-                            <div className="row">
-                                {/* Top Catagory Area */}
-                                <div className="col-12 col-lg-6">
-                                    <div className="single-top-catagory">
-                                        <img src="/img/bg-img/bg2.jpg" alt="true"/>
-                                        {/* Content */}
-                                        <div className="top-cta-content">
-                                            <h3>Hanoi's restaurants</h3>
-                                            <h6>Simple &amp; Delicios</h6>
-                                            <a href="receipe-post.html" className="btn delicious-btn">See Full
-                                                Restaurants</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Top Catagory Area */}
-                                <div className="col-12 col-lg-6">
-                                    <div className="single-top-catagory">
-                                        <img src="/img/bg-img/bg3.jpg" alt="true"/>
-                                        {/* Content */}
-                                        <div className="top-cta-content">
-                                            <h3>Hochiminh's restaurants</h3>
-                                            <h6>Simple &amp; Delicios</h6>
-                                            <a href="receipe-post.html" className="btn delicious-btn">See Full
-                                                Restaurants</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                     {/* ##### Top Catagory Area End ##### */}
                     {/* ##### Best Receipe Area Start ##### */}
                     <section className="best-receipe-area">

@@ -174,11 +174,6 @@ export default class ProfileEdit extends Component {
                     <input type="password" value={this.state.rePassword}
                            onChange={e => this.onRePasswordChange(e.target.value)}/>
                 </div>
-                <div className="form-grp">
-                    <label>Old Password</label>
-                    <input type="password" value={this.state.oldPassword}
-                           onChange={e => this.onOldPasswordChange(e.target.value)}/>
-                </div>
                 <div className="errors">
                     {this.state.validate.errors.map(e => <p style={{color: 'red'}}>{e}</p>)}
                 </div>

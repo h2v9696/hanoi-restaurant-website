@@ -27,6 +27,7 @@ export default class index extends Component {
   render () {
     return (
       <React.Fragment>
+        <title>Restaurant</title>
         <Header {...this.props}/>
         <Homepage {...this.props} restaurantInfo={this.state.restaurant}/>
         <Footer/>
