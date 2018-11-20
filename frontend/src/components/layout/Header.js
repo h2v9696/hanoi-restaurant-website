@@ -132,7 +132,7 @@ export default class Header extends Component {
                                     {/* Nav Start */}
                                     <div className="classynav">
                                         <ul>
-                                            <li className="active"><a href="/">Home</a></li>
+                                            <li><a href="/">Home</a></li>
                                             {!this.state.loading ?  <li>{notification}</li> : null
                                             }
                                             {this.state.loading ? <li><Link to="/logIn">Login</Link></li> : <li><Link
@@ -167,23 +167,6 @@ export default class Header extends Component {
                                     {/* Nav End */}
                                 </div>
                             </nav>
-                        </div>
-                    </div>
-                </div>
-                {/* Navbar Area */}
-                <div className="top-header-area">
-                    <div className="container h-100">
-                        <div className="row h-100 align-items-center justify-content-between">
-                            <div className="col-12 col-sm-6">
-                                <div className="top-social-info text-right">
-                                    <a href="#"><i className="fa fa-pinterest" aria-hidden="true"/></a>
-                                    <a href="#"><i className="fa fa-facebook" aria-hidden="true"/></a>
-                                    <a href="#"><i className="fa fa-twitter" aria-hidden="true"/></a>
-                                    <a href="#"><i className="fa fa-dribbble" aria-hidden="true"/></a>
-                                    <a href="#"><i className="fa fa-behance" aria-hidden="true"/></a>
-                                    <a href="#"><i className="fa fa-linkedin" aria-hidden="true"/></a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,9 @@ import {
     Link,
 } from "react-router-dom";
 import {Image} from "cloudinary-react";
+import cloudinary from 'cloudinary-core'
 
+const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'dzd4yfu79'})
 export default class Homepage extends Component {
     constructor(props) {
         super(props);
@@ -22,16 +24,15 @@ export default class Homepage extends Component {
     render() {
         if (this.props.restaurantInfo !== 0) {
             const restaurant = this.props.restaurantInfo;
-
-            const restaurantTop3 = restaurant
-                .sort((a, b)=>a.rating_avg < b.rating_avg)
+            const restaurantTop3 = [].concat(restaurant
+                .sort((a, b)=>b.rating_avg - a.rating_avg))
                 .map((restaurantInfo, index)=>{
                 if (index <= 2){
                     return (
                         <div key={restaurantInfo.id}>
                             <div style={{
                                 height: "700px",
-                                backgroundImage: `url(/img/bg-img/bg3.jpg)`,
+                                backgroundImage: `url(${cloudinaryCore.url(restaurantInfo.cover_url)})`,
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'noRepeat'
@@ -78,8 +79,8 @@ export default class Homepage extends Component {
                 }
             });
 
-            const restaurantTop6 = restaurant
-                .sort((a, b)=>a.name < b.name)
+            const restaurantTop6 = [].concat(restaurant
+                .sort((a, b)=> a.name.localeCompare(b.name)))
                 .map((restaurantInfo, index)=>{
                 if (index <= 5){
                     return (
@@ -106,8 +107,8 @@ export default class Homepage extends Component {
                 }
             });
 
-            const newRestaurant= restaurant
-                .sort((a, b)=>a.created_at > b.created_at)
+            const newRestaurant= [].concat(restaurant
+                .sort((a, b)=>a.created_at > b.created_at))
                 .map((restaurantInfo, index)=>{
                     if (index <= 8) {
                         return (
