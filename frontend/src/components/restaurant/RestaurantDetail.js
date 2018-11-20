@@ -14,6 +14,9 @@ import 'moment-timezone';
 import axios from "axios";
 import {Image, Transformation} from 'cloudinary-react';
 import API from 'constants/api';
+import Modal from 'react-responsive-modal';
+import EditMessage from "../Modal/EditMessage";
+import ReplyMessage from "../Modal/ReplyMessage";
 
 export default class RestaurantDetail extends Component {
     constructor(props) {
@@ -24,13 +27,15 @@ export default class RestaurantDetail extends Component {
             dish: 0,
             userInfo: 0,
             comments: 0,
-            reply: [],
+            reply: false,
             checkComment: 0,
             checkLike: 0,
             subscribe: [],
             countRating: 0,
             countLikeRestaurant: 0,
-            like: 0
+            like: 0,
+            show: false,
+            value: '',
         };
         this.changeRating = this.changeRating.bind(this);
         this.getComment = this.getComment.bind(this);
@@ -39,8 +44,15 @@ export default class RestaurantDetail extends Component {
         this.getSubscribe = this.getSubscribe.bind(this);
         this.getCountRating = this.getCountRating.bind(this);
         this.getCountLikeRestaurant = this.getCountLikeRestaurant.bind(this);
-        this.getReplyComment = this.getReplyComment.bind(this);
         this.checkLike = this.checkLike.bind(this);
+        this.focusTextInput = this.focusTextInput.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+
+        this.replyRef = React.createRef();
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
     }
 
     componentDidMount() {
@@ -60,6 +72,26 @@ export default class RestaurantDetail extends Component {
         this.getRating();
         this.checkLike();
         this.getCountLikeRestaurant();
+    }
+
+    onOpenModal = () => {
+        this.setState({show: true});
+    };
+
+    onCloseModal = () => {
+        this.setState({show: false});
+        this.getComment();
+    };
+
+    onCloseModalReply = () => {
+        this.setState({reply: false});
+        this.getComment();
+    };
+
+    focusTextInput() {
+        console.log(this.state.value);
+        return this.state.value;
+
     }
 
     getUser() {
@@ -99,20 +131,17 @@ export default class RestaurantDetail extends Component {
             .catch(error => console.log("comment: error!"));
     }
 
-    putComment() {
-        let comment = new FormData();
-        comment.set('content', this.refs.comment.value);
+    deleteComment(commentId) {
         axios({
-            method: 'put',
-            url: API + '/api/comments/' + this.state.checkComment[0].id,
-            data: comment,
+            method: 'delete',
+            url: API + '/api/comments/' + commentId,
             headers: {'Content-Type': 'multipart/form-data'}
         })
             .then(response => {
-                console.log("updated comment!");
+                console.log("deleted comment!");
                 this.getComment();
             })
-            .catch(error => console.log("updated comment: error!"));
+            .catch(error => console.log("delete comment: error!"));
     }
 
     checkComment() {
@@ -241,7 +270,7 @@ export default class RestaurantDetail extends Component {
             .catch(error => console.log('countLikeRestaurant: error!'));
     }
 
-    postLike (objectId, objectType) {
+    postLike(objectId, objectType) {
         let like = new FormData();
         like.set('user_id', sessionStorage.getItem('id_user'));
         like.set('object_type', objectType);
@@ -260,7 +289,7 @@ export default class RestaurantDetail extends Component {
             .catch(error => console.log("like: error!"));
     }
 
-    deleteLike (objectId) {
+    deleteLike(objectId) {
         axios({
             method: 'delete',
             url: API + '/api/likes/' + objectId,
@@ -286,13 +315,22 @@ export default class RestaurantDetail extends Component {
             );
     }
 
-    getReplyComment(commentId) {
-        axios.get(API + '/api/comments/' + commentId)
-            .then(
-                response => {
-                    this.setState({reply: [...this.state.reply, 'ngulol']});
-                })
-            .catch(error => console.log('replyComment: error!'));
+    postNotification(user_id, type_id, content) {
+        console.log(user_id);
+        let notification = new FormData();
+        notification.set('user_id', user_id);
+        notification.set('type_id', type_id);
+        notification.set('content', content);
+        axios({
+            method: 'post',
+            url: API + '/api/notifications',
+            data: notification,
+            headers: {'Content-Type': 'multipart/form-data'}
+        })
+            .then(response => {
+                console.log("send notification!");
+            })
+            .catch(error => console.log("notification: error!"));
     }
 
     render() {
@@ -326,7 +364,7 @@ export default class RestaurantDetail extends Component {
                             <div className="single-best-receipe-area mb-30">
                                 <img className="dish_image" src={dish.image_url} alt="true"/>
                                 <div className="receipe-content">
-                                    <a href="receipe-post.html">
+                                    <a>
                                         {dish.name}
                                     </a>
                                     <div className="ratings" style={{color: "grey"}}>
@@ -350,11 +388,442 @@ export default class RestaurantDetail extends Component {
                     let replyCmt = 0;
                     //reply
                     if (comment.no_of_reply > 0) {
-                        () => this.getReplyComment(comment.id);
-                        replyCmt = this.state.reply;
-                        if (replyCmt !== 0) {
-                            console.log(1111);
-                            replies = (replyCmt.reply || []).map((reply) => {
+                        replyCmt = comment.reply;
+                        if (comment.no_of_reply !== 0) {
+                            replies = (replyCmt || []).map((reply) => {
+
+                                let replies_2 = [];
+                                let replyCmt_2 = 0;
+                                //reply 2
+                                if (reply.no_of_reply > 0) {
+                                    replyCmt_2 = reply.reply;
+                                    if (reply.no_of_reply !== 0) {
+                                        replies_2 = (replyCmt_2 || []).map((reply) => {
+
+                                            let replies_3 = [];
+                                            let replyCmt_3 = 0;
+                                            //reply 3
+                                            if (reply.no_of_reply > 0) {
+                                                replyCmt_3 = reply.reply;
+                                                if (reply.no_of_reply !== 0) {
+                                                    replies_3 = (replyCmt_3 || []).map((reply) => {
+
+                                                        let replies_4 = [];
+                                                        let replyCmt_4 = 0;
+                                                        //reply 4
+                                                        if (reply.no_of_reply > 0) {
+                                                            replyCmt_4 = reply.reply;
+                                                            if (reply.no_of_reply !== 0) {
+                                                                replies_4 = (replyCmt_4 || []).map((reply) => {
+
+                                                                    //child 4
+                                                                    //edit & delete button
+                                                                    let optionButton = <div></div>;
+                                                                    if (sessionStorage.getItem('id_user')) {
+                                                                        if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
+                                                                            optionButton =
+                                                                                <p>
+                                                                                    <Modal
+                                                                                        open={this.state.show === reply.id}
+                                                                                        onClose={this.onCloseModal}
+                                                                                        center>
+                                                                                        <EditMessage
+                                                                                            content={reply.content}
+                                                                                            messageId={reply.id}/>
+                                                                                    </Modal>
+                                                                                    <i className="fa fa-edit"
+                                                                                       style={{cursor: "pointer"}}
+                                                                                       onClick={() => this.setState({show: reply.id})}/> Edit &emsp;
+                                                                                    <i className="fa fa-trash"
+                                                                                       style={{cursor: "pointer"}}
+                                                                                       onClick={() => {
+                                                                                           if (window.confirm('You really want to delete this message?')) {
+                                                                                               this.deleteComment(reply.id)
+                                                                                           }
+                                                                                       }}/> Delete</p>;
+                                                                        }
+                                                                    }
+
+                                                                    //like reply button color
+                                                                    let likeReplyStyle = {
+                                                                        color: 'grey',
+                                                                        cursor: 'pointer'
+                                                                    };
+                                                                    let likedReply = 0;
+                                                                    let likeReplyId = 0;
+                                                                    (this.state.checkLike || []).map((like) => {
+                                                                        if (like.object_id === reply.id && like.object_type === 2) {
+                                                                            likedReply = likedReply + 1;
+                                                                            likeReplyId = like.id;
+                                                                            likeReplyStyle = {
+                                                                                color: 'blue',
+                                                                                cursor: 'pointer'
+                                                                            };
+                                                                        }
+                                                                    });
+
+                                                                    //like reply and unlike action
+                                                                    let likeReplyButton = <p></p>;
+                                                                    if (sessionStorage.getItem('id_user')) {
+                                                                        if (likedReply === 0) {
+                                                                            likeReplyButton =
+                                                                                <i className="fa fa-thumbs-up"
+                                                                                   onClick={() => {
+                                                                                       this.postLike(reply.id, 2);
+                                                                                       this.postNotification(reply.user.id, 2, this.state.userInfo.username + ' likes your reply comment')
+                                                                                   }}
+                                                                                   style={likeReplyStyle}/>
+                                                                        }
+                                                                        if (likedReply !== 0) {
+                                                                            likeReplyButton =
+                                                                                <i className="fa fa-thumbs-up"
+                                                                                   onClick={() => this.deleteLike(likeReplyId)}
+                                                                                   style={likeReplyStyle}/>
+                                                                        }
+                                                                    }
+                                                                    if (!sessionStorage.getItem('id_user')) {
+                                                                        likeReplyButton = <i className="fa fa-thumbs-up"
+                                                                                             style={{
+                                                                                                 color: 'grey',
+                                                                                                 cursor: 'pointer'
+                                                                                             }}
+                                                                                             data-toggle="tooltip"
+                                                                                             title="You must log in to like this comment!"
+                                                                                             data-placement="top"
+                                                                                             disabled/>
+                                                                    }
+
+                                                                    return (
+                                                                        <div className="row commentPost" key={reply.id}>
+                                                                            <div className="col-1">
+                                                                                <div>
+                                                                                    <Image className="avatar-4"
+                                                                                           publicId={reply.user.image_url}></Image>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-11"
+                                                                                 style={{textAlign: "justify"}}>
+                                                                                <div className="row">
+                                                                                    <h3 className="col-8"
+                                                                                        style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                                                    <div
+                                                                                        className="col-4">{optionButton}</div>
+                                                                                </div>
+                                                                                <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
+                                                                            </div>
+                                                                            <p className="col-1"></p>
+                                                                            <p className="col-2 time"><Moment
+                                                                                format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment>
+                                                                            </p>
+                                                                            <p className="col-2 time">Updated: <Moment
+                                                                                fromNow>{reply.updated_at}</Moment>
+                                                                            </p>
+                                                                            <p className="col-1"></p>
+                                                                            <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
+                                                                            <p className="col-2"><i
+                                                                                className="fa fa-comment"
+                                                                                data-toggle="tooltip"
+                                                                                title="You can't reply more than 5 times!"
+                                                                                data-placement="top"
+                                                                                style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
+                                                                            </p>
+                                                                            <p className="col-2"><i
+                                                                                className="fa fa-flag"/> Report</p>
+                                                                        </div>
+                                                                    );
+                                                                });
+                                                            }
+                                                        }
+
+                                                        else {
+                                                            replies_4 = <div></div>;
+                                                        }
+                                                        //child 3
+                                                        //edit & delete button
+                                                        let optionButton = <div></div>;
+                                                        if (sessionStorage.getItem('id_user')) {
+                                                            if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
+                                                                optionButton =
+                                                                    <p>
+                                                                        <Modal open={this.state.show === reply.id}
+                                                                               onClose={this.onCloseModal} center>
+                                                                            <EditMessage content={reply.content}
+                                                                                         messageId={reply.id}/>
+                                                                        </Modal>
+                                                                        <i className="fa fa-edit"
+                                                                           style={{cursor: "pointer"}}
+                                                                           onClick={() => this.setState({show: reply.id})}/> Edit &emsp;
+                                                                        <i className="fa fa-trash"
+                                                                           style={{cursor: "pointer"}} onClick={() => {
+                                                                            if (window.confirm('You really want to delete this message?')) {
+                                                                                this.deleteComment(reply.id)
+                                                                            }
+                                                                        }}/> Delete</p>;
+                                                            }
+                                                        }
+
+                                                        //like reply button color
+                                                        let likeReplyStyle = {color: 'grey', cursor: 'pointer'};
+                                                        let likedReply = 0;
+                                                        let likeReplyId = 0;
+                                                        (this.state.checkLike || []).map((like) => {
+                                                            if (like.object_id === reply.id && like.object_type === 2) {
+                                                                likedReply = likedReply + 1;
+                                                                likeReplyId = like.id;
+                                                                likeReplyStyle = {color: 'blue', cursor: 'pointer'};
+                                                            }
+                                                        });
+
+                                                        //like reply and unlike action
+                                                        let likeReplyButton = <p></p>;
+                                                        if (sessionStorage.getItem('id_user')) {
+                                                            if (likedReply === 0) {
+                                                                likeReplyButton = <i className="fa fa-thumbs-up"
+                                                                                     onClick={() => {
+                                                                                         this.postLike(reply.id, 2);
+                                                                                         this.postNotification(reply.user.id, 2, this.state.userInfo.username + ' likes your reply comment')
+                                                                                     }}
+                                                                                     style={likeReplyStyle}/>
+                                                            }
+                                                            if (likedReply !== 0) {
+                                                                likeReplyButton = <i className="fa fa-thumbs-up"
+                                                                                     onClick={() => this.deleteLike(likeReplyId)}
+                                                                                     style={likeReplyStyle}/>
+                                                            }
+                                                        }
+                                                        if (!sessionStorage.getItem('id_user')) {
+                                                            likeReplyButton = <i className="fa fa-thumbs-up"
+                                                                                 style={{
+                                                                                     color: 'grey',
+                                                                                     cursor: 'pointer'
+                                                                                 }}
+                                                                                 data-toggle="tooltip"
+                                                                                 title="You must log in to like this comment!"
+                                                                                 data-placement="top" disabled/>
+                                                        }
+
+                                                        return (
+                                                            <div className="row commentPost" key={reply.id}>
+                                                                <div className="col-1">
+                                                                    <div>
+                                                                        <Image className="avatar-3"
+                                                                               publicId={reply.user.image_url}></Image>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-11" style={{textAlign: "justify"}}>
+                                                                    <div className="row">
+                                                                        <h3 className="col-8"
+                                                                            style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                                        <div className="col-4">{optionButton}</div>
+                                                                    </div>
+                                                                    <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
+                                                                </div>
+                                                                <p className="col-1"></p>
+                                                                <p className="col-2 time"><Moment
+                                                                    format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment>
+                                                                </p>
+                                                                <p className="col-2 time">Updated: <Moment
+                                                                    fromNow>{reply.updated_at}</Moment>
+                                                                </p>
+                                                                <p className="col-1"></p>
+                                                                <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
+                                                                <p className="col-2"><i className="fa fa-comment"
+                                                                                        onClick={() => this.setState({reply: reply.id})}
+                                                                                        style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
+                                                                </p>
+                                                                <p className="col-2"><i className="fa fa-flag"/> Report
+                                                                </p>
+                                                                <Modal open={this.state.reply === reply.id}
+                                                                       onClose={this.onCloseModalReply} center>
+                                                                    <ReplyMessage messageId={reply.id}
+                                                                                  userInfo={this.state.userInfo}/>
+                                                                </Modal>
+                                                                <div className="reply col-12 row">
+                                                                    <div className="col-1"></div>
+                                                                    <div className="col-11">
+                                                                        {replies_4}
+                                                                    </div>
+                                                                    <div className="col-1"></div>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    });
+                                                }
+                                            }
+
+                                            else {
+                                                replies_3 = <div></div>;
+                                            }
+
+                                            //child 2
+                                            //edit & delete button
+                                            let optionButton = <div></div>;
+                                            if (sessionStorage.getItem('id_user')) {
+                                                if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
+                                                    optionButton =
+                                                        <p>
+                                                            <Modal open={this.state.show === reply.id}
+                                                                   onClose={this.onCloseModal} center>
+                                                                <EditMessage content={reply.content}
+                                                                             messageId={reply.id}/>
+                                                            </Modal>
+                                                            <i className="fa fa-edit" style={{cursor: "pointer"}}
+                                                               onClick={() => this.setState({show: reply.id})}/> Edit &emsp;
+                                                            <i className="fa fa-trash" style={{cursor: "pointer"}}
+                                                               onClick={() => {
+                                                                   if (window.confirm('You really want to delete this message?')) {
+                                                                       this.deleteComment(reply.id)
+                                                                   }
+                                                               }}/> Delete</p>;
+                                                }
+                                            }
+
+                                            //like reply button color
+                                            let likeReplyStyle = {color: 'grey', cursor: 'pointer'};
+                                            let likedReply = 0;
+                                            let likeReplyId = 0;
+                                            (this.state.checkLike || []).map((like) => {
+                                                if (like.object_id === reply.id && like.object_type === 2) {
+                                                    likedReply = likedReply + 1;
+                                                    likeReplyId = like.id;
+                                                    likeReplyStyle = {color: 'blue', cursor: 'pointer'};
+                                                }
+                                            });
+
+                                            //like reply and unlike action
+                                            let likeReplyButton = <p></p>;
+                                            if (sessionStorage.getItem('id_user')) {
+                                                if (likedReply === 0) {
+                                                    likeReplyButton = <i className="fa fa-thumbs-up"
+                                                                         onClick={() => {
+                                                                             this.postLike(reply.id, 2);
+                                                                             this.postNotification(reply.user.id, 2, this.state.userInfo.username + ' likes your reply comment')
+                                                                         }}
+                                                                         style={likeReplyStyle}/>
+                                                }
+                                                if (likedReply !== 0) {
+                                                    likeReplyButton = <i className="fa fa-thumbs-up"
+                                                                         onClick={() => this.deleteLike(likeReplyId)}
+                                                                         style={likeReplyStyle}/>
+                                                }
+                                            }
+                                            if (!sessionStorage.getItem('id_user')) {
+                                                likeReplyButton = <i className="fa fa-thumbs-up"
+                                                                     style={{color: 'grey', cursor: 'pointer'}}
+                                                                     data-toggle="tooltip"
+                                                                     title="You must log in to like this comment!"
+                                                                     data-placement="top" disabled/>
+                                            }
+
+                                            return (
+                                                <div className="row commentPost" key={reply.id}>
+                                                    <div className="col-1">
+                                                        <div>
+                                                            <Image className="avatar-2"
+                                                                   publicId={reply.user.image_url}></Image>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-11" style={{textAlign: "justify"}}>
+                                                        <div className="row">
+                                                            <h3 className="col-8"
+                                                                style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                            <div className="col-4">{optionButton}</div>
+                                                        </div>
+                                                        <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
+                                                    </div>
+                                                    <p className="col-1"></p>
+                                                    <p className="col-2 time"><Moment
+                                                        format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment></p>
+                                                    <p className="col-2 time">Updated: <Moment
+                                                        fromNow>{reply.updated_at}</Moment>
+                                                    </p>
+                                                    <p className="col-1"></p>
+                                                    <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
+                                                    <p className="col-2"><i className="fa fa-comment"
+                                                                            onClick={() => this.setState({reply: reply.id})}
+                                                                            style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
+                                                    </p>
+                                                    <p className="col-2"><i className="fa fa-flag"/> Report</p>
+                                                    <Modal open={this.state.reply === reply.id}
+                                                           onClose={this.onCloseModalReply} center>
+                                                        <ReplyMessage messageId={reply.id}
+                                                                      userInfo={this.state.userInfo}/>
+                                                    </Modal>
+                                                    <div className="reply col-12 row">
+                                                        <div className="col-1"></div>
+                                                        <div className="col-11">
+                                                            {replies_3}
+                                                        </div>
+                                                        <div className="col-1"></div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        });
+                                    }
+                                }
+
+                                else {
+                                    replies_2 = <div></div>;
+                                }
+
+                                //child 1
+                                //edit & delete button
+                                let optionButton = <div></div>;
+                                if (sessionStorage.getItem('id_user')) {
+                                    if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
+                                        optionButton =
+                                            <p>
+                                                <Modal open={this.state.show === reply.id} onClose={this.onCloseModal}
+                                                       center>
+                                                    <EditMessage content={reply.content} messageId={reply.id}/>
+                                                </Modal>
+                                                <i className="fa fa-edit" style={{cursor: "pointer"}}
+                                                   onClick={() => this.setState({show: reply.id})}/> Edit &emsp;
+                                                <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
+                                                    if (window.confirm('You really want to delete this message?')) {
+                                                        this.deleteComment(reply.id)
+                                                    }
+                                                }}/> Delete</p>;
+                                    }
+                                }
+
+                                //like reply button color
+                                let likeReplyStyle = {color: 'grey', cursor: 'pointer'};
+                                let likedReply = 0;
+                                let likeReplyId = 0;
+                                (this.state.checkLike || []).map((like) => {
+                                    if (like.object_id === reply.id && like.object_type === 2) {
+                                        likedReply = likedReply + 1;
+                                        likeReplyId = like.id;
+                                        likeReplyStyle = {color: 'blue', cursor: 'pointer'};
+                                    }
+                                });
+
+                                //like reply and unlike action
+                                let likeReplyButton = <p></p>;
+                                if (sessionStorage.getItem('id_user')) {
+                                    if (likedReply === 0) {
+                                        likeReplyButton = <i className="fa fa-thumbs-up"
+                                                             onClick={() => {
+                                                                 this.postLike(reply.id, 2);
+                                                                 this.postNotification(reply.user.id, 2, this.state.userInfo.username + ' likes your reply comment')
+                                                             }}
+                                                             style={likeReplyStyle}/>
+                                    }
+                                    if (likedReply !== 0) {
+                                        likeReplyButton = <i className="fa fa-thumbs-up"
+                                                             onClick={() => this.deleteLike(likeReplyId)}
+                                                             style={likeReplyStyle}/>
+                                    }
+                                }
+                                if (!sessionStorage.getItem('id_user')) {
+                                    likeReplyButton = <i className="fa fa-thumbs-up"
+                                                         style={{color: 'grey', cursor: 'pointer'}}
+                                                         data-toggle="tooltip"
+                                                         title="You must log in to like this comment!"
+                                                         data-placement="top" disabled/>
+                                }
+
                                 return (
                                     <div className="row commentPost" key={reply.id}>
                                         <div className="col-1">
@@ -363,17 +832,36 @@ export default class RestaurantDetail extends Component {
                                             </div>
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
-                                            <h3 style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                            <div className="row">
+                                                <h3 className="col-8"
+                                                    style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                <div className="col-4">{optionButton}</div>
+                                            </div>
                                             <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
                                         </div>
                                         <p className="col-1"></p>
-                                        <p className="col-2 time"><Moment>{reply.created_at}</Moment></p>
-                                        <p className="col-2 time">Updated at <Moment>{reply.updated_at}</Moment></p>
+                                        <p className="col-2 time"><Moment
+                                            format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment></p>
+                                        <p className="col-2 time">Updated: <Moment fromNow>{reply.updated_at}</Moment>
+                                        </p>
                                         <p className="col-1"></p>
-                                        <p className="col-2"><i className="fa fa-thumbs-up"/> Like {reply.no_of_like}</p>
+                                        <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
                                         <p className="col-2"><i className="fa fa-comment"
-                                                                style={{}}/> Reply {reply.no_of_reply}</p>
-                                        <p className="col-2"><i className="fa fa-flag" style={{}}/> Report</p>
+                                                                onClick={() => this.setState({reply: reply.id})}
+                                                                style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
+                                        </p>
+                                        <p className="col-2"><i className="fa fa-flag"/> Report</p>
+                                        <Modal open={this.state.reply === reply.id} onClose={this.onCloseModalReply}
+                                               center>
+                                            <ReplyMessage messageId={reply.id} userInfo={this.state.userInfo}/>
+                                        </Modal>
+                                        <div className="reply col-12 row">
+                                            <div className="col-1"></div>
+                                            <div className="col-11">
+                                                {replies_2}
+                                            </div>
+                                            <div className="col-1"></div>
+                                        </div>
                                     </div>
                                 );
                             });
@@ -386,50 +874,25 @@ export default class RestaurantDetail extends Component {
 
                     //new reply
                     let reply = [];
+                    let replyForm = new FormData();
                     if (sessionStorage.getItem('id_user')) {
-                        reply =  <div className="reply col-12 row">
+                        replyForm.set('user_id', sessionStorage.getItem('id_user'));
+                        replyForm.set('parent_id', comment.id);
+                    }
+                    reply =
+                        <div className="reply col-12 row">
                             <div className="col-1"></div>
                             <div className="col-11">
                                 {replies}
                             </div>
                             <div className="col-1"></div>
-                            <div className="contact-form-area col-11">
-                                <div className="row">
-                                    <div className="col-1">
-                                        <div>
-                                            <Image className="avatar"
-                                                   publicId={this.state.userInfo.image_url}>
-                                            </Image>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <input name="reply" className="form-control" id="reply"
-                                               placeholder="Reply"
-                                               defaultValue={""} style={{borderRadius: "15px"}}
-                                               ref="comment"/>
-                                    </div>
-                                    <div className="col-12">
-                                        <button className="btn delicious-btn"
-                                                onClick={() => this.postComment(commentForm)}
-                                                type="submit"
-                                                style={{
-                                                    float: "right",
-                                                    fontSize: "15px",
-                                                    marginTop: "10px !important",
-                                                    marginBot: "10px !important"
-                                                }}>Reply
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                        </div>;
 
                     //like button color
                     let likeStyle = {color: 'grey', cursor: 'pointer'};
                     let liked = 0;
                     let likeId = 0;
-                    (this.state.checkLike || []).map((like)=>{
+                    (this.state.checkLike || []).map((like) => {
                         if (like.object_id === comment.id && like.object_type === 2) {
                             liked = liked + 1;
                             likeId = like.id;
@@ -439,10 +902,13 @@ export default class RestaurantDetail extends Component {
 
                     //like and unlike action
                     let likeButton = <p></p>
-                    if (sessionStorage.getItem('id_user')){
+                    if (sessionStorage.getItem('id_user')) {
                         if (liked === 0) {
                             likeButton = <i className="fa fa-thumbs-up"
-                                            onClick={() => this.postLike(comment.id, 2)}
+                                            onClick={() => {
+                                                this.postLike(comment.id, 2);
+                                                this.postNotification(comment.user.id, 2, this.state.userInfo.username + ' likes your comment')
+                                            }}
                                             style={likeStyle}/>
                         }
                         if (liked !== 0) {
@@ -451,10 +917,29 @@ export default class RestaurantDetail extends Component {
                                             style={likeStyle}/>
                         }
                     }
-                    if (!sessionStorage.getItem('id_user')){
+                    if (!sessionStorage.getItem('id_user')) {
                         likeButton = <i className="fa fa-thumbs-up"
                                         style={{color: 'grey', cursor: 'pointer'}} data-toggle="tooltip"
                                         title="You must log in to like this comment!" data-placement="top" disabled/>
+                    }
+
+                    //edit & delete button
+                    let optionButton = <div></div>;
+                    if (sessionStorage.getItem('id_user')) {
+                        if (sessionStorage.getItem('id_user') - comment.user.id === 0) {
+                            optionButton =
+                                <p>
+                                    <Modal open={this.state.show === comment.id} onClose={this.onCloseModal} center>
+                                        <EditMessage content={comment.content} messageId={comment.id}/>
+                                    </Modal>
+                                    <i className="fa fa-edit" style={{cursor: "pointer"}}
+                                       onClick={() => this.setState({show: comment.id})}/> Edit &emsp;
+                                    <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
+                                        if (window.confirm('You really want to delete this message?')) {
+                                            this.deleteComment(comment.id)
+                                        }
+                                    }}/> Delete</p>;
+                        }
                     }
 
                     return (
@@ -468,20 +953,30 @@ export default class RestaurantDetail extends Component {
                                             </div>
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
-                                            <h3 style={{fontWeight: "bold !important"}}>{comment.user.username}</h3>
+                                            <div className="row">
+                                                <h3 className="col-8"
+                                                    style={{fontWeight: "bold !important"}}>{comment.user.username}</h3>
+                                                <div className="col-4">{optionButton}</div>
+                                            </div>
                                             <h4 style={{fontWeight: "bold !important"}}>{comment.content}</h4>
                                         </div>
                                         <p className="col-1"></p>
-                                        <p className="col-2 time"><Moment>{comment.created_at}</Moment></p>
-                                        <p className="col-2 time">Updated at <Moment>{comment.updated_at}</Moment></p>
+                                        <p className="col-2 time"><Moment
+                                            format="YYYY/MM/DD HH:MM">{comment.created_at}</Moment></p>
+                                        <p className="col-2 time">Updated: <Moment fromNow>{comment.updated_at}</Moment>
+                                        </p>
                                         <p className="col-1"></p>
                                         <p className="col-2">{likeButton} Like {comment.no_of_like}</p>
                                         <p className="col-2"><i className="fa fa-comment"
-                                                                style={{}}/> Reply {comment.no_of_reply}</p>
-                                        <p className="col-2"><i className="fa fa-flag" style={{}}/>Report</p>
-
+                                                                onClick={() => this.setState({reply: comment.id})}
+                                                                style={{cursor: "pointer"}}/> Reply {comment.no_of_reply}
+                                        </p>
+                                        <p className="col-2"><i className="fa fa-flag"/>Report</p>
+                                        <Modal open={this.state.reply === comment.id} onClose={this.onCloseModalReply}
+                                               center>
+                                            <ReplyMessage messageId={comment.id} userInfo={this.state.userInfo}/>
+                                        </Modal>
                                         {reply}
-
                                     </div>
                                 </form>
                             </div>
@@ -497,72 +992,36 @@ export default class RestaurantDetail extends Component {
             let rating = [];
             if (sessionStorage.getItem('id_user')) {
                 //new comment
-                if (this.state.checkComment.length === 0) {
-                    newComment =
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="contact-form-area">
-                                    <div className="row">
-                                        <div className="col-1">
-                                            <div>
-                                                <Image className="avatar"
-                                                       publicId={this.state.userInfo.image_url}>
-                                                </Image>
-                                            </div>
+                newComment =
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="contact-form-area">
+                                <div className="row">
+                                    <div className="col-1">
+                                        <div>
+                                            <Image className="avatar"
+                                                   publicId={this.state.userInfo.image_url}>
+                                            </Image>
                                         </div>
-                                        <div className="col-11">
-                                            <input name="message" className="form-control" id="message"
-                                                   placeholder="Message"
-                                                   defaultValue={""} style={{borderRadius: "15px"}} ref="comment"/>
-                                        </div>
-                                        <div className="col-12">
-                                            <button className="btn delicious-btn mt-30"
-                                                    onClick={() => this.postComment(commentForm)} type="submit"
-                                                    style={{float: "right", fontSize: "15px"}}>Post
-                                                Comments
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div className="col-11">
+                                        <input name="message" className="form-control" id="message"
+                                               placeholder="Message"
+                                               defaultValue={""} style={{borderRadius: "15px"}} ref="comment"/>
+                                    </div>
+                                    <div className="col-12">
+                                        <button className="btn delicious-btn mt-30"
+                                                onClick={() => this.postComment(commentForm)} type="submit"
+                                                style={{float: "right", fontSize: "15px"}}>Post
+                                            Comments
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>;
-                    commentForm.set('user_id', sessionStorage.getItem('id_user'));
-                    commentForm.set('restaurant_id', this.props.match.params.id);
-                    commentForm.set('content', this.refs.comment);
-                }
-
-                //update comment
-                if (this.state.checkComment.length === 1) {
-                    newComment =
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="contact-form-area">
-                                    <div className="row">
-                                        <div className="col-1">
-                                            <div>
-                                                <Image className="avatar"
-                                                       publicId={this.state.userInfo.image_url}>
-                                                </Image>
-                                            </div>
-                                        </div>
-                                        <div className="col-11">
-                                            <input name="message" className="form-control" id="message"
-                                                   placeholder={this.state.checkComment[0].content}
-                                                   defaultValue={this.state.checkComment[0].content}
-                                                   style={{borderRadius: "15px"}} ref="comment"/>
-                                        </div>
-                                        <div className="col-12">
-                                            <button className="btn delicious-btn mt-30"
-                                                    onClick={() => this.putComment()} type="submit"
-                                                    style={{float: "right", fontSize: "15px"}}>Update
-                                                Comments
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>;
-                }
+                        </div>
+                    </div>;
+                commentForm.set('user_id', sessionStorage.getItem('id_user'));
+                commentForm.set('restaurant_id', this.props.match.params.id);
 
                 //subscribe
                 if ((this.state.subscribe).length === 0) {
@@ -601,8 +1060,8 @@ export default class RestaurantDetail extends Component {
 
             if (sessionStorage.getItem('id_user')) {
                 let restaurantId = this.props.match.params.id;
-                (this.state.checkLike || []).map((like)=> {
-                    if ((like.object_id - restaurantId)===0 && like.object_type === 1) {
+                (this.state.checkLike || []).map((like) => {
+                    if ((like.object_id - restaurantId) === 0 && like.object_type === 1) {
                         checkLikeRestaurant = 1;
                         likeRestaurantId = like.id;
                         likeRestaurantStyle = {color: 'blue', cursor: 'pointer'};
@@ -610,10 +1069,14 @@ export default class RestaurantDetail extends Component {
                 });
 
                 if (checkLikeRestaurant === 0) {
-                    likeRestaurantButton = <h2><i className="fa fa-4x fa-thumbs-up" onClick={() => this.postLike(this.props.match.params.id, 1)} style={likeRestaurantStyle}/> {this.state.countLikeRestaurant} </h2>
+                    likeRestaurantButton = <h2><i className="fa fa-4x fa-thumbs-up"
+                                                  onClick={() => this.postLike(this.props.match.params.id, 1)}
+                                                  style={likeRestaurantStyle}/> {this.state.countLikeRestaurant} </h2>
                 }
                 if (checkLikeRestaurant !== 0) {
-                    likeRestaurantButton = <h2><i className="fa fa-4x fa-thumbs-up" onClick={() => this.deleteLike(likeRestaurantId)} style={likeRestaurantStyle}/> {this.state.countLikeRestaurant} </h2>
+                    likeRestaurantButton =
+                        <h2><i className="fa fa-4x fa-thumbs-up" onClick={() => this.deleteLike(likeRestaurantId)}
+                               style={likeRestaurantStyle}/> {this.state.countLikeRestaurant} </h2>
                 }
             }
 
@@ -639,11 +1102,17 @@ export default class RestaurantDetail extends Component {
                     />;
 
                 likeRestaurantButton = <h2 data-toggle="tooltip"
-                                           title="You must log in to like this restaurant!" data-placement="top" disabled><i className="fa fa-4x fa-thumbs-up" style={{color: 'grey', cursor: 'pointer'}}/> {this.state.countLikeRestaurant} </h2>
+                                           title="You must log in to like this restaurant!" data-placement="top"
+                                           disabled><i className="fa fa-4x fa-thumbs-up" style={{
+                    color: 'grey',
+                    cursor: 'pointer'
+                }}/> {this.state.countLikeRestaurant} </h2>
             }
 
+            const {show} = this.state;
             return (
                 <div>
+                    <title>{restaurantDetail.name}</title>
                     {/* ##### Header Area End ##### */}
                     {/* ##### Breadcumb Area Start ##### */}
                     <div className="breadcumb-area bg-img bg-overlay"
@@ -667,7 +1136,7 @@ export default class RestaurantDetail extends Component {
                                 <div className="col-12">
                                     <div className="receipe-slider">
                                         <Image
-                                            publicId="default_restaurant.jpg">
+                                            publicId={restaurantDetail.cover_url}>
                                         </Image>
                                     </div>
                                 </div>

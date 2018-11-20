@@ -1,0 +1,91 @@
+.edit {
+    height: 400px;
+    width: 800px
+}
+
+.content {
+    padding-top: 20px;
+}
+
+.content h1 {
+    font-weight: bold !important;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.content textarea {
+    padding-left: 15px;
+    min-height: 200px;
+    text-align: justify !important;
+    font-size: 18px;
+    overflow: auto;
+}
+
+.content textarea:focus {
+    border-style: inset;
+    border-width: 3px;
+}
+
+.edit-button {
+    padding-right: 120px !important;
+}
+
+.cancel:hover {
+    background-color: lightgrey;
+    color: black;
+}
+
+.cancel {
+    background-color: lightgrey !important;
+    color: black;
+    font-weight: bold !important;
+}
+
+.styles_modal__gNwvD {
+    width: 850px;
+    max-width: 1000px !important;
+}
+
+.replyMessage {
+    padding-top: 10px;
+    padding-left: 15px;
+    width: 800px;
+}
+
+.contentMessage {
+    padding-left: 25px !important;
+    max-width: 850px;
+    max-height: 700px;
+    overflow: auto;
+}
+
+.title {
+    font-weight: bold !important;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.replyMessage input {
+    padding-left: 15px;
+    height: 50px;
+    text-align: justify !important;
+    font-size: 18px;
+    overflow: auto;
+}
+
+.col-1 {
+    padding-left: 0 !important;
+}
+
+.avatar-2 {
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    display: block;
+    float: right;
+}

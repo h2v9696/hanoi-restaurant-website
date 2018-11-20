@@ -9,7 +9,10 @@ import 'moment-timezone';
 import {
     Link,
 } from "react-router-dom";
+import {Image} from "cloudinary-react";
+import cloudinary from 'cloudinary-core'
 
+const cloudinaryCore = new cloudinary.Cloudinary({cloud_name: 'dzd4yfu79'})
 export default class Homepage extends Component {
     constructor(props) {
         super(props);
@@ -21,14 +24,15 @@ export default class Homepage extends Component {
     render() {
         if (this.props.restaurantInfo !== 0) {
             const restaurant = this.props.restaurantInfo;
-
-            const restaurantTop3 = restaurant.map((restaurantInfo, index)=>{
+            const restaurantTop3 = [].concat(restaurant
+                .sort((a, b)=>b.rating_avg - a.rating_avg))
+                .map((restaurantInfo, index)=>{
                 if (index <= 2){
                     return (
                         <div key={restaurantInfo.id}>
                             <div style={{
                                 height: "700px",
-                                backgroundImage: `url(/img/bg-img/bg3.jpg)`,
+                                backgroundImage: `url(${cloudinaryCore.url(restaurantInfo.cover_url)})`,
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'noRepeat'
@@ -42,7 +46,7 @@ export default class Homepage extends Component {
                                             </a>
                                             <div className="ratings">
                                                 <StarRatings
-                                                    rating={restaurantInfo.id%5}
+                                                    rating={restaurantInfo.rating_avg}
                                                     starRatedColor="gold"
                                                     starDimension="20px"
                                                     starSpacing="3px"
@@ -75,19 +79,21 @@ export default class Homepage extends Component {
                 }
             });
 
-            const restaurantTop6 = restaurant
-                .sort((a, b)=>a.name < b.name)
+            const restaurantTop6 = [].concat(restaurant
+                .sort((a, b)=> a.name.localeCompare(b.name)))
                 .map((restaurantInfo, index)=>{
                 if (index <= 5){
                     return (
                         <div className="col-12 col-sm-6 col-lg-4" key={restaurantInfo.id}>
                             <div className="single-best-receipe-area mb-30">
-                                <img src="/img/bg-img/r1.jpg" alt="true"/>
+                                <Image
+                                    publicId={restaurantInfo.cover_url}>
+                                </Image>
                                 <div className="receipe-content">
                                     <Link to={"restaurant/"+restaurantInfo.id}>{restaurantInfo.name}</Link>
                                     <div className="ratings">
                                         <StarRatings
-                                            rating={restaurantInfo.id%5}
+                                            rating={restaurantInfo.rating_avg}
                                             starRatedColor="gold"
                                             starDimension="15px"
                                             starSpacing="2px"
@@ -101,8 +107,8 @@ export default class Homepage extends Component {
                 }
             });
 
-            const newRestaurant= restaurant
-                .sort((a, b)=>a.created_at > b.created_at)
+            const newRestaurant= [].concat(restaurant
+                .sort((a, b)=>a.created_at > b.created_at))
                 .map((restaurantInfo, index)=>{
                     if (index <= 8) {
                         return (
@@ -110,15 +116,17 @@ export default class Homepage extends Component {
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <img src="/img/bg-img/sr5.jpg" alt="true"/>
+                                        <Image
+                                            publicId={restaurantInfo.cover_url}>
+                                        </Image>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
-                                        <span><Moment>{restaurantInfo.created_at}</Moment></span>
+                                        <span><Moment format="YYYY/MM/DD HH:MM">{restaurantInfo.created_at}</Moment></span>
                                         <Link to={"restaurant/" + restaurantInfo.id}>{restaurantInfo.name}</Link>
                                         <div className="ratings">
                                             <StarRatings
-                                                rating={restaurantInfo.id%5}
+                                                rating={restaurantInfo.rating_avg}
                                                 starRatedColor="gold"
                                                 starDimension="10px"
                                                 starSpacing="1px"
@@ -171,39 +179,9 @@ export default class Homepage extends Component {
                             </Slider>
                         </div>
                     </section>
+                    <br/>
+                    <br/>
 
-                    <section className="top-catagory-area section-padding-80-0">
-                        <div className="container">
-                            <div className="row">
-                                {/* Top Catagory Area */}
-                                <div className="col-12 col-lg-6">
-                                    <div className="single-top-catagory">
-                                        <img src="/img/bg-img/bg2.jpg" alt="true"/>
-                                        {/* Content */}
-                                        <div className="top-cta-content">
-                                            <h3>Hanoi's restaurants</h3>
-                                            <h6>Simple &amp; Delicios</h6>
-                                            <a href="receipe-post.html" className="btn delicious-btn">See Full
-                                                Restaurants</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Top Catagory Area */}
-                                <div className="col-12 col-lg-6">
-                                    <div className="single-top-catagory">
-                                        <img src="/img/bg-img/bg3.jpg" alt="true"/>
-                                        {/* Content */}
-                                        <div className="top-cta-content">
-                                            <h3>Hochiminh's restaurants</h3>
-                                            <h6>Simple &amp; Delicios</h6>
-                                            <a href="receipe-post.html" className="btn delicious-btn">See Full
-                                                Restaurants</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
                     {/* ##### Top Catagory Area End ##### */}
                     {/* ##### Best Receipe Area Start ##### */}
                     <section className="best-receipe-area">
