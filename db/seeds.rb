@@ -45,7 +45,8 @@ if ActiveRecord::Base.connection.table_exists? :restaurants
       name: Faker::Restaurant.unique.name,
       address: Faker::Address.unique.full_address,
       phone: Faker::PhoneNumber.unique.cell_phone,
-      description: Faker::Restaurant.description
+      description: Faker::Restaurant.description,
+      cover_url: 'default_restaurant'
     )
     @count += 1
   end
