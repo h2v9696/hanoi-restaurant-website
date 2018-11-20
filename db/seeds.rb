@@ -46,7 +46,7 @@ if ActiveRecord::Base.connection.table_exists? :restaurants
       address: Faker::Address.unique.full_address,
       phone: Faker::PhoneNumber.unique.cell_phone,
       description: Faker::Restaurant.description,
-      cover_url: 'https://res.cloudinary.com/dzd4yfu79/image/upload/v1541525447/default_restaurant.jpg'
+      cover_url: 'default_restaurant'
     )
     @count += 1
   end
