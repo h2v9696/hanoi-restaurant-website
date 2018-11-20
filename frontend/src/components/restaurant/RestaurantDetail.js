@@ -75,16 +75,16 @@ export default class RestaurantDetail extends Component {
     }
 
     onOpenModal = () => {
-        this.setState({ show: true });
+        this.setState({show: true});
     };
 
     onCloseModal = () => {
-        this.setState({ show: false });
+        this.setState({show: false});
         this.getComment();
     };
 
     onCloseModalReply = () => {
-        this.setState({ reply: false });
+        this.setState({reply: false});
         this.getComment();
     };
 
@@ -423,27 +423,42 @@ export default class RestaurantDetail extends Component {
                                                                         if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
                                                                             optionButton =
                                                                                 <p>
-                                                                                    <Modal open={this.state.show === reply.id} onClose={this.onCloseModal} center>
-                                                                                        <EditMessage content={reply.content} messageId={reply.id}/>
+                                                                                    <Modal
+                                                                                        open={this.state.show === reply.id}
+                                                                                        onClose={this.onCloseModal}
+                                                                                        center>
+                                                                                        <EditMessage
+                                                                                            content={reply.content}
+                                                                                            messageId={reply.id}/>
                                                                                     </Modal>
-                                                                                    <i className="fa fa-edit" style={{cursor: "pointer"}} onClick={()=>this.setState({show: reply.id})}/> Edit &emsp;
-                                                                                    <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
-                                                                                        if (window.confirm('You really want to delete this message?')) {
-                                                                                            this.deleteComment(reply.id)
-                                                                                        }
-                                                                                    }}/> Delete</p>;
+                                                                                    <i className="fa fa-edit"
+                                                                                       style={{cursor: "pointer"}}
+                                                                                       onClick={() => this.setState({show: reply.id})}/> Edit &emsp;
+                                                                                    <i className="fa fa-trash"
+                                                                                       style={{cursor: "pointer"}}
+                                                                                       onClick={() => {
+                                                                                           if (window.confirm('You really want to delete this message?')) {
+                                                                                               this.deleteComment(reply.id)
+                                                                                           }
+                                                                                       }}/> Delete</p>;
                                                                         }
                                                                     }
 
                                                                     //like reply button color
-                                                                    let likeReplyStyle = {color: 'grey', cursor: 'pointer'};
+                                                                    let likeReplyStyle = {
+                                                                        color: 'grey',
+                                                                        cursor: 'pointer'
+                                                                    };
                                                                     let likedReply = 0;
                                                                     let likeReplyId = 0;
                                                                     (this.state.checkLike || []).map((like) => {
                                                                         if (like.object_id === reply.id && like.object_type === 2) {
                                                                             likedReply = likedReply + 1;
                                                                             likeReplyId = like.id;
-                                                                            likeReplyStyle = {color: 'blue', cursor: 'pointer'};
+                                                                            likeReplyStyle = {
+                                                                                color: 'blue',
+                                                                                cursor: 'pointer'
+                                                                            };
                                                                         }
                                                                     });
 
@@ -451,50 +466,69 @@ export default class RestaurantDetail extends Component {
                                                                     let likeReplyButton = <p></p>;
                                                                     if (sessionStorage.getItem('id_user')) {
                                                                         if (likedReply === 0) {
-                                                                            likeReplyButton = <i className="fa fa-thumbs-up"
-                                                                                                 onClick={() => {
-                                                                                                     this.postLike(reply.id, 2);
-                                                                                                     this.postNotification(reply.user.id, 2, this.state.userInfo.username + ' likes your reply comment')
-                                                                                                 }}
-                                                                                                 style={likeReplyStyle}/>
+                                                                            likeReplyButton =
+                                                                                <i className="fa fa-thumbs-up"
+                                                                                   onClick={() => {
+                                                                                       this.postLike(reply.id, 2);
+                                                                                       this.postNotification(reply.user.id, 2, this.state.userInfo.username + ' likes your reply comment')
+                                                                                   }}
+                                                                                   style={likeReplyStyle}/>
                                                                         }
                                                                         if (likedReply !== 0) {
-                                                                            likeReplyButton = <i className="fa fa-thumbs-up"
-                                                                                                 onClick={() => this.deleteLike(likeReplyId)}
-                                                                                                 style={likeReplyStyle}/>
+                                                                            likeReplyButton =
+                                                                                <i className="fa fa-thumbs-up"
+                                                                                   onClick={() => this.deleteLike(likeReplyId)}
+                                                                                   style={likeReplyStyle}/>
                                                                         }
                                                                     }
                                                                     if (!sessionStorage.getItem('id_user')) {
                                                                         likeReplyButton = <i className="fa fa-thumbs-up"
-                                                                                             style={{color: 'grey', cursor: 'pointer'}}
+                                                                                             style={{
+                                                                                                 color: 'grey',
+                                                                                                 cursor: 'pointer'
+                                                                                             }}
                                                                                              data-toggle="tooltip"
                                                                                              title="You must log in to like this comment!"
-                                                                                             data-placement="top" disabled/>
+                                                                                             data-placement="top"
+                                                                                             disabled/>
                                                                     }
 
                                                                     return (
                                                                         <div className="row commentPost" key={reply.id}>
                                                                             <div className="col-1">
                                                                                 <div>
-                                                                                    <Image className="avatar" publicId={reply.user.image_url}></Image>
+                                                                                    <Image className="avatar-4"
+                                                                                           publicId={reply.user.image_url}></Image>
                                                                                 </div>
                                                                             </div>
-                                                                            <div className="col-11" style={{textAlign: "justify"}}>
+                                                                            <div className="col-11"
+                                                                                 style={{textAlign: "justify"}}>
                                                                                 <div className="row">
-                                                                                    <h3 className="col-9"
+                                                                                    <h3 className="col-8"
                                                                                         style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
-                                                                                    <div className="col-3">{optionButton}</div>
+                                                                                    <div
+                                                                                        className="col-4">{optionButton}</div>
                                                                                 </div>
                                                                                 <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
                                                                             </div>
                                                                             <p className="col-1"></p>
                                                                             <p className="col-2 time"><Moment
-                                                                                format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment></p>
-                                                                            <p className="col-2 time">Updated: <Moment fromNow>{reply.updated_at}</Moment>
+                                                                                format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment>
+                                                                            </p>
+                                                                            <p className="col-2 time">Updated: <Moment
+                                                                                fromNow>{reply.updated_at}</Moment>
                                                                             </p>
                                                                             <p className="col-1"></p>
                                                                             <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
-                                                                            <p className="col-2"><i className="fa fa-flag"/> Report</p>
+                                                                            <p className="col-2"><i
+                                                                                className="fa fa-comment"
+                                                                                data-toggle="tooltip"
+                                                                                title="You can't reply more than 5 times!"
+                                                                                data-placement="top"
+                                                                                style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
+                                                                            </p>
+                                                                            <p className="col-2"><i
+                                                                                className="fa fa-flag"/> Report</p>
                                                                         </div>
                                                                     );
                                                                 });
@@ -511,11 +545,16 @@ export default class RestaurantDetail extends Component {
                                                             if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
                                                                 optionButton =
                                                                     <p>
-                                                                        <Modal open={this.state.show === reply.id} onClose={this.onCloseModal} center>
-                                                                            <EditMessage content={reply.content} messageId={reply.id}/>
+                                                                        <Modal open={this.state.show === reply.id}
+                                                                               onClose={this.onCloseModal} center>
+                                                                            <EditMessage content={reply.content}
+                                                                                         messageId={reply.id}/>
                                                                         </Modal>
-                                                                        <i className="fa fa-edit" style={{cursor: "pointer"}} onClick={()=>this.setState({show: reply.id})}/> Edit &emsp;
-                                                                        <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
+                                                                        <i className="fa fa-edit"
+                                                                           style={{cursor: "pointer"}}
+                                                                           onClick={() => this.setState({show: reply.id})}/> Edit &emsp;
+                                                                        <i className="fa fa-trash"
+                                                                           style={{cursor: "pointer"}} onClick={() => {
                                                                             if (window.confirm('You really want to delete this message?')) {
                                                                                 this.deleteComment(reply.id)
                                                                             }
@@ -554,7 +593,10 @@ export default class RestaurantDetail extends Component {
                                                         }
                                                         if (!sessionStorage.getItem('id_user')) {
                                                             likeReplyButton = <i className="fa fa-thumbs-up"
-                                                                                 style={{color: 'grey', cursor: 'pointer'}}
+                                                                                 style={{
+                                                                                     color: 'grey',
+                                                                                     cursor: 'pointer'
+                                                                                 }}
                                                                                  data-toggle="tooltip"
                                                                                  title="You must log in to like this comment!"
                                                                                  data-placement="top" disabled/>
@@ -564,29 +606,37 @@ export default class RestaurantDetail extends Component {
                                                             <div className="row commentPost" key={reply.id}>
                                                                 <div className="col-1">
                                                                     <div>
-                                                                        <Image className="avatar" publicId={reply.user.image_url}></Image>
+                                                                        <Image className="avatar-3"
+                                                                               publicId={reply.user.image_url}></Image>
                                                                     </div>
                                                                 </div>
                                                                 <div className="col-11" style={{textAlign: "justify"}}>
                                                                     <div className="row">
-                                                                        <h3 className="col-9"
+                                                                        <h3 className="col-8"
                                                                             style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
-                                                                        <div className="col-3">{optionButton}</div>
+                                                                        <div className="col-4">{optionButton}</div>
                                                                     </div>
                                                                     <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
                                                                 </div>
                                                                 <p className="col-1"></p>
                                                                 <p className="col-2 time"><Moment
-                                                                    format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment></p>
-                                                                <p className="col-2 time">Updated: <Moment fromNow>{reply.updated_at}</Moment>
+                                                                    format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment>
+                                                                </p>
+                                                                <p className="col-2 time">Updated: <Moment
+                                                                    fromNow>{reply.updated_at}</Moment>
                                                                 </p>
                                                                 <p className="col-1"></p>
                                                                 <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
-                                                                <p className="col-2"><i className="fa fa-comment" onClick={()=>this.setState({reply: reply.id})}/> Reply {reply.no_of_reply}
+                                                                <p className="col-2"><i className="fa fa-comment"
+                                                                                        onClick={() => this.setState({reply: reply.id})}
+                                                                                        style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
                                                                 </p>
-                                                                <p className="col-2"><i className="fa fa-flag"/> Report</p>
-                                                                <Modal open={this.state.reply === reply.id} onClose={this.onCloseModalReply} center>
-                                                                    <ReplyMessage messageId={reply.id} userInfo={this.state.userInfo}/>
+                                                                <p className="col-2"><i className="fa fa-flag"/> Report
+                                                                </p>
+                                                                <Modal open={this.state.reply === reply.id}
+                                                                       onClose={this.onCloseModalReply} center>
+                                                                    <ReplyMessage messageId={reply.id}
+                                                                                  userInfo={this.state.userInfo}/>
                                                                 </Modal>
                                                                 <div className="reply col-12 row">
                                                                     <div className="col-1"></div>
@@ -612,15 +662,19 @@ export default class RestaurantDetail extends Component {
                                                 if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
                                                     optionButton =
                                                         <p>
-                                                            <Modal open={this.state.show === reply.id} onClose={this.onCloseModal} center>
-                                                                <EditMessage content={reply.content} messageId={reply.id}/>
+                                                            <Modal open={this.state.show === reply.id}
+                                                                   onClose={this.onCloseModal} center>
+                                                                <EditMessage content={reply.content}
+                                                                             messageId={reply.id}/>
                                                             </Modal>
-                                                            <i className="fa fa-edit" style={{cursor: "pointer"}} onClick={()=>this.setState({show: reply.id})}/> Edit &emsp;
-                                                            <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
-                                                                if (window.confirm('You really want to delete this message?')) {
-                                                                    this.deleteComment(reply.id)
-                                                                }
-                                                            }}/> Delete</p>;
+                                                            <i className="fa fa-edit" style={{cursor: "pointer"}}
+                                                               onClick={() => this.setState({show: reply.id})}/> Edit &emsp;
+                                                            <i className="fa fa-trash" style={{cursor: "pointer"}}
+                                                               onClick={() => {
+                                                                   if (window.confirm('You really want to delete this message?')) {
+                                                                       this.deleteComment(reply.id)
+                                                                   }
+                                                               }}/> Delete</p>;
                                                 }
                                             }
 
@@ -665,29 +719,35 @@ export default class RestaurantDetail extends Component {
                                                 <div className="row commentPost" key={reply.id}>
                                                     <div className="col-1">
                                                         <div>
-                                                            <Image className="avatar" publicId={reply.user.image_url}></Image>
+                                                            <Image className="avatar-2"
+                                                                   publicId={reply.user.image_url}></Image>
                                                         </div>
                                                     </div>
                                                     <div className="col-11" style={{textAlign: "justify"}}>
                                                         <div className="row">
-                                                            <h3 className="col-9"
+                                                            <h3 className="col-8"
                                                                 style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
-                                                            <div className="col-3">{optionButton}</div>
+                                                            <div className="col-4">{optionButton}</div>
                                                         </div>
                                                         <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
                                                     </div>
                                                     <p className="col-1"></p>
                                                     <p className="col-2 time"><Moment
                                                         format="YYYY/MM/DD HH:MM">{reply.created_at}</Moment></p>
-                                                    <p className="col-2 time">Updated: <Moment fromNow>{reply.updated_at}</Moment>
+                                                    <p className="col-2 time">Updated: <Moment
+                                                        fromNow>{reply.updated_at}</Moment>
                                                     </p>
                                                     <p className="col-1"></p>
                                                     <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
-                                                    <p className="col-2"><i className="fa fa-comment" onClick={()=>this.setState({reply: reply.id})}/> Reply {reply.no_of_reply}
+                                                    <p className="col-2"><i className="fa fa-comment"
+                                                                            onClick={() => this.setState({reply: reply.id})}
+                                                                            style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
                                                     </p>
                                                     <p className="col-2"><i className="fa fa-flag"/> Report</p>
-                                                    <Modal open={this.state.reply === reply.id} onClose={this.onCloseModalReply} center>
-                                                        <ReplyMessage messageId={reply.id} userInfo={this.state.userInfo}/>
+                                                    <Modal open={this.state.reply === reply.id}
+                                                           onClose={this.onCloseModalReply} center>
+                                                        <ReplyMessage messageId={reply.id}
+                                                                      userInfo={this.state.userInfo}/>
                                                     </Modal>
                                                     <div className="reply col-12 row">
                                                         <div className="col-1"></div>
@@ -713,10 +773,12 @@ export default class RestaurantDetail extends Component {
                                     if (sessionStorage.getItem('id_user') - reply.user.id === 0) {
                                         optionButton =
                                             <p>
-                                                <Modal open={this.state.show === reply.id} onClose={this.onCloseModal} center>
+                                                <Modal open={this.state.show === reply.id} onClose={this.onCloseModal}
+                                                       center>
                                                     <EditMessage content={reply.content} messageId={reply.id}/>
                                                 </Modal>
-                                                <i className="fa fa-edit" style={{cursor: "pointer"}} onClick={()=>this.setState({show: reply.id})}/> Edit &emsp;
+                                                <i className="fa fa-edit" style={{cursor: "pointer"}}
+                                                   onClick={() => this.setState({show: reply.id})}/> Edit &emsp;
                                                 <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
                                                     if (window.confirm('You really want to delete this message?')) {
                                                         this.deleteComment(reply.id)
@@ -771,9 +833,9 @@ export default class RestaurantDetail extends Component {
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
                                             <div className="row">
-                                                <h3 className="col-9"
+                                                <h3 className="col-8"
                                                     style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
-                                                <div className="col-3">{optionButton}</div>
+                                                <div className="col-4">{optionButton}</div>
                                             </div>
                                             <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
                                         </div>
@@ -784,10 +846,13 @@ export default class RestaurantDetail extends Component {
                                         </p>
                                         <p className="col-1"></p>
                                         <p className="col-2">{likeReplyButton} Like {reply.no_of_like}</p>
-                                        <p className="col-2"><i className="fa fa-comment" onClick={()=>this.setState({reply: reply.id})}/> Reply {reply.no_of_reply}
+                                        <p className="col-2"><i className="fa fa-comment"
+                                                                onClick={() => this.setState({reply: reply.id})}
+                                                                style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
                                         </p>
                                         <p className="col-2"><i className="fa fa-flag"/> Report</p>
-                                        <Modal open={this.state.reply === reply.id} onClose={this.onCloseModalReply} center>
+                                        <Modal open={this.state.reply === reply.id} onClose={this.onCloseModalReply}
+                                               center>
                                             <ReplyMessage messageId={reply.id} userInfo={this.state.userInfo}/>
                                         </Modal>
                                         <div className="reply col-12 row">
@@ -813,16 +878,15 @@ export default class RestaurantDetail extends Component {
                     if (sessionStorage.getItem('id_user')) {
                         replyForm.set('user_id', sessionStorage.getItem('id_user'));
                         replyForm.set('parent_id', comment.id);
-                        // console.log(this.replyRef.value);
-                        reply =
-                            <div className="reply col-12 row">
-                                <div className="col-1"></div>
-                                <div className="col-11">
-                                    {replies}
-                                </div>
-                                <div className="col-1"></div>
-                            </div>;
                     }
+                    reply =
+                        <div className="reply col-12 row">
+                            <div className="col-1"></div>
+                            <div className="col-11">
+                                {replies}
+                            </div>
+                            <div className="col-1"></div>
+                        </div>;
 
                     //like button color
                     let likeStyle = {color: 'grey', cursor: 'pointer'};
@@ -868,12 +932,13 @@ export default class RestaurantDetail extends Component {
                                     <Modal open={this.state.show === comment.id} onClose={this.onCloseModal} center>
                                         <EditMessage content={comment.content} messageId={comment.id}/>
                                     </Modal>
-                                    <i className="fa fa-edit" style={{cursor: "pointer"}} onClick={()=>this.setState({show: comment.id})}/> Edit &emsp;
+                                    <i className="fa fa-edit" style={{cursor: "pointer"}}
+                                       onClick={() => this.setState({show: comment.id})}/> Edit &emsp;
                                     <i className="fa fa-trash" style={{cursor: "pointer"}} onClick={() => {
-                                    if (window.confirm('You really want to delete this message?')) {
-                                        this.deleteComment(comment.id)
-                                    }
-                                }}/> Delete</p>;
+                                        if (window.confirm('You really want to delete this message?')) {
+                                            this.deleteComment(comment.id)
+                                        }
+                                    }}/> Delete</p>;
                         }
                     }
 
@@ -889,9 +954,9 @@ export default class RestaurantDetail extends Component {
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
                                             <div className="row">
-                                                <h3 className="col-9"
+                                                <h3 className="col-8"
                                                     style={{fontWeight: "bold !important"}}>{comment.user.username}</h3>
-                                                <div className="col-3">{optionButton}</div>
+                                                <div className="col-4">{optionButton}</div>
                                             </div>
                                             <h4 style={{fontWeight: "bold !important"}}>{comment.content}</h4>
                                         </div>
@@ -902,10 +967,13 @@ export default class RestaurantDetail extends Component {
                                         </p>
                                         <p className="col-1"></p>
                                         <p className="col-2">{likeButton} Like {comment.no_of_like}</p>
-                                        <p className="col-2"><i className="fa fa-comment" onClick={()=>this.setState({reply: comment.id})}/> Reply {comment.no_of_reply}
+                                        <p className="col-2"><i className="fa fa-comment"
+                                                                onClick={() => this.setState({reply: comment.id})}
+                                                                style={{cursor: "pointer"}}/> Reply {comment.no_of_reply}
                                         </p>
                                         <p className="col-2"><i className="fa fa-flag"/>Report</p>
-                                        <Modal open={this.state.reply === comment.id} onClose={this.onCloseModalReply} center>
+                                        <Modal open={this.state.reply === comment.id} onClose={this.onCloseModalReply}
+                                               center>
                                             <ReplyMessage messageId={comment.id} userInfo={this.state.userInfo}/>
                                         </Modal>
                                         {reply}
@@ -1041,7 +1109,7 @@ export default class RestaurantDetail extends Component {
                 }}/> {this.state.countLikeRestaurant} </h2>
             }
 
-            const { show } = this.state;
+            const {show} = this.state;
             return (
                 <div>
                     <title>{restaurantDetail.name}</title>
