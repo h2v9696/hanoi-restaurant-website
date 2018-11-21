@@ -39,16 +39,16 @@ export default class ProfileEdit extends Component {
     }
 
     onPasswordChange(value) {
-        this.setState({password: value, validate: this.validate()})
+        this.setState({password: value}, () => this.setState({validate: this.validate()}))
     }
 
     onRePasswordChange(value) {
-        this.setState({rePassword: value, validate: this.validate()})
+        this.setState({rePassword: value}, () => this.setState({validate: this.validate()}))
     }
 
-    onOldPasswordChange(value) {
-        this.setState({oldPassword: value, validate: this.validate()})
-    }
+    // onOldPasswordChange(value) {
+    //     this.setState({oldPassword: value, validate: this.validate()})
+    // }
 
     validate() {
         let valid = true
@@ -57,14 +57,14 @@ export default class ProfileEdit extends Component {
             valid = false
             errors.push('password not match!!!')
         }
-        if (this.state.password.length > 0 && this.state.password < 6) {
+        if (this.state.password.length > 0 && this.state.password.length < 6) {
             valid = false
             errors.push('password minimum 6 characters')
         }
-        if (this.state.password.length > 0 && this.state.oldPassword.length === 0) {
-            valid = false
-            errors.push('old password requires for change new password')
-        }
+        // if (this.state.password.length > 0 && this.state.oldPassword.length === 0) {
+        //     valid = false
+        //     errors.push('old password requires for change new password')
+        // }
         return {
             valid,
             errors
