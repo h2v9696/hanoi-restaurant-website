@@ -21,12 +21,13 @@ export default class Signup extends Component {
         }
         this.Auth = new AuthService()
     }
-    static validateEmail (email) {
+
+    static validateEmail(email) {
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return re.test(String(email).toLowerCase())
     }
 
-    static validatePassword (password, rePassword) {
+    static validatePassword(password, rePassword) {
 
         let valid = password.length >= 6 && password === rePassword
         let error = password.length < 6 ? 'Password requires minimum 6 characters' : password !== rePassword ? 'Password not match' : null
@@ -36,12 +37,13 @@ export default class Signup extends Component {
             error
         }
     }
+
     onNameInputChange(value) {
         this.setState({userName: value})
     }
 
     onEmailInputChange(value) {
-        this.setState({email: value}, )
+        this.setState({email: value},)
     }
 
     onPasswordChange(value) {
@@ -76,9 +78,9 @@ export default class Signup extends Component {
     handleSubmit(e) {
         //TODO validate sign up form
         e.preventDefault()
-        this.state.passwordValidation && this.signUp().then(this.props.history.push('/login')).catch(error => console.log(error))
+        this.state.passwordValidation && this.signUp().then(data =>
+            data.status === 'error' ? this.setState({errorSignup: data.errors[0]}) : this.setState({errorSignup: null}, () => this.props.history.push('/login')))
     }
-
     componentWillMount() {
         this.Auth.loggedIn() && this.props.history.push('/profile')
     }
@@ -131,6 +133,9 @@ export default class Signup extends Component {
                                     </div>
                                     <div className="form-message">
                                         {this.state.errorValidate}
+                                    </div>
+                                    <div className={classNames("form-message", {['message-login']: this.state.errorSignup})}>
+                                        {this.state.errorSignup}
                                     </div>
                                     <div className="form-group">
                                         <button type="submit" className="btn btn-color btn-md btn-block">Create New
