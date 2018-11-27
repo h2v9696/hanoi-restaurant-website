@@ -79,8 +79,9 @@ export default class Signup extends Component {
         //TODO validate sign up form
         e.preventDefault()
         this.state.passwordValidation && this.signUp().then(data =>
-            data.status === 'error' ? this.setState({errorSignup: data.errors[0]}) : this.setState({errorSignup: null}, () => this.props.history.push('/login')))
+            data.status === 'error' ? this.setState({errorSignup: data.errors[0]}) : this.setState({errorSignup: null}, () => this.Auth.ezLogin(data.data.id, () => this.props.history.push('/profile'))))
     }
+
     componentWillMount() {
         this.Auth.loggedIn() && this.props.history.push('/profile')
     }
@@ -134,7 +135,8 @@ export default class Signup extends Component {
                                     <div className="form-message">
                                         {this.state.errorValidate}
                                     </div>
-                                    <div className={classNames("form-message", {['message-login']: this.state.errorSignup})}>
+                                    <div
+                                        className={classNames("form-message", {['message-login']: this.state.errorSignup})}>
                                         {this.state.errorSignup}
                                     </div>
                                     <div className="form-group">
