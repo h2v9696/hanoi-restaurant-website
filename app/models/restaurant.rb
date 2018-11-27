@@ -17,7 +17,8 @@ class Restaurant < ApplicationRecord
       Notification.create(
         user_id: sub["user_id"],
         type_id: Notification::TYPE_NEW_DISH,
-        content: "Restaurant #{self.name} has updated their infomation"
+        content: "Restaurant #{self.name} has updated their infomation",
+        is_read: false
       )
     end
   end
