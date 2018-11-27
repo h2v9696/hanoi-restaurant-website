@@ -21,6 +21,7 @@ export default class Header extends Component {
         };
         this.Auth = new AuthService();
         this.getNotification = this.getNotification.bind(this);
+        this.updateNotification = this.updateNotification.bind(this);
     }
 
     componentDidMount() {
@@ -57,21 +58,49 @@ export default class Header extends Component {
             );
     }
 
+    updateNotification(notificationId, is_read) {
+        let notification = new FormData();
+        notification.set('is_read', is_read);
+        axios({
+            method: 'put',
+            url: API + '/api/notifications/' + notificationId,
+            data: notification,
+            headers: {'Content-Type': 'multipart/form-data'}
+        })
+            .then(response => {
+                console.log("send notification!");
+            })
+            .catch(error => console.log("notification: error!"));
+    }
+
     showNotification() {
         if (this.state.showNotification) {
             this.setState({showNotification: false});
         }
         else {
+            this.state.notification.map((noti, index) => {
+                if (!noti.is_read) {
+                    this.updateNotification(noti.id, true);
+                }
+            });
             this.setState({showNotification: true});
         }
     }
 
     render() {
-        let notification =
-            <a href="#" onClick={() => this.showNotification()}>Notification <mark
-                style={{backgroundColor: "#ff0000", color: "white"}}>{this.state.notification.length}</mark>
+        let numberOfNoti = this.state.notification.length;
+        this.state.notification.map((noti, index) => {
+            if (noti.is_read) {
+                numberOfNoti--;
+            }
+        });
+        let notification;
+        if (numberOfNoti > 0)
+            notification = <a href="#" onClick={() => this.showNotification()}>Notification <mark
+                style={{backgroundColor: "#ff0000", color: "white"}}>{numberOfNoti}</mark>
             </a>;
-
+        else
+            notification = <a href="#" onClick={() => this.showNotification()}>Notification</a>;
         const notiModal = (this.state.notification || []).map((notification) => {
             let icon = <i/>;
             if (notification.type_id === 2) {
@@ -102,7 +131,8 @@ export default class Header extends Component {
                     }}>
                         <a className="col-1">{icon}</a>
                         <h4 className="col-11">
-                            <b>{notification.content}</b> at <Moment>{notification.created_at}</Moment></h4>
+                            <b>{notification.content}</b> at <Moment
+                                format="YYYY/MM/DD HH:MM">{notification.created_at}</Moment></h4>
                     </div>
                 </div>
             );

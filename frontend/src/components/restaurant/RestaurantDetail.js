@@ -321,6 +321,7 @@ export default class RestaurantDetail extends Component {
         notification.set('user_id', user_id);
         notification.set('type_id', type_id);
         notification.set('content', content);
+        notification.set('is_read', false);
         axios({
             method: 'post',
             url: API + '/api/notifications',
