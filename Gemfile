@@ -15,6 +15,8 @@ gem 'figaro'
 gem 'faker', github: 'stympy/faker'
 gem 'rails_admin'
 gem 'rails_admin_rollincode'
+gem 'carrierwave'
+gem 'cloudinary'
 
 group :development, :test do
   gem 'rspec-rails'

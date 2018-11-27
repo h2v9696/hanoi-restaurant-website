@@ -1,5 +1,5 @@
 class Restaurant < ApplicationRecord
-  has_many :dishes, inverse_of: :restaurant
+  has_many :dishes
   before_save :update_notification, only: :update
 
   OBJECT_TYPE = 1

@@ -1,0 +1,12 @@
+production:
+  cloud_name: "dzd4yfu79"
+  api_key: "925467996395283"
+  api_secret: "Yuz7bqNvbom-VdyZujlTKIsfWeA"
+  secure: true
+  cdn_subdomain: true
+development:
+  cloud_name: "dzd4yfu79"
+  api_key: "925467996395283"
+  api_secret: "Yuz7bqNvbom-VdyZujlTKIsfWeA"
+  secure: true
+  cdn_subdomain: true

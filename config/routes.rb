@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  root 'infos#home'
+  root to: 'application#redirect_to_web'
+
   namespace :api, default: { format: :json } do
     scope '/users' do
       post '/sign_in', to: 'sessions#create'

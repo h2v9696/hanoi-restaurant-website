@@ -15,12 +15,13 @@ RailsAdmin.config do |config|
   config.model 'Dish' do
     visible false
     edit do
-      configure :name, :string do
+      field :name, :string do
         required true
       end
-      configure :price do
+      field :price do
         required true
       end
+      field :image_url
     end
   end
 
