@@ -1,6 +1,7 @@
 class Restaurant < ApplicationRecord
   has_many :dishes
   before_save :update_notification, only: :update
+  mount_uploader :cover_url, ImageUploader
 
   OBJECT_TYPE = 1
 
@@ -21,5 +22,8 @@ class Restaurant < ApplicationRecord
         is_read: false
       )
     end
+  end
+
+  def change_img
   end
 end

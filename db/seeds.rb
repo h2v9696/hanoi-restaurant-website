@@ -1,4 +1,5 @@
 puts "\nGenerating fake data\n"
+include CloudinaryHelper
 
 @count = 0
 if ActiveRecord::Base.connection.table_exists? :users
@@ -31,11 +32,12 @@ if ActiveRecord::Base.connection.table_exists? :restaurants
   ActiveRecord::Base.connection.execute 'TRUNCATE TABLE restaurants'
   20.times do
     Restaurant.create(
+      id: @count + 1,
       name: Faker::Restaurant.unique.name,
       address: Faker::Address.unique.full_address,
       phone: Faker::PhoneNumber.unique.cell_phone,
       description: Faker::Restaurant.description,
-      cover_url: ('default_restaurant' + rand(1..3).to_s)
+      remote_cover_url_url: cl_image_path('default_restaurant' + rand(1..3).to_s)
     )
     @count += 1
   end
@@ -46,12 +48,13 @@ puts "#{@count} Restaurants created"
 if ActiveRecord::Base.connection.table_exists? :dishes
   ActiveRecord::Base.connection.execute 'TRUNCATE TABLE dishes'
   Restaurant.all.each do |restaurant|
-    rand(5..10).times do
+    rand(2..5).times do
       Dish.create(
+        id: @count + 1,
         restaurant_id: restaurant.id,
         name: Faker::Food.unique.dish,
         price: rand(20..100) * 1000,
-        image_url: 'https://res.cloudinary.com/dzd4yfu79/image/upload/v1542125143/default-dish.jpg'
+        remote_image_url_url: cl_image_path('default-dish')
       )
       @count += 1
     end

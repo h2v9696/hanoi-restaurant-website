@@ -1,4 +1,4 @@
-class ImageUploader < CarrierWave::Uploader::Base
+class DishUploaderUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -46,10 +46,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
   def public_id
-    if (Restaurant.maximum(:id))
-      publicID = "restaurant" + (Restaurant.maximum(:id).next).to_s
+    if (Dish.maximum(:id))
+      publicID = "dish" + (Dish.maximum(:id).next).to_s
     else
-      publicID = "restaurant" + model.id.to_s
+      publicID = "dish" + model.id.to_s
     end
     puts publicID
     return publicID

@@ -21,7 +21,7 @@ RailsAdmin.config do |config|
       field :price do
         required true
       end
-      field :image_url
+      field :image_url, :carrierwave
     end
   end
 
@@ -36,6 +36,7 @@ RailsAdmin.config do |config|
       configure :phone, :string do
         required true
       end
+      configure :cover_url, :carrierwave
       configure :description, :string do
         required true
       end
