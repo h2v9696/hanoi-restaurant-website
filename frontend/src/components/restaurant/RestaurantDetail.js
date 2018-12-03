@@ -363,7 +363,8 @@ export default class RestaurantDetail extends Component {
                     return (
                         <div className="col-12 col-sm-6 col-lg-4" key={index}>
                             <div className="single-best-receipe-area mb-30">
-                                <img className="dish_image" src={dish.image_url} alt="true"/>
+                                <Image className="dish_image-4" alt="true"
+                                       publicId={"dish" + dish.id}></Image>
                                 <div className="receipe-content">
                                     <a>
                                         {dish.name}
@@ -528,8 +529,6 @@ export default class RestaurantDetail extends Component {
                                                                                 data-placement="top"
                                                                                 style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
                                                                             </p>
-                                                                            <p className="col-2"><i
-                                                                                className="fa fa-flag"/> Report</p>
                                                                         </div>
                                                                     );
                                                                 });
@@ -631,8 +630,6 @@ export default class RestaurantDetail extends Component {
                                                                 <p className="col-2"><i className="fa fa-comment"
                                                                                         onClick={() => this.setState({reply: reply.id})}
                                                                                         style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
-                                                                </p>
-                                                                <p className="col-2"><i className="fa fa-flag"/> Report
                                                                 </p>
                                                                 <Modal open={this.state.reply === reply.id}
                                                                        onClose={this.onCloseModalReply} center>
@@ -744,7 +741,6 @@ export default class RestaurantDetail extends Component {
                                                                             onClick={() => this.setState({reply: reply.id})}
                                                                             style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
                                                     </p>
-                                                    <p className="col-2"><i className="fa fa-flag"/> Report</p>
                                                     <Modal open={this.state.reply === reply.id}
                                                            onClose={this.onCloseModalReply} center>
                                                         <ReplyMessage messageId={reply.id}
@@ -851,7 +847,6 @@ export default class RestaurantDetail extends Component {
                                                                 onClick={() => this.setState({reply: reply.id})}
                                                                 style={{cursor: "pointer"}}/> Reply {reply.no_of_reply}
                                         </p>
-                                        <p className="col-2"><i className="fa fa-flag"/> Report</p>
                                         <Modal open={this.state.reply === reply.id} onClose={this.onCloseModalReply}
                                                center>
                                             <ReplyMessage messageId={reply.id} userInfo={this.state.userInfo}/>
@@ -972,7 +967,6 @@ export default class RestaurantDetail extends Component {
                                                                 onClick={() => this.setState({reply: comment.id})}
                                                                 style={{cursor: "pointer"}}/> Reply {comment.no_of_reply}
                                         </p>
-                                        <p className="col-2"><i className="fa fa-flag"/>Report</p>
                                         <Modal open={this.state.reply === comment.id} onClose={this.onCloseModalReply}
                                                center>
                                             <ReplyMessage messageId={comment.id} userInfo={this.state.userInfo}/>
@@ -1137,7 +1131,7 @@ export default class RestaurantDetail extends Component {
                                 <div className="col-12">
                                     <div className="receipe-slider">
                                         <Image
-                                            publicId={restaurantDetail.cover_url}>
+                                            publicId={"restaurant" + restaurantDetail.id}>
                                         </Image>
                                     </div>
                                 </div>

@@ -32,7 +32,7 @@ export default class Homepage extends Component {
                         <div key={restaurantInfo.id}>
                             <div style={{
                                 height: "700px",
-                                backgroundImage: `url(${cloudinaryCore.url(restaurantInfo.cover_url)})`,
+                                backgroundImage: `url(${cloudinaryCore.url("restaurant" + restaurantInfo.id)})`,
                                 backgroundPosition: 'center',
                                 backgroundSize: 'cover',
                                 backgroundRepeat: 'noRepeat'
@@ -80,14 +80,14 @@ export default class Homepage extends Component {
             });
 
             const restaurantTop6 = [].concat(restaurant
-                .sort((a, b)=> a.name.localeCompare(b.name)))
+                .sort((a, b)=> b.rating_avg - a.rating_avg))
                 .map((restaurantInfo, index)=>{
                 if (index <= 5){
                     return (
                         <div className="col-12 col-sm-6 col-lg-4" key={restaurantInfo.id}>
                             <div className="single-best-receipe-area mb-30">
                                 <Image
-                                    publicId={restaurantInfo.cover_url}>
+                                    publicId={"restaurant" + restaurantInfo.id}>
                                 </Image>
                                 <div className="receipe-content">
                                     <Link to={"restaurant/"+restaurantInfo.id}>{restaurantInfo.name}</Link>
@@ -108,7 +108,10 @@ export default class Homepage extends Component {
             });
 
             const newRestaurant= [].concat(restaurant
-                .sort((a, b)=>a.created_at > b.created_at))
+                .sort((a, b)=> {
+                    return new Date(b.created_at).getTime() -
+                        new Date(a.created_at).getTime()
+                }))
                 .map((restaurantInfo, index)=>{
                     if (index <= 8) {
                         return (
@@ -117,7 +120,7 @@ export default class Homepage extends Component {
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
                                         <Image
-                                            publicId={restaurantInfo.cover_url}>
+                                            publicId={"restaurant" + restaurantInfo.id}>
                                         </Image>
                                     </div>
                                     {/* Receipe Content */}
