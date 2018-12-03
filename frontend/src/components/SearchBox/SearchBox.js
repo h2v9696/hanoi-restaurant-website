@@ -2,6 +2,7 @@ import React from 'react'
 import {Link,} from 'react-router-dom'
 import * as styles from './SearchBox.module.scss'
 import API from '../../constants/api'
+import StarRatings from "react-star-ratings";
 
 export default class SearchBox extends React.PureComponent {
     constructor() {
@@ -34,7 +35,8 @@ export default class SearchBox extends React.PureComponent {
                 </div>
                 <div className={styles.resultsBox}>
                     {
-                        inputValue.length > 0 ? (results.length > 0 ? hasResults(results, this.props.closeModal) : <NotFound/>)
+                        inputValue.length > 0 ? (results.length > 0 ? hasResults(results, this.props.closeModal) :
+                            <NotFound/>)
                             : null
                     }
                 </div>
@@ -43,12 +45,23 @@ export default class SearchBox extends React.PureComponent {
     }
 }
 
-const hasResults = (data, closeModal) => (
-    <React.Fragment>
-        {data.map((e, index) => <Link key={index} to={'/restaurant/' + e.id} onClick={closeModal}><p>{e.name}</p><span>{e.address}</span>
+const hasResults = (data, closeModal) => {
+    data.sort((a, b) => b.rating_avg - a.rating_avg )
+    return <React.Fragment>
+        {data.map((e, index) => <Link key={index} to={'/restaurant/' + e.id} onClick={closeModal}>
+            <p>{e.name}</p>
+            <StarRatings
+                rating={e.rating_avg}
+                starRatedColor="gold"
+                starDimension="15px"
+                starSpacing="2px"
+                name={e.id}
+            />
+            <br/>
+            <span>{e.address}</span>
         </Link>)}
     </React.Fragment>
-)
+}
 const NotFound = () => (
     <div>
         No result Found.

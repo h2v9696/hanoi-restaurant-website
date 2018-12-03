@@ -74,7 +74,7 @@ export default class UserProfile extends React.Component {
                         </div>
                         <div className="profile-bio">
                             <p>
-                                <span className="profile-real-name">{data.email}</span> {data.address}📷✈️🏕️
+                                <span className="profile-real-name">{data.email}</span> {data.address}
                             </p>
                         </div>
                     </div>
