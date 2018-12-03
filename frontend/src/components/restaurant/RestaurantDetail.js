@@ -351,8 +351,8 @@ export default class RestaurantDetail extends Component {
             }
             let countRating =
                 <div className="rateCount">
-                    <p className="rateCount">{rateNumber} ratings</p>
-                    <p className="rateCount">{Number.parseFloat(sumRating / rateNumber).toFixed(1)}/5.0</p>
+                    <p className="rateCount">{restaurantDetail.rating_count} ratings</p>
+                    <p className="rateCount">{restaurantDetail.rating_avg}/5.0</p>
                 </div>;
 
             //show menu

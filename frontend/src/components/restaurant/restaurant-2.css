@@ -1,0 +1,97 @@
+.image-list {
+    object-fit: cover;
+    height: 400px !important;
+    width: 400px !important;
+    display: block !important;
+}
+
+.restaurant {
+    width: 1300px;
+    margin-left: 300px;
+    margin-top: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.listTitle {
+    font-weight: bold;
+    font-size: 30px;
+    cursor: pointer !important;
+}
+
+.listTitle:hover {
+    font-weight: bold;
+    font-size: 30px !important;
+}
+
+a.address {
+    font-size: 18px;
+}
+
+a.description {
+    font-size: 18px;
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.count {
+    color: grey !important;
+    font-size: 15px !important;
+}
+
+.info {
+    line-height: 2;
+    pointer-events: none !important;
+    text-align: justify !important;
+    margin-right: 20px;
+    max-height: 5cm !important;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+}
+
+.detail {
+    font-size: 18px !important;
+    position: absolute;
+    bottom: 10px !important;
+    right: 30px !important;
+}
+
+.detail:hover {
+    font-size: 18px !important;
+    color: lightskyblue;
+    text-decoration: underline;
+}
+
+.pagination {
+    padding-top: 40px !important;
+    padding-bottom: 20px !important;
+    padding-left: 130px !important;
+    text-align: center !important;
+}
+
+.pagination >li {
+    text-align: center !important;
+}
+
+.pagination >li >a {
+    padding-left: 10px;
+    background-color: transparent !important;
+    font-size: 25px !important;
+    border-style: none!important;
+    box-shadow: 0 0;
+}
+
+li.active {
+    border-bottom: 3px solid lightskyblue;
+}
+
+li.active >a:hover {
+    font-size: 25px !important;
+}
+
+.pagination >li >a:hover {
+    background-color: lightskyblue !important;
+}
+
+.undefined:hover {
+    font-size: 20px !important;
+}
