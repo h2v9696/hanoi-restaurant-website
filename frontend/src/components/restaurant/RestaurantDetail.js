@@ -506,8 +506,8 @@ export default class RestaurantDetail extends Component {
                                                                             <div className="col-11"
                                                                                  style={{textAlign: "justify"}}>
                                                                                 <div className="row">
-                                                                                    <h3 className="col-8"
-                                                                                        style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                                                    <Link className="col-8" to={'profile'+reply.user.id}
+                                                                                        style={{fontWeight: "bold !important"}}>{reply.user.username}</Link>
                                                                                     <div
                                                                                         className="col-4">{optionButton}</div>
                                                                                 </div>
@@ -612,8 +612,8 @@ export default class RestaurantDetail extends Component {
                                                                 </div>
                                                                 <div className="col-11" style={{textAlign: "justify"}}>
                                                                     <div className="row">
-                                                                        <h3 className="col-8"
-                                                                            style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                                        <Link className="col-8" to={'/profile/'+reply.user.id}
+                                                                            style={{fontWeight: "bold !important"}}>{reply.user.username}</Link>
                                                                         <div className="col-4">{optionButton}</div>
                                                                     </div>
                                                                     <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
@@ -723,8 +723,8 @@ export default class RestaurantDetail extends Component {
                                                     </div>
                                                     <div className="col-11" style={{textAlign: "justify"}}>
                                                         <div className="row">
-                                                            <h3 className="col-8"
-                                                                style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                            <Link className="col-8" to={'/profile/'+reply.user.id}
+                                                                style={{fontWeight: "bold !important"}}>{reply.user.username}</Link>
                                                             <div className="col-4">{optionButton}</div>
                                                         </div>
                                                         <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
@@ -830,8 +830,8 @@ export default class RestaurantDetail extends Component {
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
                                             <div className="row">
-                                                <h3 className="col-8"
-                                                    style={{fontWeight: "bold !important"}}>{reply.user.username}</h3>
+                                                <Link className="col-8" to={'/profile/'+reply.user.id}
+                                                    style={{fontWeight: "bold !important"}}>{reply.user.username}</Link>
                                                 <div className="col-4">{optionButton}</div>
                                             </div>
                                             <h4 style={{fontWeight: "bold !important"}}>{reply.content}</h4>
@@ -950,8 +950,8 @@ export default class RestaurantDetail extends Component {
                                         </div>
                                         <div className="col-11" style={{textAlign: "justify"}}>
                                             <div className="row">
-                                                <h3 className="col-8"
-                                                    style={{fontWeight: "bold !important"}}>{comment.user.username}</h3>
+                                                <Link className="col-8" to={'/profile/'+comment.user.id}
+                                                    style={{fontWeight: "bold !important"}}>{comment.user.username}</Link>
                                                 <div className="col-4">{optionButton}</div>
                                             </div>
                                             <h4 style={{fontWeight: "bold !important"}}>{comment.content}</h4>

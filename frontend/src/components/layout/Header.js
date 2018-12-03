@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Link,} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {AuthService} from 'components/AuthServices'
 import Modal from 'react-responsive-modal'
 import SearchBox from 'components/SearchBox'

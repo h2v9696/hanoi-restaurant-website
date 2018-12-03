@@ -1825,7 +1825,7 @@ clone-deep@^2.0.1:
     kind-of "^6.0.0"
     shallow-clone "^1.0.0"
 
-cloudinary-core@^2.3.0:
+cloudinary-core@^2.3.0, cloudinary-core@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/cloudinary-core/-/cloudinary-core-2.5.0.tgz#580d7255a394f0900879e7eee0d6f3072df99ac5"
   integrity sha512-lrzdLUzFZPnxpWgIAGtOwfqM2D+rG+fLsgd6KqZwDkQX+DYOUNaJpD3lEqxhoMI90zoT1gP/7+pMh/AscSaQ0w==
