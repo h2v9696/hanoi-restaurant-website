@@ -91,7 +91,6 @@ export default class ReplyMessage extends Component {
                         <p className="col-2"><i className="fa fa-thumbs-up"/> Like {reply.no_of_like}</p>
                         <p className="col-2"><i className="fa fa-comment"/> Reply {reply.no_of_reply}
                         </p>
-                        <p className="col-2"><i className="fa fa-flag"/> Report</p>
                     </div>
                 );
             });
@@ -122,7 +121,6 @@ export default class ReplyMessage extends Component {
                         <p className="col-2"><i className="fa fa-thumbs-up"/>Like {content.no_of_like}</p>
                         <p className="col-2"><i className="fa fa-comment"/> Reply {content.no_of_reply}
                         </p>
-                        <p className="col-2"><i className="fa fa-flag"/> Report</p>
 
                         <div className="col-1"></div>
                         <div className="col-11">
