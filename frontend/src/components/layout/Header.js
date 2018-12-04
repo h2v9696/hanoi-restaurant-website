@@ -163,6 +163,7 @@ export default class Header extends Component {
                                     <div className="classynav">
                                         <ul>
                                             <li><a href="/">Home</a></li>
+                                            <li><a href="/restaurant">Restaurant</a></li>
                                             {!this.state.loading ?  <li>{notification}</li> : null
                                             }
                                             {this.state.loading ? <li><Link to="/logIn">Login</Link></li> : <li><Link

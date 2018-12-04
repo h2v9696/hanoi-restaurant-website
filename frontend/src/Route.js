@@ -11,6 +11,7 @@ import {withRouter} from "react-router"
 
 //restaurant
 import Show from "./pages/restaurant/Show";
+import Index from "./pages/restaurant/Index";
 
 class Main extends Component {
     render() {
@@ -26,6 +27,7 @@ class Main extends Component {
                 <Route path='/profile/:id' component={PeopleProfile}/>
                 {/*restaurant*/}
                 <Route path="/restaurant/:id" component={Show}/>
+                <Route path="/restaurant" component={Index}/>
             </Switch>
         )
     }
