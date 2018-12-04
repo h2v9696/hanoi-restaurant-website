@@ -1,10 +1,10 @@
 class Api::SessionsController < ApplicationController
-  
   def create
     if !(user = User.find_by(email: params[:email].downcase))
       render json: {status: :error, errors: ["Email not found"]}
     else
       if user.authenticate(params[:password])
+        auth_token = user.generate_auth_token
         render json: {status: :success, data: user}
       else
         render json: {status: :error, errors: ["Wrong password"]}
@@ -13,6 +13,8 @@ class Api::SessionsController < ApplicationController
   end
 
   def destroy
+    puts current_user
+    current_user.invalidate_auth_token
     render json: {status: :success}
   end
 end
