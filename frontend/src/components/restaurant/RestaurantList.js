@@ -35,7 +35,7 @@ export default class RestaurantList extends Component {
                             <div className="row restaurant" key={index}>
                                 <div className="col-4">
                                     <Image className="image-list" alt="true"
-                                           publicId={"dish" + restaurant.id}></Image>
+                                           publicId={"restaurant" + restaurant.id}></Image>
                                 </div>
                                 <div className="col-8 content">
                                     <Link to={"restaurant/"+restaurant.id} className="listTitle">
