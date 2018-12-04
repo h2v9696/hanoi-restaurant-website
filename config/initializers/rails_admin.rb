@@ -43,4 +43,9 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.authenticate_with do
+    if !(params[:token] && AdminToken.exists?(token: params[:token]))
+      redirect_to '/'
+    end
+  end
 end

@@ -76,5 +76,12 @@ class CreateDatabase < ActiveRecord::Migration[5.2]
       t.timestamps
     end
 
+    # Admin token
+    create_table :admin_tokens do |t|
+      t.string :token
+      t.integer :user_id
+      t.timestamps
+    end
+    
   end
 end
