@@ -86,6 +86,11 @@ export default class Header extends Component {
             this.setState({showNotification: true});
         }
     }
+    logout = () =>  {
+        fetch(API + '/api/users/sign_out', {
+            method: "DELETE",
+        })
+    }
 
     render() {
         let numberOfNoti = this.state.notification.length;
@@ -172,6 +177,7 @@ export default class Header extends Component {
                                                 <li><a href={API + '/admin/?auth_token=' + this.state.userData.auth_token}>Admin</a></li>}
                                             {!this.state.loading && <li><Link onClick={() => {
                                                 this.Auth.logout();
+                                                this.logout();
                                                 this.setState({loading: true})
                                             }} to='/home'>Logout</Link></li>}
                                         </ul>
