@@ -30,7 +30,7 @@ export default class RestaurantList extends Component {
             const restaurantList = [].concat(restaurantData
                 .sort((a, b) => b.rating_avg - a.rating_avg))
                 .map((restaurant, index) => {
-                    if (index <= this.state.activePage * 5 && index >= (this.state.activePage - 1) * 5) {
+                    if (index < this.state.activePage*5 && index >= (this.state.activePage-1)*5) {
                         return (
                             <div className="row restaurant" key={index}>
                                 <div className="col-4">
