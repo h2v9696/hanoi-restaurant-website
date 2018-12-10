@@ -3,8 +3,9 @@ class ApplicationController < ActionController::API
   include ActionController::ImplicitRender
   include ActionController::Helpers
   include ActionController::Flash
+  include ActionController::MimeResponds
   include ActionController::HttpAuthentication::Token::ControllerMethods
-
+  include ActionView::Helpers::TranslationHelper
   include ActionController::RequestForgeryProtection
 
   helper_method :user_signed_in?, :current_user

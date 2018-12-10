@@ -13,8 +13,8 @@ class Api::SessionsController < ApplicationController
   end
 
   def destroy
-    puts current_user
-    current_user.invalidate_auth_token
+    session[:auth_token] = nil
+    # current_user.invalidate_auth_token
     render json: {status: :success}
   end
 end

@@ -47,7 +47,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
   def public_id
     if (Restaurant.maximum(:id))
-      publicID = "restaurant" + (Restaurant.maximum(:id).next).to_s
+      if (Restaurant.maximum(:id) == model.id)
+        publicID = "restaurant" + model.id.to_s
+      else
+        publicID = "restaurant" + (Restaurant.maximum(:id).next).to_s
+      end
     else
       publicID = "restaurant" + model.id.to_s
     end
