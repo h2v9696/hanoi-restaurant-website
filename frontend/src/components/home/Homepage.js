@@ -25,107 +25,136 @@ export default class Homepage extends Component {
         if (this.props.restaurantInfo !== 0) {
             const restaurant = this.props.restaurantInfo;
             const restaurantTop3 = [].concat(restaurant
-                .sort((a, b)=>b.rating_avg - a.rating_avg))
-                .map((restaurantInfo, index)=>{
-                if (index <= 2){
-                    return (
-                        <div key={restaurantInfo.id}>
-                            <div style={{
-                                height: "700px",
-                                backgroundImage: `url(${cloudinaryCore.url("restaurant" + restaurantInfo.id)})`,
-                                backgroundPosition: 'center',
-                                backgroundSize: 'cover',
-                                backgroundRepeat: 'noRepeat'
-                            }}>
-                                <div className="container h-100">
-                                    <div className="row h-100 align-items-center"
-                                         style={{backgroundColor: "rgba(255,255,255, 0.3)", width: "500px", position: "fixed", textOverflow: "ellipsis",overflow: "hidden"}}>
-                                        <div className="col-12 col-md-9 col-lg-7 col-xl-6">
-                                            <a>
-                                                <h1 style={{color: "white"}}>{restaurantInfo.name}</h1>
-                                            </a>
-                                            <div className="ratings">
-                                                <StarRatings
-                                                    rating={restaurantInfo.rating_avg}
-                                                    starRatedColor="gold"
-                                                    starDimension="20px"
-                                                    starSpacing="3px"
-                                                    name={restaurantInfo.id}
-                                                />
-                                            </div>
-                                            <a>
-                                                <h5 style={{
-                                                    color: "white",
-                                                    fontStyle: "italic"
-                                                }}>{restaurantInfo.address}</h5>
-                                            </a>
-                                            <div className="hero-slides-content" data-animation="fadeInUp"
-                                                 data-delay="100ms" style={{height: "11em",textOverflow: "ellipsis",overflow: "hidden"}}>
+                .sort((a, b) => b.rating_avg - a.rating_avg))
+                .map((restaurantInfo, index) => {
+                    if (index <= 2) {
+                        return (
+                            <div key={restaurantInfo.id}>
+                                <div style={{
+                                    height: "700px",
+                                    backgroundImage: `url(${cloudinaryCore.url("restaurant" + restaurantInfo.id)})`,
+                                    backgroundPosition: 'center',
+                                    backgroundSize: 'cover',
+                                    backgroundRepeat: 'noRepeat'
+                                }}>
+                                    <div className="container h-100">
+                                        <div className="row h-100 align-items-center"
+                                             style={{
+                                                 backgroundColor: "rgba(255,255,255, 0.3)",
+                                                 width: "500px",
+                                                 position: "fixed",
+                                                 textOverflow: "ellipsis",
+                                                 overflow: "hidden"
+                                             }}>
+                                            <div className="col-12 col-md-9 col-lg-7 col-xl-6">
+                                                <a>
+                                                    <h1 style={{color: "white"}}>{restaurantInfo.name}</h1>
+                                                </a>
+                                                <div className="ratings">
+                                                    <StarRatings
+                                                        rating={restaurantInfo.rating_avg}
+                                                        starRatedColor="gold"
+                                                        starDimension="20px"
+                                                        starSpacing="3px"
+                                                    />
+                                                </div>
                                                 <a>
                                                     <h5 style={{
                                                         color: "white",
-                                                        fontStyle: "italic",
-                                                        textOverflow: "ellipsis"
-                                                    }}>{restaurantInfo.description}</h5>
+                                                        fontStyle: "italic"
+                                                    }}>{restaurantInfo.address}</h5>
                                                 </a>
+                                                <div className="hero-slides-content" data-animation="fadeInUp"
+                                                     data-delay="100ms" style={{
+                                                    height: "11em",
+                                                    textOverflow: "ellipsis",
+                                                    overflow: "hidden"
+                                                }}>
+                                                    <a>
+                                                        <h5 style={{
+                                                            color: "white",
+                                                            fontStyle: "italic",
+                                                            textOverflow: "ellipsis"
+                                                        }}>{restaurantInfo.description}</h5>
+                                                    </a>
+                                                </div>
+                                                <Link to={"restaurant/" + restaurantInfo.id}
+                                                      style={{color: "white", textDecoration: "underline"}}>More info
+                                                    about {restaurantInfo.name}</Link>
                                             </div>
-                                            <Link to={"restaurant/"+restaurantInfo.id} style={{color: "white",textDecoration: "underline"}}>More info about {restaurantInfo.name}</Link>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                }
-            });
+                        );
+                    }
+                });
 
             const restaurantTop6 = [].concat(restaurant
-                .sort((a, b)=> b.rating_avg - a.rating_avg))
-                .map((restaurantInfo, index)=>{
-                if (index <= 5){
-                    return (
-                        <div className="col-12 col-sm-6 col-lg-4" key={restaurantInfo.id}>
-                            <div className="single-best-receipe-area mb-30">
-                                <Image
-                                    publicId={"restaurant" + restaurantInfo.id}>
-                                </Image>
-                                <div className="receipe-content">
-                                    <Link to={"restaurant/"+restaurantInfo.id}>{restaurantInfo.name}</Link>
-                                    <div className="ratings">
-                                        <StarRatings
-                                            rating={restaurantInfo.rating_avg}
-                                            starRatedColor="gold"
-                                            starDimension="15px"
-                                            starSpacing="2px"
-                                            name={restaurantInfo.id}
-                                        />
+                .sort((a, b) => b.rating_avg - a.rating_avg))
+                .map((restaurantInfo, index) => {
+                    if (index <= 5) {
+                        return (
+                            <div className="col-12 col-sm-6 col-lg-4" key={restaurantInfo.id}>
+                                <div className="single-best-receipe-area mb-30">
+                                    <Link to={"restaurant/" + restaurantInfo.id}>
+                                        <Image
+                                            publicId={"restaurant" + restaurantInfo.id} style={{
+                                            objectFit: "cover",
+                                            marginLeft: "auto",
+                                            marginRight: "auto",
+                                            height: "100px",
+                                            width: "250px",
+                                            display: "block"
+                                        }}>
+                                        </Image>
+                                    </Link>
+                                    <div className="receipe-content">
+                                        <Link to={"restaurant/" + restaurantInfo.id}>{restaurantInfo.name}</Link>
+                                        <div className="ratings">
+                                            <StarRatings
+                                                rating={restaurantInfo.rating_avg}
+                                                starRatedColor="gold"
+                                                starDimension="15px"
+                                                starSpacing="2px"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                }
-            });
+                        );
+                    }
+                });
 
-            const newRestaurant= [].concat(restaurant
-                .sort((a, b)=> {
+            const newRestaurant = [].concat(restaurant
+                .sort((a, b) => {
                     return new Date(b.created_at).getTime() -
                         new Date(a.created_at).getTime()
                 }))
-                .map((restaurantInfo, index)=>{
+                .map((restaurantInfo, index) => {
                     if (index <= 8) {
                         return (
                             <div className="col-12 col-sm-6 col-lg-4" key={restaurantInfo.id}>
                                 <div className="single-small-receipe-area d-flex">
                                     {/* Receipe Thumb */}
                                     <div className="receipe-thumb">
-                                        <Image
-                                            publicId={"restaurant" + restaurantInfo.id}>
-                                        </Image>
+                                        <Link to={"restaurant/" + restaurantInfo.id}>
+                                            <Image style={{
+                                                objectFit: "cover",
+                                                marginLeft: "auto",
+                                                marginRight: "auto",
+                                                height: "100px",
+                                                width: "75px",
+                                                display: "block"
+                                            }}
+                                                publicId={"restaurant" + restaurantInfo.id}>
+                                            </Image>
+                                        </Link>
                                     </div>
                                     {/* Receipe Content */}
                                     <div className="receipe-content">
-                                        <span><Moment format="YYYY/MM/DD HH:MM">{restaurantInfo.created_at}</Moment></span>
+                                        <span><Moment
+                                            format="YYYY/MM/DD HH:MM">{restaurantInfo.created_at}</Moment></span>
                                         <Link to={"restaurant/" + restaurantInfo.id}>{restaurantInfo.name}</Link>
                                         <div className="ratings">
                                             <StarRatings
@@ -133,7 +162,6 @@ export default class Homepage extends Component {
                                                 starRatedColor="gold"
                                                 starDimension="10px"
                                                 starSpacing="1px"
-                                                name={restaurantInfo.id}
                                             />
                                         </div>
                                     </div>
@@ -147,7 +175,8 @@ export default class Homepage extends Component {
             if (!sessionStorage.getItem('id_user')) {
                 middle =
                     <div className="cta-content text-center">
-                        <p>Follow the favourite restaurants, share your feeling with more and more people,find the best for you and your family!</p>
+                        <p>Follow the favourite restaurants, share your feeling with more and more people,find the best
+                            for you and your family!</p>
                         <Link to="login" className="btn btn-myself">Login now!</Link>
                     </div>
             }

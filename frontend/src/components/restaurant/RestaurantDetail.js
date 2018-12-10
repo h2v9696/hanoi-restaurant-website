@@ -360,6 +360,12 @@ export default class RestaurantDetail extends Component {
             let dishes = [];
             if (dish !== 0) {
                 dishes = dish.map((dish, index) => {
+                    const formatter = new Intl.NumberFormat('de-DE', {
+                        style: 'currency',
+                        currency: 'VND',
+                        minimumFractionDigits: 0
+                    });
+                    const price = formatter.format(dish.price);
                     return (
                         <div className="col-12 col-sm-6 col-lg-4" key={index}>
                             <div className="single-best-receipe-area mb-30">
@@ -370,8 +376,7 @@ export default class RestaurantDetail extends Component {
                                         {dish.name}
                                     </a>
                                     <div className="ratings" style={{color: "grey"}}>
-                                        <i className="fa fa-money" aria-hidden="true"
-                                           style={{color: "gold"}}/><a>{dish.price}</a>
+                                        <a>{price}</a>
                                     </div>
                                 </div>
                             </div>

@@ -8,7 +8,8 @@ import "components/restaurant/restaurant-2.css"
 import StarRatings from "react-star-ratings";
 
 import Pagination from "react-js-pagination";
-require ('bootstrap-less/bootstrap/bootstrap.less');
+
+require('bootstrap-less/bootstrap/bootstrap.less');
 
 export default class RestaurantList extends Component {
     constructor(props) {
@@ -26,19 +27,20 @@ export default class RestaurantList extends Component {
     render() {
         if (this.props.restaurantList !== 0) {
             const restaurantData = this.props.restaurantList;
-            console.log(restaurantData);
             const restaurantList = [].concat(restaurantData
-                .sort((a, b)=> b.rating_avg - a.rating_avg))
+                .sort((a, b) => b.rating_avg - a.rating_avg))
                 .map((restaurant, index) => {
                     if (index < this.state.activePage*5 && index >= (this.state.activePage-1)*5) {
                         return (
                             <div className="row restaurant" key={index}>
                                 <div className="col-4">
-                                    <Image className="image-list" alt="true"
-                                           publicId={"restaurant" + restaurant.id}></Image>
+                                    <Link to={"restaurant/" + restaurant.id}>
+                                        <Image className="image-list" alt="true"
+                                               publicId={"restaurant" + restaurant.id}></Image>
+                                    </Link>
                                 </div>
                                 <div className="col-8 content">
-                                    <Link to={"restaurant/"+restaurant.id} className="listTitle">
+                                    <Link to={"restaurant/" + restaurant.id} className="listTitle">
                                         {restaurant.name}
                                     </Link>
                                     <div className="receipe-content">
@@ -48,9 +50,8 @@ export default class RestaurantList extends Component {
                                                 starRatedColor="gold"
                                                 starDimension="25px"
                                                 starSpacing="2px"
-                                                name={restaurant.id}
                                             />
-                                            <a className="info count">  ({restaurant.rating_count} rantings)</a>
+                                            <a className="info count"> ({restaurant.rating_count} rantings)</a>
                                         </div>
                                     </div>
                                     <div className="info" style={{color: "grey"}}>
@@ -62,14 +63,14 @@ export default class RestaurantList extends Component {
                                         <a className="address">  {restaurant.phone}</a>
                                     </div>
                                     <div className="info" style={{color: "grey"}}>
-                                        <a className="description">  "{restaurant.description}"</a>
+                                        <a className="description"> "{restaurant.description}"</a>
                                     </div>
-                                    <Link to={"restaurant/"+restaurant.id} className="detail"> More detail >></Link>
+                                    <Link to={"restaurant/" + restaurant.id} className="detail"> More detail >></Link>
                                 </div>
                             </div>
                         );
                     }
-            });
+                });
             return (
                 <div>
                     <div className="breadcumb-area bg-img bg-overlay"
