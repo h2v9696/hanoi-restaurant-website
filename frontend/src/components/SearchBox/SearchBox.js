@@ -19,13 +19,13 @@ export default class SearchBox extends React.PureComponent {
     }
     fetchSearch = () => new Promise((resolve, reject) => {
         const {inputValue, filterValue} = this.state
-        let fetchURL = ''
+            let fetchURL = ''
         switch (filterValue) {
             case 'name':
-                fetchURL = API + '/api/search/?q=' + inputValue
+                fetchURL = API + '/api/search/?name=' + inputValue
                 break
             case 'address':
-                fetchURL = API + '/api/search/?q=' + inputValue
+                fetchURL = API + '/api/search/?address=' + inputValue
                 break
             default:
                 break
