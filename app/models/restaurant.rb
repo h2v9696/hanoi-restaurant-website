@@ -1,8 +1,11 @@
 class Restaurant < ApplicationRecord
+  attr_accessor :next_id
   has_many :dishes
   before_save :update_notification, only: :update
+  after_destroy :change_ai
   mount_uploader :cover_url, ImageUploader
 
+  TRUE_ID = 0
   OBJECT_TYPE = 1
 
   def rating_avg
@@ -25,5 +28,13 @@ class Restaurant < ApplicationRecord
   end
 
   def change_img
+  end
+
+  def change_ai
+    @restaurant = Restaurant.find_by(id: Restaurant.last.id)
+    if (@restaurant)
+      puts @restaurant.id
+      ActiveRecord::Base.connection.execute("ALTER TABLE restaurants AUTO_INCREMENT=" + (@restaurant.id+1).to_s)
+    end
   end
 end

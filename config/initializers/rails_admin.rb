@@ -1,4 +1,12 @@
 RailsAdmin.config do |config|
+  config.parent_controller = '::ApplicationController'
+
+  config.authenticate_with do
+    if !(current_user && current_user.admin)
+        require_login!
+    end
+  end
+
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory

@@ -23,6 +23,16 @@ class User < ApplicationRecord
     presence: true,
     if: :should_validate_password?
 
+  def generate_auth_token
+    token = SecureRandom.hex
+    self.update_columns(auth_token: token)
+    token
+  end
+
+  def invalidate_auth_token
+    self.update_columns(auth_token: nil)
+  end
+
   private
 
   def before_save_action
