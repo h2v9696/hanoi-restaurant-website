@@ -8,6 +8,7 @@ import axios from "axios";
 import Moment from 'react-moment';
 import 'moment-timezone';
 
+import ADMIN_SV from '../../constants/server'
 export default class Header extends Component {
     constructor(props) {
         super(props);
@@ -174,7 +175,7 @@ export default class Header extends Component {
                                             {this.state.loading ? <li><Link to="/logIn">Login</Link></li> : <li><Link
                                                 to="/profile">{this.state.userData.username}</Link></li>}
                                             {this.state.loading ? null : this.state.userData.admin &&
-                                                <li><a href={API + '/admin/?auth_token=' + this.state.userData.auth_token}>Admin</a></li>}
+                                                <li><a href={ ADMIN_SV+'/admin/?auth_token=' + this.state.userData.auth_token}>Admin</a></li>}
                                             {!this.state.loading && <li><Link onClick={() => {
                                                 this.Auth.logout();
                                                 this.logout();
