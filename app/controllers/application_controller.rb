@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
   helper_method :user_signed_in?, :current_user
 
   def redirect_to_web
-    redirect_to 'http://localhost:3001'
+    redirect_to 'http://45.76.151.220:3001'
   end
 
   def require_login!
