@@ -60,10 +60,9 @@ GEM
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
-    cloudinary (1.10.0)
+    cloudinary (1.10.1.pre.rc)
       aws_cf_signer
-      json (~> 1.8)
-      rest-client (< 2.0)
+      rest-client
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -106,7 +105,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (1.8.6)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.1.1)
@@ -197,10 +195,10 @@ GEM
       ffi (>= 0.5.0, < 2)
     redis (4.0.2)
     remotipart (1.4.2)
-    rest-client (1.8.0)
+    rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.1)
@@ -263,7 +261,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
   carrierwave
-  cloudinary
+  cloudinary (= 1.10.1.pre.rc)
   factory_bot_rails
   faker!
   figaro

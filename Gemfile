@@ -16,7 +16,7 @@ gem 'faker', github: 'stympy/faker'
 gem 'rails_admin'
 gem 'rails_admin_rollincode'
 gem 'carrierwave'
-gem 'cloudinary'
+gem 'cloudinary', "1.10.1.pre.rc"
 
 group :development, :test do
   gem 'rspec-rails'
